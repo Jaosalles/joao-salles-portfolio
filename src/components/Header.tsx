@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useHashNavigation } from "@/hooks/useHashNavigation";
 
 const navLinks = [
   { label: "Sobre", href: "#about" },
@@ -13,6 +14,7 @@ const navLinks = [
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { navigateToSection } = useHashNavigation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,21 +45,21 @@ const Header = () => {
           <ul className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors relative group"
+                <button
+                  onClick={() => navigateToSection(link.href.slice(1))}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors relative group cursor-pointer"
                 >
                   {link.label}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-                </a>
+                </button>
               </li>
             ))}
           </ul>
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button variant="hero" size="sm" asChild>
-              <a href="#contact">Contratar</a>
+            <Button variant="hero" size="sm" onClick={() => navigateToSection('contact')}>
+              Contratar
             </Button>
           </div>
 
@@ -88,18 +90,27 @@ const Header = () => {
               <ul className="py-6 space-y-4">
                 {navLinks.map((link) => (
                   <li key={link.href}>
-                    <a
-                      href={link.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block text-lg text-muted-foreground hover:text-foreground transition-colors"
+                    <button
+                      onClick={() => {
+                        navigateToSection(link.href.slice(1));
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="block text-lg text-muted-foreground hover:text-foreground transition-colors text-left w-full"
                     >
                       {link.label}
-                    </a>
+                    </button>
                   </li>
                 ))}
                 <li className="pt-4">
-                  <Button variant="hero" className="w-full" asChild>
-                    <a href="#contact">Contratar</a>
+                  <Button
+                    variant="hero"
+                    className="w-full"
+                    onClick={() => {
+                      navigateToSection('contact');
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    Contratar
                   </Button>
                 </li>
               </ul>
