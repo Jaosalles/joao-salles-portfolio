@@ -1,0 +1,7 @@
+node_modules
+dist
+coverage
+.vscode
+.husky
+public
+scripts/fix-permissions.sh

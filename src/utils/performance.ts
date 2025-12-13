@@ -62,6 +62,7 @@ export const getNavigationTiming = () => {
 
     if (navigationEntries.length > 0) {
       const entry = navigationEntries[0]
+      if (!entry) return null
       return {
         dnsLookup: entry.domainLookupEnd - entry.domainLookupStart,
         tcpConnect: entry.connectEnd - entry.connectStart,

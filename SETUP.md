@@ -44,6 +44,19 @@ Este script irá:
 - Reinstalar dependências
 - Testar se tudo funciona
 
+### 4. Configurar Husky (hooks de pre-commit)
+
+Após instalar dependências, execute:
+
+```bash
+npm run prepare
+# ou
+npx husky install
+```
+
+Isso configura os hooks do Git para rodar o lint-staged automaticamente antes do commit.
+
+
 ### 4. Correção manual de permissões (se o script não funcionar)
 
 ```bash

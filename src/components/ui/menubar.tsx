@@ -1,6 +1,6 @@
-import * as React from "react";
 import * as MenubarPrimitive from "@radix-ui/react-menubar";
 import { Check, ChevronRight, Circle } from "lucide-react";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -125,7 +125,7 @@ const MenubarCheckboxItem = React.forwardRef<
       "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 focus:bg-accent focus:text-accent-foreground",
       className,
     )}
-    checked={checked}
+    checked={checked as any}
     {...props}
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
@@ -188,20 +188,8 @@ const MenubarShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanE
 MenubarShortcut.displayname = "MenubarShortcut";
 
 export {
-  Menubar,
-  MenubarMenu,
-  MenubarTrigger,
-  MenubarContent,
-  MenubarItem,
-  MenubarSeparator,
-  MenubarLabel,
-  MenubarCheckboxItem,
-  MenubarRadioGroup,
-  MenubarRadioItem,
-  MenubarPortal,
-  MenubarSubContent,
-  MenubarSubTrigger,
-  MenubarGroup,
-  MenubarSub,
-  MenubarShortcut,
+    Menubar, MenubarCheckboxItem, MenubarContent, MenubarGroup, MenubarItem, MenubarLabel, MenubarMenu, MenubarPortal, MenubarRadioGroup,
+    MenubarRadioItem, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubContent,
+    MenubarSubTrigger, MenubarTrigger
 };
+

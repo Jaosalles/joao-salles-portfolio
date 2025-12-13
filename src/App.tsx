@@ -1,22 +1,12 @@
-import { useEffect } from "react";
-import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PerformanceMonitor from "./components/PerformanceMonitor";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-
-// Handle client-side routing for GitHub Pages
-const handleGitHubPagesRouting = () => {
-  // If we're on GitHub Pages and there's a query parameter with the path
-  if (window.location.hostname.includes('github.io') && window.location.search.startsWith('?/')) {
-    const path = window.location.search.slice(2); // Remove '?/'
-    // Replace the current URL without causing a page reload
-    window.history.replaceState(null, '', path + (window.location.hash || ''));
-  }
-};
 
 const queryClient = new QueryClient({
   defaultOptions: {

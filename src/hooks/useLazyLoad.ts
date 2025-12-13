@@ -23,6 +23,7 @@ export const useLazyLoad = (options: UseLazyLoadOptions = {}) => {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        if (!entry) return;
         const isElementIntersecting = entry.isIntersecting;
 
         if (isElementIntersecting && !hasTriggered) {
@@ -60,7 +61,7 @@ export const useLazyImage = (
   const [imageSrc, setImageSrc] = useState(placeholder || "");
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const { ref, isIntersecting } = useLazyLoad({ threshold: 0.1, externalRef });
+  const { ref, isIntersecting } = useLazyLoad({ threshold: 0.1, externalRef: externalRef as any });
 
   useEffect(() => {
     if (isIntersecting && src && imageSrc !== src) {

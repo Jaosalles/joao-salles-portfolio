@@ -17,6 +17,8 @@ Um portfólio profissional moderno e responsivo construído com as melhores prá
 - 🧪 **Testado**: Suite completa de testes com Vitest e Testing Library
 - 🎯 **Acessibilidade**: Componentes acessíveis seguindo as melhores práticas
 - 🌙 **Tema Dark/Light**: Suporte completo a temas com next-themes
+- 🛡️ **Qualidade de Código**: ESLint, Prettier e hooks de commit (Husky + lint-staged) para manter a qualidade
+- 🧭 **TypeScript Estrito**: `tsconfig.app.json` habilita `strict` para a maior parte da base (run `npm run type-check`)
 
 ## 🛠️ Stack Tecnológico
 

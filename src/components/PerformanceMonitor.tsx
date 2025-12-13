@@ -31,7 +31,9 @@ export const PerformanceMonitor = () => {
         const lcpObserver = new PerformanceObserver((list) => {
           const entries = list.getEntries()
           const lastEntry = entries[entries.length - 1]
-          logMetric('LCP (Largest Contentful Paint)', `${lastEntry.startTime.toFixed(2)}ms`)
+          if (lastEntry) {
+            logMetric('LCP (Largest Contentful Paint)', `${lastEntry.startTime.toFixed(2)}ms`)
+          }
         })
 
         lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] })
