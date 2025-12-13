@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,6 +7,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PerformanceMonitor from "./components/PerformanceMonitor";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+
+// Handle client-side routing for GitHub Pages
+const handleGitHubPagesRouting = () => {
+  // If we're on GitHub Pages and there's a query parameter with the path
+  if (window.location.hostname.includes('github.io') && window.location.search.startsWith('?/')) {
+    const path = window.location.search.slice(2); // Remove '?/'
+    // Replace the current URL without causing a page reload
+    window.history.replaceState(null, '', path + (window.location.hash || ''));
+  }
+};
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,21 +34,32 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <PerformanceMonitor />
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  useEffect(() => {
+    // Handle client-side routing for GitHub Pages
+    if (window.location.hostname.includes('github.io') && window.location.search.startsWith('?/')) {
+      const path = window.location.search.slice(2); // Remove '?/'
+      // Replace the current URL without causing a page reload
+      window.history.replaceState(null, '', path + (window.location.hash || ''));
+    }
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <PerformanceMonitor />
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
