@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useHashNavigation } from "@/hooks/useHashNavigation";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   { label: "Sobre", href: "#about" },
@@ -20,8 +20,9 @@ const Header = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener("scroll", handleScroll);
+    // Run once to set initial state based on current scroll position
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -34,10 +35,7 @@ const Header = () => {
       <div className="container px-6">
         <nav className="flex items-center justify-between">
           {/* Logo */}
-          <a 
-            href="#" 
-            className="font-display text-xl font-bold gradient-text"
-          >
+          <a href="#" className="font-display text-xl font-bold gradient-text">
             &lt;Dev /&gt;
           </a>
 
@@ -58,7 +56,11 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button variant="hero" size="sm" onClick={() => navigateToSection('contact')}>
+            <Button
+              variant="hero"
+              size="sm"
+              onClick={() => navigateToSection("contact")}
+            >
               Contratar
             </Button>
           </div>
@@ -106,7 +108,7 @@ const Header = () => {
                     variant="hero"
                     className="w-full"
                     onClick={() => {
-                      navigateToSection('contact');
+                      navigateToSection("contact");
                       setIsMobileMenuOpen(false);
                     }}
                   >

@@ -1,7 +1,7 @@
-import '@testing-library/jest-dom'
+import "@testing-library/jest-dom";
 
 // Mock matchMedia
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: (query: string) => ({
     matches: false,
@@ -13,15 +13,29 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: () => {},
     dispatchEvent: () => {},
   }),
-})
+});
 
 // Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
-  disconnect() {}
-  observe() {}
-  unobserve() {}
+let createdIntersectionObserver: any = null;
+class MockIntersectionObserver {
+  callback: any = null;
+  options: any = null;
+  observe: any;
+  unobserve: any;
+  disconnect: any;
+  constructor(callback?: any, options?: any) {
+    this.callback = callback;
+    this.options = options;
+    // Use vi.fn if available so tests can assert calls
+    this.observe = vi && vi.fn ? vi.fn() : () => {};
+    this.unobserve = vi && vi.fn ? vi.fn() : () => {};
+    this.disconnect = vi && vi.fn ? vi.fn() : () => {};
+    createdIntersectionObserver = this;
+  }
 }
+(global as any).IntersectionObserver = MockIntersectionObserver as any;
+(global as any).__createdIntersectionObserver = () =>
+  createdIntersectionObserver;
 
 // Mock ResizeObserver
 global.ResizeObserver = class ResizeObserver {
@@ -29,4 +43,19 @@ global.ResizeObserver = class ResizeObserver {
   disconnect() {}
   observe() {}
   unobserve() {}
+};
+
+// Mock Image constructor for tests that interact with image loading
+let createdImage: any = null;
+class MockImage {
+  onload: any = null;
+  onerror: any = null;
+  src = "";
+  constructor() {
+    createdImage = this;
+  }
 }
+(global as any).Image = MockImage as any;
+
+// Expose getter for tests if needed
+(global as any).__createdImage = () => createdImage;

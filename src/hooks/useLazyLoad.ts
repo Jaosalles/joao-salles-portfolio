@@ -1,82 +1,86 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from "react";
 
 interface UseLazyLoadOptions {
-  threshold?: number
-  rootMargin?: string
-  triggerOnce?: boolean
+  threshold?: number;
+  rootMargin?: string;
+  triggerOnce?: boolean;
+  // Optionally provide an external ref so tests or callers can control the observed element
+  externalRef?: React.RefObject<HTMLElement>;
 }
 
 export const useLazyLoad = (options: UseLazyLoadOptions = {}) => {
-  const {
-    threshold = 0.1,
-    rootMargin = '50px',
-    triggerOnce = true
-  } = options
+  const { threshold = 0.1, rootMargin = "50px", triggerOnce = true } = options;
 
-  const [isIntersecting, setIsIntersecting] = useState(false)
-  const [hasTriggered, setHasTriggered] = useState(false)
-  const ref = useRef<HTMLElement>(null)
+  const internalRef = useRef<HTMLElement>(null);
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const [hasTriggered, setHasTriggered] = useState(false);
+  const ref =
+    (options.externalRef as React.RefObject<HTMLElement>) || internalRef;
 
   useEffect(() => {
-    const element = ref.current
-    if (!element) return
+    const element = ref.current;
+    if (!element) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const isElementIntersecting = entry.isIntersecting
+        const isElementIntersecting = entry.isIntersecting;
 
         if (isElementIntersecting && !hasTriggered) {
-          setIsIntersecting(true)
+          setIsIntersecting(true);
           if (triggerOnce) {
-            setHasTriggered(true)
-            observer.disconnect()
+            setHasTriggered(true);
+            observer.disconnect();
           }
         } else if (!triggerOnce) {
-          setIsIntersecting(isElementIntersecting)
+          setIsIntersecting(isElementIntersecting);
         }
       },
       {
         threshold,
         rootMargin,
       }
-    )
+    );
 
-    observer.observe(element)
+    observer.observe(element);
 
     return () => {
-      observer.disconnect()
-    }
-  }, [threshold, rootMargin, triggerOnce, hasTriggered])
+      observer.disconnect();
+    };
+  }, [threshold, rootMargin, triggerOnce, hasTriggered]);
 
-  return { ref, isIntersecting }
-}
+  return { ref, isIntersecting };
+};
 
 // Hook específico para lazy loading de imagens
-export const useLazyImage = (src: string, placeholder?: string) => {
-  const [imageSrc, setImageSrc] = useState(placeholder || '')
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [hasError, setHasError] = useState(false)
-  const { ref, isIntersecting } = useLazyLoad({ threshold: 0.1 })
+export const useLazyImage = (
+  src: string,
+  placeholder?: string,
+  externalRef?: React.RefObject<HTMLElement>
+) => {
+  const [imageSrc, setImageSrc] = useState(placeholder || "");
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const { ref, isIntersecting } = useLazyLoad({ threshold: 0.1, externalRef });
 
   useEffect(() => {
     if (isIntersecting && src && imageSrc !== src) {
-      const img = new Image()
-      img.src = src
+      const img = new Image();
+      img.src = src;
       img.onload = () => {
-        setImageSrc(src)
-        setIsLoaded(true)
-      }
+        setImageSrc(src);
+        setIsLoaded(true);
+      };
       img.onerror = () => {
-        setHasError(true)
-      }
+        setHasError(true);
+      };
     }
-  }, [isIntersecting, src, imageSrc])
+  }, [isIntersecting, src, imageSrc]);
 
   return {
     ref,
     src: imageSrc,
     isLoaded,
     hasError,
-    isIntersecting
-  }
-}
+    isIntersecting,
+  };
+};
