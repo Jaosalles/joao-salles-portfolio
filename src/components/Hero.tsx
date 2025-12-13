@@ -1,25 +1,26 @@
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background glow effect */}
-      <div 
+      <div
         className="absolute inset-0 opacity-30"
         style={{
-          background: "radial-gradient(ellipse at 50% 30%, hsl(174, 72%, 56%, 0.15) 0%, transparent 60%)"
+          background:
+            "radial-gradient(ellipse at 50% 30%, hsl(174, 72%, 56%, 0.15) 0%, transparent 60%)",
         }}
       />
-      
+
       {/* Grid pattern */}
-      <div 
+      <div
         className="absolute inset-0 opacity-5"
         style={{
           backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
                            linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px"
+          backgroundSize: "60px 60px",
         }}
       />
 
@@ -38,7 +39,9 @@ const Hero = () => {
             className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8"
           >
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span className="text-sm text-muted-foreground">Disponível para novas oportunidades</span>
+            <span className="text-sm text-muted-foreground">
+              Disponível para novas oportunidades
+            </span>
           </motion.div>
 
           {/* Main headline */}
@@ -48,9 +51,8 @@ const Hero = () => {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight"
           >
-            Senior Frontend
             <br />
-            <span className="gradient-text">Engineer</span>
+            <span className="gradient-text">Senior Frontend Engineer</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -60,8 +62,10 @@ const Hero = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Transformando ideias em experiências digitais excepcionais. 
-            Especializado em <span className="text-foreground font-medium">React</span>, <span className="text-foreground font-medium">TypeScript</span> e 
+            Transformando ideias em experiências digitais excepcionais.
+            Especializado em{" "}
+            <span className="text-foreground font-medium">React</span>,{" "}
+            <span className="text-foreground font-medium">TypeScript</span> e
             arquiteturas frontend escaláveis.
           </motion.p>
 
@@ -87,26 +91,26 @@ const Hero = () => {
             transition={{ delay: 0.6, duration: 0.6 }}
             className="flex items-center justify-center gap-4"
           >
-            <a 
-              href="https://github.com" 
-              target="_blank" 
+            <a
+              href="https://github.com/jaosalles"
+              target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full glass hover:bg-secondary transition-all duration-300 hover:scale-110"
               aria-label="GitHub"
             >
               <Github className="w-5 h-5" />
             </a>
-            <a 
-              href="https://linkedin.com" 
-              target="_blank" 
+            <a
+              href="https://www.linkedin.com/in/joao-pedro-salles-dos-santos-a5358a11a/"
+              target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full glass hover:bg-secondary transition-all duration-300 hover:scale-110"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-5 h-5" />
             </a>
-            <a 
-              href="mailto:email@example.com"
+            <a
+              href="mailto:joaopedrosalles@hotmail.com"
               className="p-3 rounded-full glass hover:bg-secondary transition-all duration-300 hover:scale-110"
               aria-label="Email"
             >
@@ -122,7 +126,7 @@ const Hero = () => {
           transition={{ delay: 1, duration: 0.6 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
-          <a 
+          <a
             href="#about"
             className="flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
           >

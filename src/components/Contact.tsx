@@ -38,8 +38,8 @@ const Contact = () => {
                 </h3>
                 
                 <div className="space-y-4">
-                  <a 
-                    href="mailto:seu@email.com"
+                  <a
+                    href="mailto:joaopedrosalles@hotmail.com"
                     className="flex items-center gap-4 text-muted-foreground hover:text-foreground transition-colors group"
                   >
                     <div className="p-3 rounded-lg bg-secondary group-hover:bg-primary/20 transition-colors">
@@ -47,12 +47,12 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Email</p>
-                      <p className="font-medium text-foreground">seu@email.com</p>
+                      <p className="font-medium text-foreground">joaopedrosalles@hotmail.com</p>
                     </div>
                   </a>
 
-                  <a 
-                    href="https://linkedin.com/in/seu-perfil"
+                  <a
+                    href="https://www.linkedin.com/in/joao-pedro-salles-dos-santos-a5358a11a/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-4 text-muted-foreground hover:text-foreground transition-colors group"
@@ -62,12 +62,12 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">LinkedIn</p>
-                      <p className="font-medium text-foreground">/in/seu-perfil</p>
+                      <p className="font-medium text-foreground">/in/joao-pedro-salles-dos-santos-a5358a11a/</p>
                     </div>
                   </a>
 
-                  <a 
-                    href="https://github.com/seu-usuario"
+                  <a
+                    href="https://github.com/jaosalles"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-4 text-muted-foreground hover:text-foreground transition-colors group"
@@ -77,7 +77,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">GitHub</p>
-                      <p className="font-medium text-foreground">@seu-usuario</p>
+                      <p className="font-medium text-foreground">@jaosalles</p>
                     </div>
                   </a>
 
@@ -122,7 +122,7 @@ const Contact = () => {
                     type="email"
                     id="email"
                     className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
-                    placeholder="seu@email.com"
+                    placeholder="joaopedrosalles@hotmail.com"
                   />
                 </div>
 

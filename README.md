@@ -1,73 +1,184 @@
-# Welcome to your Lovable project
+# 🚀 João Pedro Salles - Portfolio
 
-## Project info
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Um portfólio profissional moderno e responsivo construído com as melhores práticas de desenvolvimento frontend. Apresenta minha experiência como Senior Frontend Engineer, projetos destacados e informações de contato.
 
-## How can I edit this code?
+## ✨ Características
 
-There are several ways of editing your application.
+- 🎨 **Design Moderno**: Interface elegante com animações suaves usando Framer Motion
+- 📱 **Totalmente Responsivo**: Experiência otimizada para desktop, tablet e mobile
+- ⚡ **Performance Otimizada**: Build otimizado com Vite, code splitting e lazy loading
+- 📊 **Monitoramento de Performance**: Web Vitals nativos sem dependências externas
+- 🔧 **TypeScript Estrito**: Código type-safe com configurações rigorosas
+- 🧪 **Testado**: Suite completa de testes com Vitest e Testing Library
+- 🎯 **Acessibilidade**: Componentes acessíveis seguindo as melhores práticas
+- 🌙 **Tema Dark/Light**: Suporte completo a temas com next-themes
 
-**Use Lovable**
+## 🛠️ Stack Tecnológico
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### Core
+- **React 18** - Biblioteca para interfaces de usuário
+- **TypeScript** - JavaScript com tipagem estática
+- **Vite** - Build tool ultra-rápido
 
-Changes made via Lovable will be committed automatically to this repo.
+### UI/UX
+- **Tailwind CSS** - Framework CSS utilitário
+- **shadcn/ui** - Componentes acessíveis e customizáveis
+- **Radix UI** - Primitivos acessíveis para componentes complexos
+- **Framer Motion** - Animações e gestos
+- **Lucide React** - Ícones consistentes
 
-**Use your preferred IDE**
+### Desenvolvimento
+- **ESLint** - Linting rigoroso para qualidade de código
+- **Vitest** - Framework de testes rápido
+- **Testing Library** - Testes focados no usuário
+- **React Hook Form** - Gerenciamento de formulários
+- **React Query** - Gerenciamento de estado server
+- **React Router** - Roteamento client-side
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🚀 Começando
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Pré-requisitos
 
-Follow these steps:
+- Node.js 20.10.0 ou superior ([instalar com nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
+- npm ou yarn
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### ⚠️ Importante: Setup Inicial
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Este projeto usa configurações avançadas de senior-level. Se encontrar problemas com `yarn run lint`, consulte o [arquivo SETUP.md](./SETUP.md) para instruções detalhadas.
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Instalação
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/jaosalles/portfolio.git
+   cd portfolio
+   ```
+
+2. **Instale as dependências** (importante!)
+   ```bash
+   npm install
+   # ou
+   yarn install
+   ```
+
+3. **Inicie o servidor de desenvolvimento**
+   ```bash
+   npm run dev
+   # ou
+   yarn dev
+   ```
+
+4. **Abra [http://localhost:8080](http://localhost:8080) no seu navegador**
+
+### 🔧 Verificação do Setup
+
+Após instalar as dependências, teste os comandos:
+
+```bash
+npm run type-check  # Deve passar ✅
+npm run lint       # Deve funcionar após setup completo
+npm run build      # Deve gerar build de produção
 ```
 
-**Edit a file directly in GitHub**
+## 📜 Scripts Disponíveis
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+# Desenvolvimento
+npm run dev              # Inicia servidor de desenvolvimento
+npm run build           # Build de produção
+npm run preview         # Preview do build de produção
 
-**Use GitHub Codespaces**
+# Qualidade de código
+npm run lint            # Executa ESLint
+npm run lint:fix        # Executa ESLint com correção automática
+npm run type-check      # Verifica tipos TypeScript
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Testes
+npm run test            # Executa testes
+npm run test:ui         # Executa testes com interface gráfica
+npm run test:coverage   # Executa testes com relatório de cobertura
+```
 
-## What technologies are used for this project?
+## 📁 Estrutura do Projeto
 
-This project is built with:
+```
+src/
+├── components/          # Componentes React
+│   ├── ui/             # Componentes base (shadcn/ui)
+│   ├── Hero.tsx        # Seção hero
+│   ├── Experience.tsx  # Experiência profissional
+│   ├── Projects.tsx    # Projetos
+│   └── ...
+├── hooks/              # Custom hooks
+├── lib/                # Utilitários
+├── pages/              # Páginas da aplicação
+├── test/               # Configurações de teste
+├── App.tsx             # Componente raiz
+└── main.tsx            # Ponto de entrada
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🧪 Testes
 
-## How can I deploy this project?
+O projeto inclui uma suíte completa de testes:
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+```bash
+# Executar todos os testes
+npm run test
 
-## Can I connect a custom domain to my Lovable project?
+# Executar testes em modo watch
+npm run test:watch
 
-Yes, you can!
+# Executar testes com interface gráfica
+npm run test:ui
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+# Gerar relatório de cobertura
+npm run test:coverage
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 🚢 Deploy
+
+### Vercel (Recomendado)
+
+1. Conecte seu repositório no [Vercel](https://vercel.com)
+2. Configure o comando de build: `npm run build`
+3. Configure o diretório de saída: `dist`
+
+### Netlify
+
+1. Conecte seu repositório no [Netlify](https://netlify.com)
+2. Configure o comando de build: `npm run build`
+3. Configure o diretório de publish: `dist`
+
+### Build Manual
+
+```bash
+# Build para produção
+npm run build
+
+# Preview do build local
+npm run preview
+```
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Por favor, leia as [diretrizes de contribuição](CONTRIBUTING.md) antes de começar.
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## 📞 Contato
+
+**João Pedro Salles**
+- Email: joaopedrosalles@hotmail.com
+- LinkedIn: [linkedin.com/in/joao-pedro-salles-dos-santos-a5358a11a](https://www.linkedin.com/in/joao-pedro-salles-dos-santos-a5358a11a/)
+- GitHub: [github.com/jaosalles](https://github.com/jaosalles)
+
+---
+
+⭐ **Dê uma estrela se gostou do projeto!**
