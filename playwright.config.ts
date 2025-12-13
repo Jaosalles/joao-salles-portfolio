@@ -8,14 +8,14 @@ export default defineConfig({
   },
   reporter: [['list'], ['html', { outputFolder: 'playwright-report' }]],
   use: {
-    baseURL: 'http://localhost:5173',
+    baseURL: 'http://localhost:8080',
     headless: true,
     ignoreHTTPSErrors: true,
     video: 'retain-on-failure',
   },
   webServer: {
     command: 'npm run dev',
-    url: 'http://localhost:5173',
+    url: 'http://localhost:8080',
     reuseExistingServer: !process.env.CI,
   },
   projects: [
