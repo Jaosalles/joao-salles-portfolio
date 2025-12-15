@@ -1,15 +1,15 @@
-import { Button } from "@/components/ui/button";
-import { useHashNavigation } from "@/hooks/useHashNavigation";
-import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Button } from '@/components/ui/button';
+import { useHashNavigation } from '@/hooks/useHashNavigation';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const navLinks = [
-  { label: "Sobre", href: "#about" },
-  { label: "Projetos", href: "#projects" },
-  { label: "Experiência", href: "#experience" },
-  { label: "Contato", href: "#contact" },
+  { label: 'Sobre', href: '#about' },
+  { label: 'Projetos', href: '#projects' },
+  { label: 'Experiência', href: '#experience' },
+  { label: 'Contato', href: '#contact' },
 ];
 
 const Header = () => {
@@ -36,9 +36,9 @@ const Header = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Close on escape and close when clicking outside the mobile menu
@@ -49,9 +49,18 @@ const Header = () => {
 
     function onPointerDown(e: PointerEvent) {
       if (!isMobileMenuOpen) return;
-      const path = (e.composedPath ? e.composedPath() : ((e as unknown) as { path?: EventTarget[] }).path) || [];
-      const clickedInside = mobileMenuRef.current && (Array.isArray(path) ? path.includes(mobileMenuRef.current) : mobileMenuRef.current.contains(e.target as Node));
-      const clickedToggle = toggleButtonRef.current && (Array.isArray(path) ? path.includes(toggleButtonRef.current) : toggleButtonRef.current.contains(e.target as Node));
+      const path =
+        (e.composedPath ? e.composedPath() : (e as unknown as { path?: EventTarget[] }).path) || [];
+      const clickedInside =
+        mobileMenuRef.current &&
+        (Array.isArray(path)
+          ? path.includes(mobileMenuRef.current)
+          : mobileMenuRef.current.contains(e.target as Node));
+      const clickedToggle =
+        toggleButtonRef.current &&
+        (Array.isArray(path)
+          ? path.includes(toggleButtonRef.current)
+          : toggleButtonRef.current.contains(e.target as Node));
       if (!clickedInside && !clickedToggle) setIsMobileMenuOpen(false);
     }
 
@@ -61,18 +70,6 @@ const Header = () => {
       document.removeEventListener('keydown', onKey);
       document.removeEventListener('pointerdown', onPointerDown);
     };
-  }, [isMobileMenuOpen]);
-
-  // Prevent background scroll when mobile menu is open
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      return () => {
-        document.body.style.overflow = prev || '';
-      };
-    }
-    return;
   }, [isMobileMenuOpen]);
 
   useEffect(() => {
@@ -90,7 +87,7 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled || isMobileMenuOpen ? "glass py-4" : "py-6"
+        isScrolled || isMobileMenuOpen ? 'glass py-4' : 'py-6'
       }`}
     >
       <div className="container px-6">
@@ -100,14 +97,14 @@ const Header = () => {
           </Link>
 
           <ul className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => {
+            {navLinks.map(link => {
               const isActive = location.hash === link.href;
               return (
                 <li key={link.href}>
                   <button
                     onClick={() => handleNavigate(link.href.slice(1))}
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors relative group cursor-pointer"
-                    aria-current={isActive ? "page" : undefined}
+                    aria-current={isActive ? 'page' : undefined}
                   >
                     {link.label}
                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
@@ -118,11 +115,7 @@ const Header = () => {
           </ul>
 
           <div className="hidden md:block">
-            <Button
-              variant="hero"
-              size="sm"
-              onClick={() => navigateToSection("contact")}
-            >
+            <Button variant="hero" size="sm" onClick={() => navigateToSection('contact')}>
               Contratar
             </Button>
           </div>
@@ -135,11 +128,7 @@ const Header = () => {
             aria-expanded={isMobileMenuOpen}
             ref={toggleButtonRef}
           >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </nav>
 
@@ -148,7 +137,7 @@ const Header = () => {
             <motion.div
               id="mobile-menu"
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
+              animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
               className="md:hidden overflow-hidden glass rounded-b-xl mt-2"
@@ -164,7 +153,7 @@ const Header = () => {
                           handleNavigate(link.href.slice(1), true);
                         }}
                         ref={i === 0 ? firstMenuItemRef : undefined}
-                        aria-current={isActive ? "page" : undefined}
+                        aria-current={isActive ? 'page' : undefined}
                         className="block text-lg text-muted-foreground hover:text-foreground transition-colors text-left w-full"
                       >
                         {link.label}
@@ -177,7 +166,7 @@ const Header = () => {
                     variant="hero"
                     className="w-full"
                     onClick={() => {
-                      navigateToSection("contact");
+                      navigateToSection('contact');
                       setIsMobileMenuOpen(false);
                     }}
                   >
