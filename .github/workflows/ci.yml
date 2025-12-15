@@ -5,6 +5,8 @@ on:
     branches: [main, develop]
   pull_request:
     branches: [main]
+  # Manual trigger to run CI jobs from the Actions UI
+  workflow_dispatch:
 
 jobs:
   test:
