@@ -120,7 +120,7 @@ export const PerformanceMonitor = () => {
             'Heap Limit': `${Math.round(memory.jsHeapSizeLimit / 1024 / 1024)}MB`,
           });
         }
-      } catch (error) {
+      } catch {
         // Memory API not available or not supported
       }
     };
@@ -166,7 +166,7 @@ export const PerformanceMonitor = () => {
       observers?.forEach(observer => {
         try {
           observer.disconnect();
-        } catch (error) {
+        } catch {
           // Ignore cleanup errors
         }
       });
