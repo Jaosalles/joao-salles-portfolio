@@ -8,7 +8,7 @@ test('projects section is visible and lists featured projects', async ({ page })
   await expect(page.locator('text=E-commerce Platform')).toBeVisible();
 
   const results = await new AxeBuilder({ page }).include('#projects').analyze();
-  const filtered = (results.violations || []).filter((v) => v.id !== 'color-contrast');
+  const filtered = (results.violations || []).filter(v => v.id !== 'color-contrast');
   if (results.violations && results.violations.length > 0) {
     test.info().attachments.push({
       name: 'axe-projects-violations',

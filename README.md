@@ -23,11 +23,13 @@ Um portfólio profissional moderno e responsivo construído com as melhores prá
 ## 🛠️ Stack Tecnológico
 
 ### Core
+
 - **React 18** - Biblioteca para interfaces de usuário
 - **TypeScript** - JavaScript com tipagem estática
 - **Vite** - Build tool ultra-rápido
 
 ### UI/UX
+
 - **Tailwind CSS** - Framework CSS utilitário
 - **shadcn/ui** - Componentes acessíveis e customizáveis
 - **Radix UI** - Primitivos acessíveis para componentes complexos
@@ -35,6 +37,7 @@ Um portfólio profissional moderno e responsivo construído com as melhores prá
 - **Lucide React** - Ícones consistentes
 
 ### Desenvolvimento
+
 - **ESLint** - Linting rigoroso para qualidade de código
 - **Vitest** - Framework de testes rápido
 - **Testing Library** - Testes focados no usuário
@@ -56,12 +59,14 @@ Este projeto usa configurações avançadas de senior-level. Se encontrar proble
 ### Instalação
 
 1. **Clone o repositório**
+
    ```bash
    git clone https://github.com/jaosalles/portfolio.git
    cd portfolio
    ```
 
 2. **Instale as dependências** (importante!)
+
    ```bash
    npm install
    # ou
@@ -69,6 +74,7 @@ Este projeto usa configurações avançadas de senior-level. Se encontrar proble
    ```
 
 3. **Inicie o servidor de desenvolvimento**
+
    ```bash
    npm run dev
    # ou
@@ -142,6 +148,21 @@ npm run test:ui
 npm run test:coverage
 ```
 
+### E2E (Playwright)
+
+Tests end-to-end com Playwright focam em navegação, usabilidade e acessibilidade.
+
+```bash
+# Instalar browsers (necessário uma vez)
+npx playwright install --with-deps
+
+# Rodar todos os testes E2E (headless)
+npm run e2e
+
+# Rodar apenas Chromium (uso em CI)
+npm run e2e:ci
+```
+
 ## 🚢 Deploy
 
 ### Vercel (Recomendado)
@@ -177,6 +198,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ## 📞 Contato
 
 **João Pedro Salles**
+
 - Email: joaopedrosalles@hotmail.com
 - LinkedIn: [linkedin.com/in/joao-pedro-salles-dos-santos-a5358a11a](https://www.linkedin.com/in/joao-pedro-salles-dos-santos-a5358a11a/)
 - GitHub: [github.com/jaosalles](https://github.com/jaosalles)

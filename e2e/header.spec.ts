@@ -12,7 +12,7 @@ test('header navigation updates hash and shows sections', async ({ page }) => {
 
   // a11y scan limited to the projects section
   const results = await new AxeBuilder({ page }).include('#projects').analyze();
-  const filtered = (results.violations || []).filter((v) => v.id !== 'color-contrast');
+  const filtered = (results.violations || []).filter(v => v.id !== 'color-contrast');
   if (results.violations && results.violations.length > 0) {
     test.info().attachments.push({
       name: 'axe-projects-violations',

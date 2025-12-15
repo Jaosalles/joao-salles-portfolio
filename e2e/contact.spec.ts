@@ -10,7 +10,7 @@ test('contact CTA scrolls to contact section and shows contact info', async ({ p
   await expect(page.locator('#contact a[href^="mailto:"]')).toBeVisible();
 
   const results = await new AxeBuilder({ page }).include('#contact').analyze();
-  const filtered = (results.violations || []).filter((v) => v.id !== 'color-contrast');
+  const filtered = (results.violations || []).filter(v => v.id !== 'color-contrast');
   if (results.violations && results.violations.length > 0) {
     test.info().attachments.push({
       name: 'axe-contact-violations',
