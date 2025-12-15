@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 interface UseLazyLoadOptions {
   threshold?: number;
@@ -9,13 +9,12 @@ interface UseLazyLoadOptions {
 }
 
 export const useLazyLoad = (options: UseLazyLoadOptions = {}) => {
-  const { threshold = 0.1, rootMargin = "50px", triggerOnce = true } = options;
+  const { threshold = 0.1, rootMargin = '50px', triggerOnce = true } = options;
 
   const internalRef = useRef<HTMLElement>(null);
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [hasTriggered, setHasTriggered] = useState(false);
-  const ref =
-    (options.externalRef as React.RefObject<HTMLElement>) || internalRef;
+  const ref = (options.externalRef as React.RefObject<HTMLElement>) || internalRef;
 
   useEffect(() => {
     const element = ref.current;
@@ -58,10 +57,10 @@ export const useLazyImage = (
   placeholder?: string,
   externalRef?: React.RefObject<HTMLElement>
 ) => {
-  const [imageSrc, setImageSrc] = useState(placeholder || "");
+  const [imageSrc, setImageSrc] = useState(placeholder || '');
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const { ref, isIntersecting } = useLazyLoad({ threshold: 0.1, externalRef: externalRef as any });
+  const { ref, isIntersecting } = useLazyLoad({ threshold: 0.1, externalRef });
 
   useEffect(() => {
     if (isIntersecting && src && imageSrc !== src) {
