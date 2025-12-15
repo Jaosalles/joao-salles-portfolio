@@ -33,8 +33,9 @@ describe('Header', () => {
     const header = screen.getByRole('banner')
     expect(header.className).toMatch(/glass/)
 
-    // Clicking a link closes the menu
+    // Clicking a link navigates to the hash and closes the menu
     await user.click(screen.getByText(/Sobre/i))
+    expect(window.location.hash).toBe('#about')
     expect(screen.queryByText(/Sobre/i)).not.toBeInTheDocument()
 
     // Re-open and test Escape closes

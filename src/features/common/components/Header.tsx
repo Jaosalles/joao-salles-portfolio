@@ -18,6 +18,16 @@ const Header = () => {
   const { navigateToSection } = useHashNavigation();
   const location = useLocation();
 
+  const handleNavigate = (sectionId: string, closeMenu = false) => {
+    navigateToSection(sectionId);
+    // Try to scroll immediately (helps mobile where hash handling may be async)
+    const el = document.getElementById(sectionId);
+    if (el && typeof (el as HTMLElement).scrollIntoView === 'function') {
+      (el as HTMLElement).scrollIntoView({ behavior: 'smooth' });
+    }
+    if (closeMenu) setIsMobileMenuOpen(false);
+  };
+
   const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
   const firstMenuItemRef = useRef<HTMLButtonElement | null>(null);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
@@ -39,9 +49,9 @@ const Header = () => {
 
     function onPointerDown(e: PointerEvent) {
       if (!isMobileMenuOpen) return;
-      const path = (e.composedPath && e.composedPath()) || (e.composedPath && (e as any).path) || [];
-      const clickedInside = mobileMenuRef.current && (path.includes(mobileMenuRef.current) || mobileMenuRef.current.contains(e.target as Node));
-      const clickedToggle = toggleButtonRef.current && (path.includes(toggleButtonRef.current) || toggleButtonRef.current.contains(e.target as Node));
+      const path = (e.composedPath ? e.composedPath() : ((e as unknown) as { path?: EventTarget[] }).path) || [];
+      const clickedInside = mobileMenuRef.current && (Array.isArray(path) ? path.includes(mobileMenuRef.current) : mobileMenuRef.current.contains(e.target as Node));
+      const clickedToggle = toggleButtonRef.current && (Array.isArray(path) ? path.includes(toggleButtonRef.current) : toggleButtonRef.current.contains(e.target as Node));
       if (!clickedInside && !clickedToggle) setIsMobileMenuOpen(false);
     }
 
@@ -95,7 +105,7 @@ const Header = () => {
               return (
                 <li key={link.href}>
                   <button
-                    onClick={() => navigateToSection(link.href.slice(1))}
+                    onClick={() => handleNavigate(link.href.slice(1))}
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors relative group cursor-pointer"
                     aria-current={isActive ? "page" : undefined}
                   >
@@ -151,8 +161,7 @@ const Header = () => {
                     <li key={link.href}>
                       <button
                         onClick={() => {
-                          navigateToSection(link.href.slice(1));
-                          setIsMobileMenuOpen(false);
+                          handleNavigate(link.href.slice(1), true);
                         }}
                         ref={i === 0 ? firstMenuItemRef : undefined}
                         aria-current={isActive ? "page" : undefined}
