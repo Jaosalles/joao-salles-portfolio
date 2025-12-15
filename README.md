@@ -61,8 +61,8 @@ Este projeto usa configurações avançadas de senior-level. Se encontrar proble
 1. **Clone o repositório**
 
    ```bash
-   git clone https://github.com/jaosalles/portfolio.git
-   cd portfolio
+   git clone https://github.com/jaosalles/joao-salles-portfolio.git
+   cd joao-salles-portfolio
    ```
 
 2. **Instale as dependências** (importante!)
@@ -165,17 +165,9 @@ npm run e2e:ci
 
 ## 🚢 Deploy
 
-### Vercel (Recomendado)
+### Github IO + Github Actions
 
-1. Conecte seu repositório no [Vercel](https://vercel.com)
-2. Configure o comando de build: `npm run build`
-3. Configure o diretório de saída: `dist`
-
-### Netlify
-
-1. Conecte seu repositório no [Netlify](https://netlify.com)
-2. Configure o comando de build: `npm run build`
-3. Configure o diretório de publish: `dist`
+[https://jaosalles.github.io/joao-salles-portfolio/]
 
 ### Build Manual
 
