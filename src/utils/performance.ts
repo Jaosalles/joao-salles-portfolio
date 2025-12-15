@@ -23,7 +23,7 @@ export const reportPerformanceMetrics = (metrics: PerformanceMetrics) => {
 
   // Example: Send to Google Analytics 4
   if (typeof window !== 'undefined' && 'gtag' in window) {
-    (window as unknown as { gtag?: (...args: any[]) => void }).gtag?.(
+    (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag?.(
       'event',
       'performance_metric',
       {

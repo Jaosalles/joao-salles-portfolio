@@ -1,8 +1,14 @@
-import "@testing-library/jest-dom";
+import '@testing-library/jest-dom';
 import { vi } from 'vitest';
 
+/*
+  Tests setup uses dynamic mocks and we prefer explicit-any here for brevity and
+  to keep the mocks straightforward. Disable the rule for this file.
+*/
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 // Mock matchMedia
-Object.defineProperty(window, "matchMedia", {
+Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: (query: string) => ({
     matches: false,
@@ -31,12 +37,12 @@ class MockIntersectionObserver {
     this.observe = vi && vi.fn ? vi.fn() : () => {};
     this.unobserve = vi && vi.fn ? vi.fn() : () => {};
     this.disconnect = vi && vi.fn ? vi.fn() : () => {};
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     createdIntersectionObserver = this;
   }
 }
 (global as any).IntersectionObserver = MockIntersectionObserver as any;
-(global as any).__createdIntersectionObserver = () =>
-  createdIntersectionObserver;
+(global as any).__createdIntersectionObserver = () => createdIntersectionObserver;
 
 // Mock ResizeObserver
 global.ResizeObserver = class ResizeObserver {
@@ -51,8 +57,9 @@ let createdImage: any = null;
 class MockImage {
   onload: any = null;
   onerror: any = null;
-  src = "";
+  src = '';
   constructor() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     createdImage = this;
   }
 }

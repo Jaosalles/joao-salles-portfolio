@@ -46,7 +46,7 @@ export const useLazyLoad = (options: UseLazyLoadOptions = {}) => {
     return () => {
       observer.disconnect();
     };
-  }, [threshold, rootMargin, triggerOnce, hasTriggered]);
+  }, [threshold, rootMargin, triggerOnce, hasTriggered, ref]);
 
   return { ref, isIntersecting };
 };
