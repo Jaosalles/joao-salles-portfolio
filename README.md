@@ -7,6 +7,25 @@
 
 Um portfólio profissional moderno e responsivo construído com as melhores práticas de desenvolvimento frontend. Apresenta minha experiência como Senior Frontend Engineer, projetos destacados e informações de contato.
 
+## Índice
+- Características
+- Stack Tecnológico
+- Arquitetura
+- Começando
+- Scripts Disponíveis
+- Estrutura do Projeto
+- Testes (Unit e E2E)
+- CI/CD
+- Performance e Observabilidade
+- Acessibilidade
+- Segurança & Dependências
+- Fluxo de Trabalho
+- Ambiente & Troubleshooting
+- Deploy
+- Contribuição
+- Licença
+- Contato
+
 ## ✨ Características
 
 - 🎨 **Design Moderno**: Interface elegante com animações suaves usando Framer Motion
@@ -44,6 +63,18 @@ Um portfólio profissional moderno e responsivo construído com as melhores prá
 - **React Hook Form** - Gerenciamento de formulários
 - **React Query** - Gerenciamento de estado server
 - **React Router** - Roteamento client-side
+
+## 🧱 Arquitetura
+
+- Padrão: Feature-Sliced Architecture (FSD) leve.
+- Camadas/Convenções:
+  - `src/components/ui`: primitivos reutilizáveis, sem regra de domínio.
+  - `src/features/<feature>`: componentes, hooks e lógica por domínio.
+  - Cada feature expõe Public API via `index.ts` (barrel).
+- Regras de dependência:
+  - Features não importam internals de outras features; apenas via Public API.
+  - `components/ui` pode ser consumido por qualquer feature.
+- Ver detalhes e boas práticas em `src/features/README.md`.
 
 ## 🚀 Começando
 
@@ -122,6 +153,7 @@ src/
 │   ├── Experience.tsx  # Experiência profissional
 │   ├── Projects.tsx    # Projetos
 │   └── ...
+├── features/           # Features por domínio (FSD)
 ├── hooks/              # Custom hooks
 ├── lib/                # Utilitários
 ├── pages/              # Páginas da aplicação
@@ -138,9 +170,6 @@ O projeto inclui uma suíte completa de testes:
 # Executar todos os testes
 npm run test
 
-# Executar testes em modo watch
-npm run test:watch
-
 # Executar testes com interface gráfica
 npm run test:ui
 
@@ -150,7 +179,7 @@ npm run test:coverage
 
 ### E2E (Playwright)
 
-Tests end-to-end com Playwright focam em navegação, usabilidade e acessibilidade.
+Testes end-to-end com Playwright focam em navegação e usabilidade.
 
 ```bash
 # Instalar browsers (necessário uma vez)
@@ -162,6 +191,49 @@ npm run e2e
 # Rodar apenas Chromium (uso em CI)
 npm run e2e:ci
 ```
+
+## 🧬 CI/CD
+
+- Pipeline (GitHub Actions):
+  - `test`: lint, type-check, unit + coverage (thresholds verificados por script).
+  - `build`: depende de `test`, artefata `dist/`.
+  - `e2e`: apenas em push, reutiliza build artefatado, cache de browsers.
+  - `lhci`: apenas em push, roda contra `dist` artefatado.
+- Concurrency: execuções na mesma ref são canceladas (evita filas).
+- Cache: npm e navegadores Playwright para reduzir tempo.
+
+## 📈 Performance e Observabilidade
+
+- Ver `PERFORMANCE.md` para detalhes.
+- `PerformanceMonitor`: coleta Web Vitals via APIs nativas (LCP, CLS, FID, FCP, TTFB) e logs em desenvolvimento.
+- `src/utils/performance.ts`: helpers para métricas, memória e navigation timing.
+
+## ♿ Acessibilidade
+
+- Uso de Radix UI e shadcn/ui para acessibilidade base.
+- Boas práticas: foco visível, labels, navegação por teclado.
+
+## 🔐 Segurança & Dependências
+
+- Atualizações automatizadas via Dependabot (agrupadas e com limites de PR, ver `.github/dependabot.yml`).
+- Auditoria local:
+  ```bash
+  npm audit --audit-level=moderate || true
+  ```
+
+## 🔁 Fluxo de Trabalho
+
+- Branching: `main` (produção), `develop` (integração).
+- PRs: precisam passar por `lint`, `type-check`, `tests` e `coverage`.
+- Commits: recomendável Conventional Commits (feat, fix, chore, docs...).
+
+## 🧩 Ambiente & Troubleshooting
+
+- Node via `.nvmrc`: use `nvm use` para alinhar versão.
+- Problemas comuns:
+  - Playwright: reinstale browsers `npx playwright install --with-deps`.
+  - Cache inconsistente: `rm -rf node_modules && npm ci`.
+  - Lint: rode `npm run lint:fix` e verifique `eslint.config.js`.
 
 ## 🚢 Deploy
 
