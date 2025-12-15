@@ -69,6 +69,8 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
+    # Run e2e only on push events to avoid heavy/fragile runs on Dependabot PRs
+    if: github.event_name == 'push'
     needs: build
     steps:
       - name: Checkout code
@@ -101,28 +103,6 @@ jobs:
       - name: Run Lighthouse CI (temporary storage)
         run: npm run lhci
 
-  deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - name: Install and build
-        run: npm ci && npm run build
-        env:
-          GITHUB_PAGES: true
-      - name: Add .nojekyll file
-        run: touch ./dist/.nojekyll
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+  # NOTE: Deploy is handled by the dedicated `.github/workflows/deploy.yml` workflow.
+  # The deploy job was removed from this workflow to avoid duplicate deployments
+  # and potential conflicts with Dependabot PR behavior.
