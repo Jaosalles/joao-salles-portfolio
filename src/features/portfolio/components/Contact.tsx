@@ -24,7 +24,6 @@ const Contact = () => {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Contact info */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -36,7 +35,6 @@ const Contact = () => {
                 <h3 className="font-display text-lg font-semibold mb-4">
                   Informações de Contato
                 </h3>
-                
                 <div className="space-y-4">
                   <a
                     href="mailto:joaopedrosalles@hotmail.com"
@@ -94,7 +92,6 @@ const Contact = () => {
               </div>
             </motion.div>
 
-            {/* Contact form */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -151,5 +148,4 @@ const Contact = () => {
   );
 };
 
-// Backward-compatible re-export to feature implementation
-export { default } from '@/features/portfolio/components/Contact';
+export default Contact;

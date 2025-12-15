@@ -27,19 +27,16 @@ const Header = () => {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
-    // Run once to set initial state based on current scroll position
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
     if (isMobileMenuOpen) {
-      // Focus first menu item
       if (firstMenuItemRef.current) {
         firstMenuItemRef.current.focus();
       }
     } else {
-      // Return focus to toggle
       if (toggleButtonRef.current) {
         toggleButtonRef.current.focus();
       }
@@ -54,12 +51,10 @@ const Header = () => {
     >
       <div className="container px-6">
         <nav className="flex items-center justify-between">
-          {/* Logo */}
           <Link to="/" className="font-display text-xl font-bold gradient-text">
             &lt;Dev /&gt;
           </Link>
 
-          {/* Desktop navigation */}
           <ul className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
               const isActive = location.hash === link.href;
@@ -78,7 +73,6 @@ const Header = () => {
             })}
           </ul>
 
-          {/* CTA Button */}
           <div className="hidden md:block">
             <Button
               variant="hero"
@@ -89,7 +83,6 @@ const Header = () => {
             </Button>
           </div>
 
-          {/* Mobile menu button */}
           <button
             className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -106,7 +99,6 @@ const Header = () => {
           </button>
         </nav>
 
-        {/* Mobile menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
@@ -158,5 +150,4 @@ const Header = () => {
   );
 };
 
-// Backward-compatible re-export to feature implementation
-export { default } from '@/features/common/components/Header';
+export default Header;
