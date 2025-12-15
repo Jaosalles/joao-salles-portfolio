@@ -54,7 +54,6 @@ const experiences = [
 const Experience = () => {
   return (
     <section id="experience" className="py-24 relative">
-      {/* Background gradient */}
       <div 
         className="absolute inset-0 opacity-30"
         style={{
@@ -89,12 +88,9 @@ const Experience = () => {
               transition={{ duration: 0.6, delay: index * 0.15 }}
               className="relative pl-8 pb-12 last:pb-0"
             >
-              {/* Timeline line */}
               {index !== experiences.length - 1 && (
                 <div className="absolute left-[11px] top-8 w-0.5 h-full bg-border" />
               )}
-              
-              {/* Timeline dot */}
               <div className="absolute left-0 top-2 w-6 h-6 rounded-full bg-secondary border-2 border-primary flex items-center justify-center">
                 <div className="w-2 h-2 rounded-full bg-primary" />
               </div>
@@ -137,5 +133,4 @@ const Experience = () => {
   );
 };
 
-// Backward-compatible re-export to feature implementation
-export { default } from '@/features/portfolio/components/Experience';
+export default Experience;
