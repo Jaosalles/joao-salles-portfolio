@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, it, expect } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
@@ -26,17 +26,20 @@ describe('Header', () => {
     const toggle = screen.getByLabelText(/Toggle menu/i)
     await user.click(toggle)
 
-    // Mobile menu item should be visible
-    expect(screen.getByText(/Sobre/i)).toBeInTheDocument()
+    // Mobile menu item should be visible inside mobile panel
+    const mobileMenu = document.getElementById('mobile-menu')
+    expect(mobileMenu).toBeInTheDocument()
+    const mobileWithin = within(mobileMenu as HTMLElement)
+    expect(mobileWithin.getByText(/Sobre/i)).toBeInTheDocument()
 
     // Header should have glass class when menu open
     const header = screen.getByRole('banner')
     expect(header.className).toMatch(/glass/)
 
     // Clicking a link navigates to the hash and closes the menu
-    await user.click(screen.getByText(/Sobre/i))
-    expect(window.location.hash).toBe('#about')
-    expect(screen.queryByText(/Sobre/i)).not.toBeInTheDocument()
+    await user.click(mobileWithin.getByText(/Sobre/i))
+    await waitFor(() => expect(window.location.hash).toBe('#about'))
+    await waitFor(() => expect(document.getElementById('mobile-menu')).toBeNull())
 
     // Re-open and test Escape closes
     await user.click(toggle)
