@@ -20,6 +20,7 @@
     "test:coverage": "vitest --coverage",
     "analyze": "vite build --config vite.config.analyze.ts",
     "e2e": "playwright test",
+    "e2e:ci": "playwright test --project=chromium --reporter=list",
     "e2e:headed": "playwright test --headed",
     "lhci": "lhci autorun --upload.target=temporary-public-storage",
     "prepare": "husky install"
@@ -108,8 +109,8 @@
     "husky": "^8.0.0",
     "lint-staged": "^14.0.0",
     "eslint-plugin-jsx-a11y": "^6.7.1",
-    "@playwright/test": "^1.43.1",
-    "@axe-core/playwright": "^4.7.1",
+    "@playwright/test": "^1.57.0",
+    "@axe-core/playwright": "^4.11.0",
     "globals": "^15.15.0",
     "jsdom": "^23.0.1",
     "lovable-tagger": "^1.1.13",

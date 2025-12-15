@@ -2,7 +2,8 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './e2e',
-  timeout: 30 * 1000,
+  // Increase global test timeout to be more resilient on CI
+  timeout: 60 * 1000,
   expect: {
     timeout: 5000,
   },
@@ -18,9 +19,14 @@ export default defineConfig({
     url: 'http://localhost:8080',
     reuseExistingServer: !process.env.CI,
   },
-  projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    { name: 'webkit', use: { ...devices['Desktop Safari'] } },
-    { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
-  ],
+  // In CI we only run Chromium to keep runtime and flakiness low.
+  projects: process.env.CI
+    ? [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }]
+    : [
+        { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+        { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+        { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
+      ],
+  // Reduce workers in CI to avoid resource contention
+  workers: process.env.CI ? 1 : undefined,
 });
