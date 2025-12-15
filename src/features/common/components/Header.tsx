@@ -31,6 +31,40 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close on escape and close when clicking outside the mobile menu
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false);
+    }
+
+    function onPointerDown(e: PointerEvent) {
+      if (!isMobileMenuOpen) return;
+      const path = (e.composedPath && e.composedPath()) || (e.composedPath && (e as any).path) || [];
+      const clickedInside = mobileMenuRef.current && (path.includes(mobileMenuRef.current) || mobileMenuRef.current.contains(e.target as Node));
+      const clickedToggle = toggleButtonRef.current && (path.includes(toggleButtonRef.current) || toggleButtonRef.current.contains(e.target as Node));
+      if (!clickedInside && !clickedToggle) setIsMobileMenuOpen(false);
+    }
+
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onPointerDown);
+    };
+  }, [isMobileMenuOpen]);
+
+  // Prevent background scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = prev || '';
+      };
+    }
+    return;
+  }, [isMobileMenuOpen]);
+
   useEffect(() => {
     if (isMobileMenuOpen) {
       if (firstMenuItemRef.current) {
@@ -46,7 +80,7 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "glass py-4" : "py-6"
+        isScrolled || isMobileMenuOpen ? "glass py-4" : "py-6"
       }`}
     >
       <div className="container px-6">
@@ -107,7 +141,7 @@ const Header = () => {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden"
+              className="md:hidden overflow-hidden glass rounded-b-xl mt-2"
               ref={mobileMenuRef}
             >
               <ul className="py-6 space-y-4">
