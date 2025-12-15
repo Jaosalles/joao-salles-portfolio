@@ -8,8 +8,8 @@ Obrigado por considerar contribuir para o meu portfólio! Este documento contém
 
 ```bash
 # Clone o repositório
-git clone https://github.com/jaosalles/portfolio.git
-cd portfolio
+git clone https://github.com/jaosalles/joao-salles-portfolio.git
+cd joao-salles-portfolio
 
 # Instale as dependências
 npm install
