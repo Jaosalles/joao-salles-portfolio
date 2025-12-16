@@ -42,3 +42,23 @@ test('mobile menu toggles and focuses back', async ({ page }) => {
   // Focus should return to toggle button
   await expect(toggle).toBeFocused();
 });
+
+test('theme toggle button is present and clickable', async ({ page }) => {
+  await page.goto('/');
+  
+  // Check desktop theme toggle
+  const themeToggle = page.locator('header button[aria-label="Toggle theme"]').first();
+  await expect(themeToggle).toBeVisible();
+  
+  // Verify it's clickable (click triggers theme change)
+  await themeToggle.click();
+  
+  // Check mobile theme toggle
+  await page.setViewportSize({ width: 375, height: 800 });
+  const menuToggle = page.locator('button[aria-label="Toggle menu"]');
+  await menuToggle.click();
+  
+  const mobileMenu = page.locator('#mobile-menu');
+  const mobileThemeToggle = mobileMenu.locator('button[aria-label="Toggle theme"]');
+  await expect(mobileThemeToggle).toBeVisible();
+});

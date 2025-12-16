@@ -4,6 +4,14 @@ import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 import Header from './Header';
 
+// Mock next-themes
+vi.mock('next-themes', () => ({
+  useTheme: () => ({
+    resolvedTheme: 'dark',
+    setTheme: vi.fn(),
+  }),
+}));
+
 describe('Header', () => {
   it('renders logo', () => {
     render(
@@ -13,6 +21,16 @@ describe('Header', () => {
     );
     const logo = screen.getByText(/Dev/i);
     expect(logo).toBeInTheDocument();
+  });
+
+  it('renders theme toggle button in desktop view', () => {
+    render(
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>
+    );
+    const themeToggle = screen.getByLabelText(/Toggle theme/i);
+    expect(themeToggle).toBeInTheDocument();
   });
 
   it('opens mobile menu and closes when link clicked or escape pressed', async () => {
