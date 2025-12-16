@@ -5,7 +5,9 @@ import { describe, expect, it } from "vitest";
 import { NavLink } from "./NavLink";
 
 const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <MemoryRouter>{children}</MemoryRouter>
+  <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    {children}
+  </MemoryRouter>
 );
 
 describe("NavLink", () => {
@@ -30,7 +32,10 @@ describe("NavLink", () => {
   it("should apply active class when active", () => {
     // Use MemoryRouter with initial entry to simulate active route
     render(
-      <MemoryRouter initialEntries={["/test"]}>
+      <MemoryRouter
+        initialEntries={["/test"]}
+        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+      >
         <NavLink to="/test" activeClassName="active">
           Test Link
         </NavLink>

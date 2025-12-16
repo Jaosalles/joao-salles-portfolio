@@ -43,6 +43,10 @@ const App = () => {
         <Sonner />
         <BrowserRouter
           basename={window.location.hostname.includes('github.io') ? '/joao-salles-portfolio' : ''}
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
         >
           <Routes>
             <Route path="/" element={<Index />} />
