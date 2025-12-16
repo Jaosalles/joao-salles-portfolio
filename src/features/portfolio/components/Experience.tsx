@@ -4,49 +4,49 @@ import { Building2, Calendar } from "lucide-react";
 const experiences = [
   {
     company: "Onesight",
-    role: "Senior Software Engineer",
-    period: "April 2024 - Present",
-    description: "Leading architecture and performance optimization of a React.js/TypeScript project, reducing loading times with code splitting, lazy loading and Tailwind CSS purging strategies.",
+    role: "Engenheiro de Software Sênior",
+    period: "Abril de 2024 - Presente",
+    description: "Liderança de arquitetura e otimização de performance de um projeto em React.js/TypeScript, reduzindo o tempo de carregamento com code splitting, lazy loading e estratégias de purga do Tailwind CSS.",
     highlights: [
-      "Led React.js/TypeScript project architecture and performance optimization",
-      "Reduced loading times using code splitting, lazy loading and Tailwind CSS purging",
-      "Implemented CI/CD pipelines with automated tests (unit, integration, E2E) using Jest, Testing Library and Cypress, increasing test coverage by 40%",
-      "Mentored developers in React.js and TypeScript best practices"
+      "Liderança de arquitetura e otimização de performance em projeto React.js/TypeScript",
+      "Redução de tempo de carregamento usando code splitting, lazy loading e purga do Tailwind CSS",
+      "Implementação de pipelines de CI/CD com testes automatizados (unitários, integração, E2E) usando Jest, Testing Library e Cypress, aumentando a cobertura em 40%",
+      "Mentoria de desenvolvedores em boas práticas de React.js e TypeScript"
     ],
   },
   {
     company: "Uber",
-    role: "Software Engineer",
-    period: "April 2021 - May 2023",
-    description: "Optimized scalability and accessibility of a React/TypeScript platform for over 10,000 global users, integrating Sentry and DataDog for error monitoring and performance analysis.",
+    role: "Engenheiro de Software",
+    period: "Abril de 2021 - Maio de 2023",
+    description: "Otimização de escalabilidade e acessibilidade de uma plataforma em React/TypeScript para mais de 10.000 usuários globais, integrando Sentry e DataDog para monitoramento de erros e análise de performance.",
     highlights: [
-      "Optimized React/TypeScript platform scalability and accessibility for 10,000+ global users",
-      "Integrated Sentry and DataDog for error monitoring and performance analysis",
-      "Automated CI/CD pipelines with SonarQube for code quality, reducing production bugs by 25%",
-      "Mentored junior developers and simplified workflows with Jira"
+      "Otimização de escalabilidade e acessibilidade de plataforma React/TypeScript para 10.000+ usuários globais",
+      "Integração de Sentry e DataDog para monitoramento de erros e análise de performance",
+      "Automatização de pipelines de CI/CD com SonarQube para qualidade de código, reduzindo bugs em produção em 25%",
+      "Mentoria de desenvolvedores juniores e simplificação de fluxos com Jira"
     ],
   },
   {
     company: "Lam Digital",
-    role: "Full Stack Developer",
-    period: "June 2018 - March 2021",
-    description: "Developed a CMS for over 500 daily users using React, Node.js and React Query, increasing content management efficiency by 30%.",
+    role: "Desenvolvedor Full Stack",
+    period: "Junho de 2018 - Março de 2021",
+    description: "Desenvolvimento de um CMS para mais de 500 usuários diários usando React, Node.js e React Query, aumentando a eficiência de gestão de conteúdo em 30%.",
     highlights: [
-      "Developed CMS for 500+ daily users using React, Node.js and React Query",
-      "Increased content management efficiency by 30%",
-      "Integrated payment APIs, real-time notifications (One Signal) and modular components with Storybook",
-      "Designed REST APIs with Swagger documentation and implemented end-to-end tests with React Testing Library"
+      "Desenvolvimento de CMS para 500+ usuários diários usando React, Node.js e React Query",
+      "Aumento da eficiência de gestão de conteúdo em 30%",
+      "Integração de APIs de pagamento, notificações em tempo real (One Signal) e componentes modulares com Storybook",
+      "Desenho de APIs REST com documentação via Swagger e implementação de testes end-to-end com React Testing Library"
     ],
   },
   {
     company: "NewM Mobile",
-    role: "Trainee Support & Junior Mobile Developer",
-    period: "June 2016 - August 2017",
-    description: "Developed Android applications with Java/SQLite and conducted training for users. Optimized bug tracking and feature testing processes using Jira.",
+    role: "Trainee de Suporte & Desenvolvedor Mobile Júnior",
+    period: "Junho de 2016 - Agosto de 2017",
+    description: "Desenvolvimento de aplicações Android com Java/SQLite e condução de treinamentos para usuários. Otimização de processos de rastreamento de bugs e testes de funcionalidades usando Jira.",
     highlights: [
-      "Developed Android applications with Java/SQLite",
-      "Conducted training sessions for users",
-      "Optimized bug tracking and feature testing processes using Jira"
+      "Desenvolvimento de aplicações Android com Java/SQLite",
+      "Condução de treinamentos para usuários",
+      "Otimização de processos de rastreamento de bugs e testes de funcionalidades usando Jira"
     ],
   },
 ];
