@@ -1,7 +1,7 @@
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { act, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import Header from './Header';
 
 // Mock next-themes
@@ -42,7 +42,9 @@ describe('Header', () => {
     );
 
     const toggle = screen.getByLabelText(/Toggle menu/i);
-    await user.click(toggle);
+    await act(async () => {
+      await user.click(toggle);
+    });
 
     // Wait for the mobile menu to be visible (animation)
     await waitFor(() => {
@@ -60,7 +62,9 @@ describe('Header', () => {
     expect(header.className).toMatch(/glass/);
 
     // Clicking a link navigates to the hash and closes the menu
-    await user.click(mobileWithin.getByText(/Sobre/i));
+    await act(async () => {
+      await user.click(mobileWithin.getByText(/Sobre/i));
+    });
     await waitFor(() => expect(window.location.hash).toBe('#about'));
     await waitFor(() => expect(document.getElementById('mobile-menu')).toBeNull());
   });

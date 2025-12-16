@@ -1,11 +1,9 @@
-import "@testing-library/jest-dom";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
-import { beforeEach, describe, expect, it, vi } from "vitest";
-import Header from "./Header";
+import '@testing-library/jest-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { describe, vi } from 'vitest';
 
 // Mock the useHashNavigation hook
-vi.mock("../hooks/useHashNavigation", () => ({
+vi.mock('../hooks/useHashNavigation', () => ({
   useHashNavigation: () => ({
     navigateToSection: vi.fn(),
   }),
