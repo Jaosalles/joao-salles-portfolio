@@ -41,7 +41,7 @@ const Contact = () => {
       });
 
       reset();
-    } catch (error) {
+    } catch {
       toast.error('Erro ao enviar mensagem', {
         description: 'Por favor, tente novamente ou entre em contato diretamente por email.',
       });

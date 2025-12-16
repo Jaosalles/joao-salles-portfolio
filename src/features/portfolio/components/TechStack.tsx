@@ -1,31 +1,33 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
 const technologies = [
-  { name: "React", level: 95, category: "core" },
-  { name: "TypeScript", level: 92, category: "core" },
-  { name: "Next.js", level: 88, category: "core" },
-  { name: "Tailwind CSS", level: 94, category: "styling" },
-  { name: "Styled Components", level: 85, category: "styling" },
-  { name: "Redux", level: 88, category: "state" },
-  { name: "React Query", level: 90, category: "state" },
-  { name: "Zustand", level: 85, category: "state" },
-  { name: "Jest", level: 82, category: "testing" },
-  { name: "Cypress", level: 78, category: "testing" },
-  { name: "Testing Library", level: 85, category: "testing" },
-  { name: "Webpack", level: 80, category: "tools" },
-  { name: "Vite", level: 88, category: "tools" },
-  { name: "Git", level: 90, category: "tools" },
-  { name: "GraphQL", level: 82, category: "api" },
-  { name: "REST APIs", level: 92, category: "api" },
+  { name: 'React', level: 95, category: 'core' },
+  { name: 'TypeScript', level: 92, category: 'core' },
+  { name: 'Next.js', level: 88, category: 'core' },
+  { name: 'Tailwind CSS', level: 94, category: 'styling' },
+  { name: 'Redux', level: 88, category: 'state' },
+  { name: 'React Query', level: 90, category: 'state' },
+  { name: 'Zustand', level: 85, category: 'state' },
+  { name: 'Jest', level: 82, category: 'testing' },
+  { name: 'Cypress', level: 78, category: 'testing' },
+  { name: 'Playtwright', level: 78, category: 'testing' },
+  { name: 'Testing Library', level: 85, category: 'testing' },
+  { name: 'Webpack', level: 80, category: 'tools' },
+  { name: 'Vite', level: 88, category: 'tools' },
+  { name: 'Git', level: 90, category: 'tools' },
+  { name: 'GraphQL', level: 82, category: 'api' },
+  { name: 'REST APIs', level: 92, category: 'api' },
+  { name: 'Github Actions', level: 92, category: 'CI/CD' },
 ];
 
 const categories = [
-  { key: "core", label: "Core" },
-  { key: "styling", label: "Styling" },
-  { key: "state", label: "State Management" },
-  { key: "testing", label: "Testing" },
-  { key: "tools", label: "Ferramentas" },
-  { key: "api", label: "APIs" },
+  { key: 'core', label: 'Core' },
+  { key: 'styling', label: 'Styling' },
+  { key: 'state', label: 'State Management' },
+  { key: 'testing', label: 'Testing' },
+  { key: 'tools', label: 'Ferramentas' },
+  { key: 'api', label: 'APIs' },
+  { key: 'CI/CD', label: 'CI/CD' },
 ];
 
 const TechStack = () => {
@@ -58,8 +60,8 @@ const TechStack = () => {
             Tech <span className="gradient-text">Stack</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Tecnologias que domino e utilizo diariamente para criar aplicações 
-            robustas, performáticas e escaláveis.
+            Tecnologias que domino e utilizo diariamente para criar aplicações robustas,
+            performáticas e escaláveis.
           </p>
         </motion.div>
 
@@ -83,13 +85,9 @@ const TechStack = () => {
               className="flex flex-wrap gap-3"
             >
               {technologies
-                .filter((tech) => tech.category === category.key)
-                .map((tech) => (
-                  <motion.div
-                    key={tech.name}
-                    variants={item}
-                    className="group relative"
-                  >
+                .filter(tech => tech.category === category.key)
+                .map(tech => (
+                  <motion.div key={tech.name} variants={item} className="group relative">
                     <div className="glass px-5 py-3 rounded-xl hover:bg-secondary/50 transition-all duration-300 cursor-default">
                       <div className="flex items-center gap-3">
                         <span className="font-medium">{tech.name}</span>
@@ -100,7 +98,7 @@ const TechStack = () => {
                             viewport={{ once: true }}
                             transition={{ duration: 1, delay: 0.3 }}
                             className="h-full rounded-full"
-                            style={{ background: "var(--gradient-primary)" }}
+                            style={{ background: 'var(--gradient-primary)' }}
                           />
                         </div>
                       </div>
