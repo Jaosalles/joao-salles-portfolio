@@ -1,8 +1,55 @@
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Mail, Linkedin, Github, MapPin, Send } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { motion } from 'framer-motion';
+import { Github, Linkedin, Mail, MapPin, Send } from 'lucide-react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import * as z from 'zod';
+
+const contactFormSchema = z.object({
+  name: z.string().min(2, 'Nome deve ter pelo menos 2 caracteres'),
+  email: z.string().email('Email inválido'),
+  message: z.string().min(10, 'Mensagem deve ter pelo menos 10 caracteres'),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
 
 const Contact = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+  });
+
+  const onSubmit = async (data: ContactFormData) => {
+    setIsSubmitting(true);
+
+    try {
+      // Simula envio de email (você pode integrar com serviços como EmailJS, SendGrid, etc.)
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      console.log('Dados do formulário:', data);
+
+      toast.success('Mensagem enviada com sucesso!', {
+        description: 'Entrarei em contato em breve.',
+      });
+
+      reset();
+    } catch (error) {
+      toast.error('Erro ao enviar mensagem', {
+        description: 'Por favor, tente novamente ou entre em contato diretamente por email.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section id="contact" className="py-24 relative">
       <div className="container px-6">
@@ -18,8 +65,8 @@ const Contact = () => {
               Vamos <span className="gradient-text">Conversar?</span>
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              Estou aberto a novas oportunidades e sempre interessado em 
-              projetos desafiadores. Entre em contato!
+              Estou aberto a novas oportunidades e sempre interessado em projetos desafiadores.
+              Entre em contato!
             </p>
           </div>
 
@@ -32,9 +79,7 @@ const Contact = () => {
               className="space-y-6"
             >
               <div className="glass rounded-xl p-6">
-                <h3 className="font-display text-lg font-semibold mb-4">
-                  Informações de Contato
-                </h3>
+                <h3 className="font-display text-lg font-semibold mb-4">Informações de Contato</h3>
                 <div className="space-y-4">
                   <a
                     href="mailto:joaopedrosalles@hotmail.com"
@@ -60,7 +105,9 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">LinkedIn</p>
-                      <p className="font-medium text-foreground">/in/joao-pedro-salles-dos-santos-a5358a11a/</p>
+                      <p className="font-medium text-foreground">
+                        /in/joao-pedro-salles-dos-santos-a5358a11a/
+                      </p>
                     </div>
                   </a>
 
@@ -98,7 +145,7 @@ const Contact = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <form className="glass rounded-xl p-6 space-y-4">
+              <form onSubmit={handleSubmit(onSubmit)} className="glass rounded-xl p-6 space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2">
                     Nome
@@ -106,9 +153,15 @@ const Contact = () => {
                   <input
                     type="text"
                     id="name"
-                    className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
+                    {...register('name')}
+                    className={`w-full px-4 py-3 rounded-lg bg-secondary/50 border ${
+                      errors.name ? 'border-red-500' : 'border-border'
+                    } focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors`}
                     placeholder="Seu nome"
                   />
+                  {errors.name && (
+                    <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
+                  )}
                 </div>
 
                 <div>
@@ -118,9 +171,15 @@ const Contact = () => {
                   <input
                     type="email"
                     id="email"
-                    className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
-                    placeholder="joaopedrosalles@hotmail.com"
+                    {...register('email')}
+                    className={`w-full px-4 py-3 rounded-lg bg-secondary/50 border ${
+                      errors.email ? 'border-red-500' : 'border-border'
+                    } focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors`}
+                    placeholder="seu@email.com"
                   />
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
+                  )}
                 </div>
 
                 <div>
@@ -130,14 +189,32 @@ const Contact = () => {
                   <textarea
                     id="message"
                     rows={4}
-                    className="w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors resize-none"
+                    {...register('message')}
+                    className={`w-full px-4 py-3 rounded-lg bg-secondary/50 border ${
+                      errors.message ? 'border-red-500' : 'border-border'
+                    } focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors resize-none`}
                     placeholder="Sua mensagem..."
                   />
+                  {errors.message && (
+                    <p className="mt-1 text-sm text-red-500">{errors.message.message}</p>
+                  )}
                 </div>
 
-                <Button variant="hero" size="lg" className="w-full">
-                  <Send className="w-4 h-4 mr-2" />
-                  Enviar Mensagem
+                <Button
+                  type="submit"
+                  variant="hero"
+                  size="lg"
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>Enviando...</>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 mr-2" />
+                      Enviar Mensagem
+                    </>
+                  )}
                 </Button>
               </form>
             </motion.div>
