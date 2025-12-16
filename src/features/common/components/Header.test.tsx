@@ -44,9 +44,14 @@ describe('Header', () => {
     const toggle = screen.getByLabelText(/Toggle menu/i);
     await user.click(toggle);
 
+    // Wait for the mobile menu to be visible (animation)
+    await waitFor(() => {
+      const mobileMenu = document.getElementById('mobile-menu');
+      expect(mobileMenu).toBeInTheDocument();
+    });
+
     // Mobile menu item should be visible inside mobile panel
     const mobileMenu = document.getElementById('mobile-menu');
-    expect(mobileMenu).toBeInTheDocument();
     const mobileWithin = within(mobileMenu as HTMLElement);
     expect(mobileWithin.getByText(/Sobre/i)).toBeInTheDocument();
 

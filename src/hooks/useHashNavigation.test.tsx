@@ -67,7 +67,10 @@ describe("useHashNavigation", () => {
       .spyOn(document, "getElementById")
       .mockReturnValue(mockElement as any);
     const wrapperWithHash = ({ children }: { children: React.ReactNode }) => (
-      <MemoryRouter initialEntries={["/#contact"]}>
+      <MemoryRouter
+        initialEntries={["/#contact"]}
+        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+      >
         <div data-testid="test">{children}</div>
       </MemoryRouter>
     );
@@ -88,7 +91,10 @@ describe("useHashNavigation", () => {
     const scrollIntoViewSpy = vi.fn();
 
     const wrapperWithHash = ({ children }: { children: React.ReactNode }) => (
-      <MemoryRouter initialEntries={["/#nonexistent"]}>
+      <MemoryRouter
+        initialEntries={["/#nonexistent"]}
+        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+      >
         <div data-testid="test">{children}</div>
       </MemoryRouter>
     );
