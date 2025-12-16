@@ -15,7 +15,7 @@ vi.mock('next-themes', () => ({
 describe('Header', () => {
   it('renders logo', () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Header />
       </MemoryRouter>
     );
@@ -25,7 +25,7 @@ describe('Header', () => {
 
   it('renders theme toggle button in desktop view', () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Header />
       </MemoryRouter>
     );
@@ -36,7 +36,7 @@ describe('Header', () => {
   it('opens mobile menu and closes when link clicked or escape pressed', async () => {
     const user = userEvent.setup();
     render(
-      <MemoryRouter>
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Header />
       </MemoryRouter>
     );

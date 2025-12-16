@@ -12,7 +12,9 @@ vi.mock("../hooks/useHashNavigation", () => ({
 }));
 
 const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <BrowserRouter>{children}</BrowserRouter>
+  <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    {children}
+  </BrowserRouter>
 );
 
 describe.skip('Header (moved to features/common)', () => {
