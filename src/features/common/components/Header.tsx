@@ -37,6 +37,7 @@ const Header = () => {
 
   const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
   const firstMenuItemRef = useRef<HTMLButtonElement | null>(null);
+  const lastMenuItemRef = useRef<HTMLButtonElement | null>(null);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -79,6 +80,32 @@ const Header = () => {
     };
   }, [isMobileMenuOpen]);
 
+  // Focus trap no mobile menu
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+
+      if (e.shiftKey) {
+        // Shift+Tab no primeiro item → foca último
+        if (document.activeElement === firstMenuItemRef.current) {
+          lastMenuItemRef.current?.focus();
+          e.preventDefault();
+        }
+      } else {
+        // Tab no último item → foca primeiro
+        if (document.activeElement === lastMenuItemRef.current) {
+          firstMenuItemRef.current?.focus();
+          e.preventDefault();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isMobileMenuOpen]);
+
   useEffect(() => {
     if (isMobileMenuOpen) {
       if (firstMenuItemRef.current) {
@@ -110,7 +137,7 @@ const Header = () => {
                 <li key={link.href}>
                   <button
                     onClick={() => handleNavigate(link.href.slice(1))}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors relative group cursor-pointer"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors relative group cursor-pointer focus:outline-none focus:text-foreground"
                     aria-current={isActive ? 'page' : undefined}
                   >
                     {link.label}
@@ -153,9 +180,9 @@ const Header = () => {
           </div>
 
           <button
-            className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
+            className="md:hidden p-2.5 rounded-lg hover:bg-secondary transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label="Toggle navigation menu"
             aria-controls="mobile-menu"
             aria-expanded={isMobileMenuOpen}
             ref={toggleButtonRef}
@@ -168,29 +195,34 @@ const Header = () => {
           {isMobileMenuOpen && (
             <motion.div
               id="mobile-menu"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden glass rounded-b-xl mt-2"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="md:hidden overflow-hidden glass rounded-b-xl mt-2 shadow-strong"
               ref={mobileMenuRef}
             >
               <ul className="py-6 space-y-4">
                 {navLinks.map((link, i) => {
                   const isActive = location.hash === link.href;
                   return (
-                    <li key={link.href}>
+                    <motion.li
+                      key={link.href}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.05, duration: 0.2 }}
+                    >
                       <button
                         onClick={() => {
                           handleNavigate(link.href.slice(1), true);
                         }}
                         ref={i === 0 ? firstMenuItemRef : undefined}
                         aria-current={isActive ? 'page' : undefined}
-                        className="block text-lg text-muted-foreground hover:text-foreground transition-colors text-left w-full"
+                        className="block text-lg text-muted-foreground hover:text-foreground transition-colors text-left w-full px-4 py-2 rounded-lg hover:bg-secondary focus:ring-2 focus:ring-primary focus:outline-none"
                       >
                         {link.label}
                       </button>
-                    </li>
+                    </motion.li>
                   );
                 })}
                 <li>
@@ -232,6 +264,7 @@ const Header = () => {
                 </li>
                 <li className="pt-4">
                   <Button
+                    ref={lastMenuItemRef as React.Ref<HTMLButtonElement>}
                     variant="hero"
                     className="w-full"
                     onClick={() => {

@@ -62,17 +62,17 @@ const Projects = () => {
             .filter(p => p.featured)
             .map((project, index) => (
               <motion.article
-                key={project.title}
+                key={project.key}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
                 className="group"
               >
-                <div className="glass rounded-2xl p-8 md:p-10 hover:bg-secondary/20 transition-all duration-500">
+                <div className="glass rounded-2xl p-8 md:p-10 hover:bg-secondary/20 transition-all duration-500 shadow-medium">
                   <div className="flex flex-col md:flex-row gap-8 items-start">
                     {/* Project image placeholder */}
-                    <div className="w-full md:w-72 h-48 md:h-40 rounded-xl bg-secondary/50 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                    <div className="w-full md:w-72 h-48 sm:h-40 rounded-xl bg-secondary/50 flex items-center justify-center flex-shrink-0 overflow-hidden">
                       <div
                         className="w-full h-full opacity-50"
                         style={{
@@ -89,15 +89,19 @@ const Projects = () => {
                         <div className="flex items-center gap-2">
                           <a
                             href={project.github}
-                            className="p-2 rounded-lg hover:bg-secondary transition-colors"
-                            aria-label={t('projects.viewOnGitHub')}
+                            className="p-2 rounded-lg hover:bg-secondary transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                            aria-label={`View ${t(`projects.items.${project.key}.title`)} on GitHub (opens in new window)`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             <Github className="w-5 h-5" />
                           </a>
                           <a
                             href={project.live}
-                            className="p-2 rounded-lg hover:bg-secondary transition-colors"
-                            aria-label={t('projects.viewLiveDemo')}
+                            className="p-2 rounded-lg hover:bg-secondary transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                            aria-label={`View live demo of ${t(`projects.items.${project.key}.title`)} (opens in new window)`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             <ExternalLink className="w-5 h-5" />
                           </a>
@@ -142,7 +146,7 @@ const Projects = () => {
               .map(project => (
                 <div
                   key={project.key}
-                  className="glass rounded-xl p-6 hover:bg-secondary/20 transition-all duration-300 group"
+                  className="glass rounded-xl p-6 hover:bg-secondary/20 transition-all duration-300 group shadow-card"
                 >
                   <div className="flex items-start justify-between mb-3">
                     <h4 className="font-display font-semibold group-hover:text-primary transition-colors">
