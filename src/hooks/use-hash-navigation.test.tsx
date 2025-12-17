@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { useHashNavigation } from './useHashNavigation';
+import { useHashNavigation } from './use-hash-navigation';
 
 const wrapper = ({ children }: { children: React.ReactNode }) => (
   <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>

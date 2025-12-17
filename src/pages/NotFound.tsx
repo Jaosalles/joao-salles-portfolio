@@ -1,5 +1,5 @@
 import { useLanguage } from '@/features/common/context/LanguageContext';
-import { useMetaTags } from '@/hooks/useMetaTags';
+import { useMetaTags } from '@/hooks/use-meta-tags';
 
 const NotFound = () => {
   const { t } = useLanguage();

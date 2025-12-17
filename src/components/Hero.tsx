@@ -1,3 +1,2 @@
-// This file kept for backward compatibility.
-// The real implementation was moved to the portfolio feature.
+// This file is deprecated. Import directly from '@/features/portfolio/components/Hero' or use the named export from '@/features/portfolio'
 export { default } from '@/features/portfolio/components/Hero';

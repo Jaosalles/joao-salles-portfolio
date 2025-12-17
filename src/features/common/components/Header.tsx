@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { useHashNavigation } from '@/hooks/useHashNavigation';
+import { useHashNavigation } from '@/hooks/use-hash-navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Globe, Menu, Moon, Sun, X } from 'lucide-react';
 import { useTheme } from 'next-themes';

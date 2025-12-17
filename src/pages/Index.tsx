@@ -1,6 +1,6 @@
 import { Footer, Header } from '@/features/common';
 import { Contact, Experience, Hero, Projects, TechStack } from '@/features/portfolio';
-import { useMetaTags } from '@/hooks/useMetaTags';
+import { useMetaTags } from '@/hooks/use-meta-tags';
 
 const Index = () => {
   useMetaTags();
