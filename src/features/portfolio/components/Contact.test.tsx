@@ -1,3 +1,4 @@
+import { LanguageProvider } from '@/features/common/context/LanguageContext';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as sonner from 'sonner';
@@ -15,23 +16,26 @@ vi.mock('sonner', () => ({
 describe('Contact', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    localStorage.setItem('language', 'pt');
   });
 
+  const renderWithLang = (ui: React.ReactNode) => render(<LanguageProvider>{ui}</LanguageProvider>);
+
   it('renders contact heading', () => {
-    render(<Contact />);
+    renderWithLang(<Contact />);
     expect(screen.getByText(/Vamos/i)).toBeInTheDocument();
     expect(screen.getByText(/Conversar\?/i)).toBeInTheDocument();
   });
 
   it('renders contact information', () => {
-    render(<Contact />);
+    renderWithLang(<Contact />);
     expect(screen.getByText('joaopedrosalles@hotmail.com')).toBeInTheDocument();
     expect(screen.getByText('@jaosalles')).toBeInTheDocument();
     expect(screen.getByText('Brasil (Remoto)')).toBeInTheDocument();
   });
 
   it('renders form fields', () => {
-    render(<Contact />);
+    renderWithLang(<Contact />);
     expect(screen.getByLabelText(/Nome/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Mensagem/i)).toBeInTheDocument();
@@ -40,7 +44,7 @@ describe('Contact', () => {
 
   it('shows validation errors when submitting empty form', async () => {
     const user = userEvent.setup();
-    render(<Contact />);
+    renderWithLang(<Contact />);
 
     const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });
 
@@ -56,7 +60,7 @@ describe('Contact', () => {
   });
 
   it('validates email field correctly', () => {
-    render(<Contact />);
+    renderWithLang(<Contact />);
 
     const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement;
 
@@ -66,7 +70,7 @@ describe('Contact', () => {
 
   it('shows error for short name', async () => {
     const user = userEvent.setup();
-    render(<Contact />);
+    renderWithLang(<Contact />);
 
     const nameInput = screen.getByLabelText(/Nome/i);
     const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });
@@ -83,7 +87,7 @@ describe('Contact', () => {
 
   it('shows error for short message', async () => {
     const user = userEvent.setup();
-    render(<Contact />);
+    renderWithLang(<Contact />);
 
     const messageInput = screen.getByLabelText(/Mensagem/i);
     const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });
@@ -100,7 +104,7 @@ describe('Contact', () => {
 
   it('submits form successfully with valid data', async () => {
     const user = userEvent.setup();
-    render(<Contact />);
+    renderWithLang(<Contact />);
 
     const nameInput = screen.getByLabelText(/Nome/i);
     const emailInput = screen.getByLabelText(/Email/i);
@@ -142,7 +146,7 @@ describe('Contact', () => {
 
   it('disables submit button while submitting', async () => {
     const user = userEvent.setup();
-    render(<Contact />);
+    renderWithLang(<Contact />);
 
     const nameInput = screen.getByLabelText(/Nome/i);
     const emailInput = screen.getByLabelText(/Email/i);
@@ -171,7 +175,7 @@ describe('Contact', () => {
   });
 
   it('renders contact links with correct href attributes', () => {
-    render(<Contact />);
+    renderWithLang(<Contact />);
 
     const emailLink = screen.getByRole('link', { name: /joaopedrosalles@hotmail\.com/i });
     expect(emailLink).toHaveAttribute('href', 'mailto:joaopedrosalles@hotmail.com');
@@ -194,7 +198,7 @@ describe('Contact', () => {
 
   it('applies error styling to invalid fields', async () => {
     const user = userEvent.setup();
-    render(<Contact />);
+    renderWithLang(<Contact />);
 
     const nameInput = screen.getByLabelText(/Nome/i);
     const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });

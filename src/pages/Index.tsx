@@ -1,7 +1,10 @@
-import { Header, Footer } from "@/features/common";
-import { Hero, Projects, Contact, Experience, TechStack } from "@/features/portfolio";
+import { Footer, Header } from '@/features/common';
+import { Contact, Experience, Hero, Projects, TechStack } from '@/features/portfolio';
+import { useMetaTags } from '@/hooks/useMetaTags';
 
 const Index = () => {
+  useMetaTags();
+
   return (
     <div className="min-h-screen bg-background">
       <Header />

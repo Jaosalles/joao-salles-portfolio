@@ -1,17 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { useHashNavigation } from '@/hooks/useHashNavigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Menu, Moon, Sun, X } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Globe, Menu, Moon, Sun, X } from 'lucide-react';
 import { useTheme } from 'next-themes';
-
-const navLinks = [
-  { label: 'Sobre', href: '#about' },
-  { label: 'Projetos', href: '#projects' },
-  { label: 'Experiência', href: '#experience' },
-  { label: 'Contato', href: '#contact' },
-];
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -19,6 +13,17 @@ const Header = () => {
   const { navigateToSection } = useHashNavigation();
   const location = useLocation();
   const { resolvedTheme, setTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
+
+  const navLinks = useMemo(
+    () => [
+      { label: t('nav.about'), href: '#about' },
+      { label: t('nav.projects'), href: '#projects' },
+      { label: t('nav.experience'), href: '#experience' },
+      { label: t('nav.contact'), href: '#contact' },
+    ],
+    [t]
+  );
 
   const handleNavigate = (sectionId: string, closeMenu = false) => {
     navigateToSection(sectionId);
@@ -117,21 +122,33 @@ const Header = () => {
             <li>
               <button
                 type="button"
-                aria-label="Toggle theme"
+                aria-label={t('header.toggleTheme')}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground transition-colors relative"
                 onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-                title={resolvedTheme === 'dark' ? 'Usar tema claro' : 'Usar tema escuro'}
+                title={resolvedTheme === 'dark' ? t('header.lightTheme') : t('header.darkTheme')}
               >
                 <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                <span className="sr-only">Alternar tema</span>
+                <span className="sr-only">{t('header.toggleTheme')}</span>
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                aria-label={t('header.toggleLanguage')}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
+                title={t('header.toggleLanguage')}
+              >
+                <Globe className="h-4 w-4" />
+                <span className="sr-only">{t('header.toggleLanguage')}</span>
               </button>
             </li>
           </ul>
 
           <div className="hidden md:block">
             <Button variant="hero" size="sm" onClick={() => navigateToSection('contact')}>
-              Contratar
+              {t('header.hire')}
             </Button>
           </div>
 
@@ -179,18 +196,37 @@ const Header = () => {
                 <li>
                   <button
                     type="button"
-                    aria-label="Toggle theme"
+                    aria-label={t('header.toggleTheme')}
                     className="mt-2 inline-flex h-10 w-full items-center justify-center rounded-md border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground transition-colors relative"
                     onClick={() => {
                       setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
                       setIsMobileMenuOpen(false);
                     }}
-                    title={resolvedTheme === 'dark' ? 'Usar tema claro' : 'Usar tema escuro'}
+                    title={
+                      resolvedTheme === 'dark' ? t('header.lightTheme') : t('header.darkTheme')
+                    }
                   >
                     <div className="relative inline-flex items-center gap-2">
                       <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                       <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                      <span>Alternar tema</span>
+                      <span>{t('header.toggleTheme')}</span>
+                    </div>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    aria-label={t('header.toggleLanguage')}
+                    className="mt-2 inline-flex h-10 w-full items-center justify-center rounded-md border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                    onClick={() => {
+                      setLanguage(language === 'pt' ? 'en' : 'pt');
+                      setIsMobileMenuOpen(false);
+                    }}
+                    title={t('header.toggleLanguage')}
+                  >
+                    <div className="relative inline-flex items-center gap-2">
+                      <Globe className="h-4 w-4" />
+                      <span>{t(`language.${language === 'pt' ? 'en' : 'pt'}`)}</span>
                     </div>
                   </button>
                 </li>
@@ -203,7 +239,7 @@ const Header = () => {
                       setIsMobileMenuOpen(false);
                     }}
                   >
-                    Contratar
+                    {t('header.hire')}
                   </Button>
                 </li>
               </ul>
