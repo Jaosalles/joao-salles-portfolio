@@ -21,14 +21,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Validate commits with commitlint
-        if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
-        uses: wagoid/commitlint-github-action@v5
-        with:
-          configFile: commitlint.config.cjs
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -37,6 +29,14 @@ jobs:
 
       - name: Install dependencies
         run: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci
+
+      - name: Validate commits with commitlint
+        if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
+        uses: wagoid/commitlint-github-action@v5
+        with:
+          configFile: commitlint.config.cjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Lint
         run: npm run lint
@@ -51,6 +51,7 @@ jobs:
         run: node scripts/check-coverage.js
 
       - name: Upload coverage to Codecov
+        if: github.event_name == 'push'
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

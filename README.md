@@ -216,6 +216,7 @@ Para proteger a branch `main`, recomendamos marcar como obrigatórios estes chec
 - codecov/patch: valida cobertura do patch (alvo 90%).
 
 Observações:
+
 - PRs de bots (Dependabot/GitHub Actions) são ignorados em commitlint e título semântico.
 - Para dispensar a verificação de título em casos específicos, aplique o rótulo `skip-semantic` no PR.
 
@@ -244,7 +245,7 @@ Observações:
 - PRs: precisam passar por `lint`, `type-check`, `tests` e `coverage`.
 - Commits: use `npm run commit` (Commitizen + cz-git) para seguir o padrão convencional.
 - PRs: siga o template em [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md) para descrição, checklist e evidências.
- - Checagens automáticas: PRs de bots (Dependabot/GitHub Actions) são ignorados em commitlint e título semântico; para dispensar manualmente a verificação de título, aplique o rótulo `skip-semantic` no PR.
+- Checagens automáticas: PRs de bots (Dependabot/GitHub Actions) são ignorados em commitlint e título semântico; para dispensar manualmente a verificação de título, aplique o rótulo `skip-semantic` no PR.
 
 ## 🧩 Ambiente & Troubleshooting
 
