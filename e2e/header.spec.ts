@@ -1,7 +1,10 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-test('header navigation updates hash and shows sections', async ({ page }) => {
+test('header navigation updates hash and shows sections', async ({ page, context }) => {
+  await context.addInitScript(() => {
+    localStorage.setItem('language', 'pt');
+  });
   await page.goto('/');
   const projetosButton = page.locator('header').locator('button', { hasText: 'Projetos' });
   await expect(projetosButton).toBeVisible();
@@ -23,7 +26,10 @@ test('header navigation updates hash and shows sections', async ({ page }) => {
   expect(filtered).toHaveLength(0);
 });
 
-test('mobile menu toggles and focuses back', async ({ page }) => {
+test('mobile menu toggles and focuses back', async ({ page, context }) => {
+  await context.addInitScript(() => {
+    localStorage.setItem('language', 'pt');
+  });
   await page.setViewportSize({ width: 375, height: 800 });
   await page.goto('/');
 
@@ -43,11 +49,14 @@ test('mobile menu toggles and focuses back', async ({ page }) => {
   await expect(toggle).toBeFocused();
 });
 
-test('theme toggle button is present and clickable', async ({ page }) => {
+test('theme toggle button is present and clickable', async ({ page, context }) => {
+  await context.addInitScript(() => {
+    localStorage.setItem('language', 'pt');
+  });
   await page.goto('/');
 
-  // Check desktop theme toggle
-  const themeToggle = page.locator('header button[aria-label="Toggle theme"]').first();
+  // Check desktop theme toggle (in PT the aria-label is "Alternar tema")
+  const themeToggle = page.locator('header button[aria-label*="Alternar"]').first();
   await expect(themeToggle).toBeVisible();
 
   // Verify it's clickable (click triggers theme change)
@@ -58,7 +67,8 @@ test('theme toggle button is present and clickable', async ({ page }) => {
   const menuToggle = page.locator('button[aria-label="Toggle menu"]');
   await menuToggle.click();
 
+  // Check mobile theme toggle (specifically looking for "Alternar tema", not "Alternar idioma")
   const mobileMenu = page.locator('#mobile-menu');
-  const mobileThemeToggle = mobileMenu.locator('button[aria-label="Toggle theme"]');
+  const mobileThemeToggle = mobileMenu.locator('button[aria-label="Alternar tema"]').first();
   await expect(mobileThemeToggle).toBeVisible();
 });

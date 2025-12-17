@@ -1,10 +1,13 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-test('contact CTA scrolls to contact section and shows contact info', async ({ page }) => {
+test('contact CTA scrolls to contact section and shows contact info', async ({ page, context }) => {
+  await context.addInitScript(() => {
+    localStorage.setItem('language', 'pt');
+  });
   await page.goto('/');
-  // The main CTA button "Contratar" should navigate to contact
-  await page.click('text=Contratar');
+  // The main CTA button "Entrar em contato" should navigate to contact
+  await page.click('text=Entrar em contato');
   await expect(page).toHaveURL(/#contact/);
   await expect(page.locator('#contact')).toBeVisible();
   await expect(page.locator('#contact a[href^="mailto:"]')).toBeVisible();

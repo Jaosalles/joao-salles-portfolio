@@ -1,63 +1,30 @@
-import { motion } from "framer-motion";
-import { Building2, Calendar } from "lucide-react";
-
-const experiences = [
-  {
-    company: "Onesight",
-    role: "Engenheiro de Software Sênior",
-    period: "Abril de 2024 - Presente",
-    description: "Liderança de arquitetura e otimização de performance de um projeto em React.js/TypeScript, reduzindo o tempo de carregamento com code splitting, lazy loading e estratégias de purga do Tailwind CSS.",
-    highlights: [
-      "Liderança de arquitetura e otimização de performance em projeto React.js/TypeScript",
-      "Redução de tempo de carregamento usando code splitting, lazy loading e purga do Tailwind CSS",
-      "Implementação de pipelines de CI/CD com testes automatizados (unitários, integração, E2E) usando Jest, Testing Library e Cypress, aumentando a cobertura em 40%",
-      "Mentoria de desenvolvedores em boas práticas de React.js e TypeScript"
-    ],
-  },
-  {
-    company: "Uber",
-    role: "Engenheiro de Software",
-    period: "Abril de 2021 - Maio de 2023",
-    description: "Otimização de escalabilidade e acessibilidade de uma plataforma em React/TypeScript para mais de 10.000 usuários globais, integrando Sentry e DataDog para monitoramento de erros e análise de performance.",
-    highlights: [
-      "Otimização de escalabilidade e acessibilidade de plataforma React/TypeScript para 10.000+ usuários globais",
-      "Integração de Sentry e DataDog para monitoramento de erros e análise de performance",
-      "Automatização de pipelines de CI/CD com SonarQube para qualidade de código, reduzindo bugs em produção em 25%",
-      "Mentoria de desenvolvedores juniores e simplificação de fluxos com Jira"
-    ],
-  },
-  {
-    company: "Lam Digital",
-    role: "Desenvolvedor Full Stack",
-    period: "Junho de 2018 - Março de 2021",
-    description: "Desenvolvimento de um CMS para mais de 500 usuários diários usando React, Node.js e React Query, aumentando a eficiência de gestão de conteúdo em 30%.",
-    highlights: [
-      "Desenvolvimento de CMS para 500+ usuários diários usando React, Node.js e React Query",
-      "Aumento da eficiência de gestão de conteúdo em 30%",
-      "Integração de APIs de pagamento, notificações em tempo real (One Signal) e componentes modulares com Storybook",
-      "Desenho de APIs REST com documentação via Swagger e implementação de testes end-to-end com React Testing Library"
-    ],
-  },
-  {
-    company: "NewM Mobile",
-    role: "Trainee de Suporte & Desenvolvedor Mobile Júnior",
-    period: "Junho de 2016 - Agosto de 2017",
-    description: "Desenvolvimento de aplicações Android com Java/SQLite e condução de treinamentos para usuários. Otimização de processos de rastreamento de bugs e testes de funcionalidades usando Jira.",
-    highlights: [
-      "Desenvolvimento de aplicações Android com Java/SQLite",
-      "Condução de treinamentos para usuários",
-      "Otimização de processos de rastreamento de bugs e testes de funcionalidades usando Jira"
-    ],
-  },
-];
+import { useLanguage } from '@/features/common/context/LanguageContext';
+import { motion } from 'framer-motion';
+import { Building2, Calendar } from 'lucide-react';
 
 const Experience = () => {
+  const { t } = useLanguage();
+  const experienceKeys = ['onesight', 'uber', 'lamDigital', 'newmMobile'] as const;
+
+  const experiences = experienceKeys.map(key => ({
+    company: t(`experience.items.${key}.company`),
+    role: t(`experience.items.${key}.role`),
+    period: t(`experience.items.${key}.period`),
+    description: t(`experience.items.${key}.description`),
+    highlights: [
+      t(`experience.items.${key}.highlight1`),
+      t(`experience.items.${key}.highlight2`),
+      t(`experience.items.${key}.highlight3`),
+      t(`experience.items.${key}.highlight4`),
+    ].filter(Boolean),
+  }));
   return (
     <section id="experience" className="py-24 relative">
-      <div 
+      <div
         className="absolute inset-0 opacity-30"
         style={{
-          background: "radial-gradient(ellipse at 80% 50%, hsl(174, 72%, 56%, 0.1) 0%, transparent 50%)"
+          background:
+            'radial-gradient(ellipse at 80% 50%, hsl(174, 72%, 56%, 0.1) 0%, transparent 50%)',
         }}
       />
 
@@ -70,12 +37,10 @@ const Experience = () => {
           className="text-center mb-16"
         >
           <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
-            Experiência <span className="gradient-text">Profissional</span>
+            {t('experience.titlePrefix')}{' '}
+            <span className="gradient-text">{t('experience.titleHighlight')}</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Minha trajetória profissional construindo produtos digitais 
-            em empresas de diferentes portes e segmentos.
-          </p>
+          <p className="text-muted-foreground max-w-2xl mx-auto">{t('experience.description')}</p>
         </motion.div>
 
         <div className="max-w-3xl mx-auto">
@@ -98,9 +63,7 @@ const Experience = () => {
               <div className="glass rounded-xl p-6 md:p-8 hover:bg-secondary/20 transition-all duration-300">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                   <div>
-                    <h3 className="font-display text-xl font-bold text-foreground">
-                      {exp.role}
-                    </h3>
+                    <h3 className="font-display text-xl font-bold text-foreground">{exp.role}</h3>
                     <div className="flex items-center gap-2 text-muted-foreground mt-1">
                       <Building2 className="w-4 h-4" />
                       <span>{exp.company}</span>
@@ -112,9 +75,7 @@ const Experience = () => {
                   </div>
                 </div>
 
-                <p className="text-muted-foreground mb-4 leading-relaxed">
-                  {exp.description}
-                </p>
+                <p className="text-muted-foreground mb-4 leading-relaxed">{exp.description}</p>
 
                 <ul className="space-y-2">
                   {exp.highlights.map((highlight, i) => (

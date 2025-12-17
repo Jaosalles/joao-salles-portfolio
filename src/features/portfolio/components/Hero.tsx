@@ -1,8 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/features/common/context/LanguageContext';
+import { motion } from 'framer-motion';
+import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
 
 const Hero = () => {
+  const { t } = useLanguage();
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background glow effect */}
@@ -10,7 +12,7 @@ const Hero = () => {
         className="absolute inset-0 opacity-30"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 30%, hsl(174, 72%, 56%, 0.15) 0%, transparent 60%)",
+            'radial-gradient(ellipse at 50% 30%, hsl(174, 72%, 56%, 0.15) 0%, transparent 60%)',
         }}
       />
 
@@ -20,7 +22,7 @@ const Hero = () => {
         style={{
           backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
                            linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
+          backgroundSize: '60px 60px',
         }}
       />
 
@@ -28,7 +30,7 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
           className="max-w-4xl mx-auto text-center"
         >
           {/* Status badge */}
@@ -39,9 +41,7 @@ const Hero = () => {
             className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8"
           >
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span className="text-sm text-muted-foreground">
-              Disponível para novas oportunidades
-            </span>
+            <span className="text-sm text-muted-foreground">{t('hero.availability')}</span>
           </motion.div>
 
           {/* Main headline */}
@@ -51,8 +51,9 @@ const Hero = () => {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight"
           >
+            {t('hero.title')}
             <br />
-            <span className="gradient-text">Senior Frontend Engineer</span>
+            <span className="gradient-text">{t('hero.subtitle')}</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -62,11 +63,7 @@ const Hero = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Transformando ideias em experiências digitais excepcionais.
-            Especializado em {" "}
-            <span className="text-foreground font-medium">React</span>, {" "}
-            <span className="text-foreground font-medium">TypeScript</span> e
-            arquiteturas frontend escaláveis.
+            {t('hero.description')}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -77,10 +74,10 @@ const Hero = () => {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
           >
             <Button variant="hero" size="xl" asChild>
-              <a href="#projects">Ver Projetos</a>
+              <a href="#projects">{t('hero.cta')}</a>
             </Button>
             <Button variant="heroOutline" size="xl" asChild>
-              <a href="#contact">Entrar em Contato</a>
+              <a href="#contact">{t('hero.ctaContact')}</a>
             </Button>
           </motion.div>
 
@@ -96,7 +93,7 @@ const Hero = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full glass hover:bg-secondary transition-all duration-300 hover:scale-110"
-              aria-label="GitHub"
+              aria-label={t('contact.github')}
             >
               <Github className="w-5 h-5" />
             </a>
@@ -105,14 +102,14 @@ const Hero = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full glass hover:bg-secondary transition-all duration-300 hover:scale-110"
-              aria-label="LinkedIn"
+              aria-label={t('contact.linkedin')}
             >
               <Linkedin className="w-5 h-5" />
             </a>
             <a
               href="mailto:joaopedrosalles@hotmail.com"
               className="p-3 rounded-full glass hover:bg-secondary transition-all duration-300 hover:scale-110"
-              aria-label="Email"
+              aria-label={t('contact.email')}
             >
               <Mail className="w-5 h-5" />
             </a>
@@ -130,7 +127,7 @@ const Hero = () => {
             href="#about"
             className="flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
           >
-            <span className="text-xs uppercase tracking-widest">Scroll</span>
+            <span className="text-xs uppercase tracking-widest">{t('hero.scroll')}</span>
             <ArrowDown className="w-4 h-4 animate-bounce" />
           </a>
         </motion.div>

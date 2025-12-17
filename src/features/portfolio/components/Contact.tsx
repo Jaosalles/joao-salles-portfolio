@@ -1,22 +1,32 @@
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/features/common/context/LanguageContext';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, MapPin, Send } from 'lucide-react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as z from 'zod';
 
-const contactFormSchema = z.object({
-  name: z.string().min(2, 'Nome deve ter pelo menos 2 caracteres'),
-  email: z.string().email('Email inválido'),
-  message: z.string().min(10, 'Mensagem deve ter pelo menos 10 caracteres'),
-});
-
-type ContactFormData = z.infer<typeof contactFormSchema>;
+type ContactFormData = {
+  name: string;
+  email: string;
+  message: string;
+};
 
 const Contact = () => {
+  const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const contactFormSchema = useMemo(
+    () =>
+      z.object({
+        name: z.string().min(2, t('contact.form.validation.nameMin')),
+        email: z.string().email(t('contact.form.validation.emailInvalid')),
+        message: z.string().min(10, t('contact.form.validation.messageMin')),
+      }),
+    [t]
+  );
 
   const {
     register,
@@ -36,14 +46,14 @@ const Contact = () => {
 
       console.log('Dados do formulário:', data);
 
-      toast.success('Mensagem enviada com sucesso!', {
-        description: 'Entrarei em contato em breve.',
+      toast.success(t('contact.toast.successTitle'), {
+        description: t('contact.toast.successDesc'),
       });
 
       reset();
     } catch {
-      toast.error('Erro ao enviar mensagem', {
-        description: 'Por favor, tente novamente ou entre em contato diretamente por email.',
+      toast.error(t('contact.toast.errorTitle'), {
+        description: t('contact.toast.errorDesc'),
       });
     } finally {
       setIsSubmitting(false);
@@ -62,12 +72,10 @@ const Contact = () => {
         >
           <div className="text-center mb-12">
             <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
-              Vamos <span className="gradient-text">Conversar?</span>
+              {t('contact.titlePrefix')}{' '}
+              <span className="gradient-text">{t('contact.titleHighlight')}</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Estou aberto a novas oportunidades e sempre interessado em projetos desafiadores.
-              Entre em contato!
-            </p>
+            <p className="text-muted-foreground max-w-xl mx-auto">{t('contact.description')}</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -79,7 +87,9 @@ const Contact = () => {
               className="space-y-6"
             >
               <div className="glass rounded-xl p-6">
-                <h3 className="font-display text-lg font-semibold mb-4">Informações de Contato</h3>
+                <h3 className="font-display text-lg font-semibold mb-4">
+                  {t('contact.infoTitle')}
+                </h3>
                 <div className="space-y-4">
                   <a
                     href="mailto:joaopedrosalles@hotmail.com"
@@ -89,7 +99,7 @@ const Contact = () => {
                       <Mail className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Email</p>
+                      <p className="text-sm text-muted-foreground">{t('contact.email')}</p>
                       <p className="font-medium text-foreground">joaopedrosalles@hotmail.com</p>
                     </div>
                   </a>
@@ -104,7 +114,7 @@ const Contact = () => {
                       <Linkedin className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">LinkedIn</p>
+                      <p className="text-sm text-muted-foreground">{t('contact.linkedin')}</p>
                       <p className="font-medium text-foreground">
                         /in/joao-pedro-salles-dos-santos-a5358a11a/
                       </p>
@@ -121,7 +131,7 @@ const Contact = () => {
                       <Github className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">GitHub</p>
+                      <p className="text-sm text-muted-foreground">{t('contact.github')}</p>
                       <p className="font-medium text-foreground">@jaosalles</p>
                     </div>
                   </a>
@@ -131,8 +141,8 @@ const Contact = () => {
                       <MapPin className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Localização</p>
-                      <p className="font-medium text-foreground">Brasil (Remoto)</p>
+                      <p className="text-sm text-muted-foreground">{t('contact.location')}</p>
+                      <p className="font-medium text-foreground">{t('contact.locationValue')}</p>
                     </div>
                   </div>
                 </div>
@@ -148,7 +158,7 @@ const Contact = () => {
               <form onSubmit={handleSubmit(onSubmit)} className="glass rounded-xl p-6 space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2">
-                    Nome
+                    {t('contact.form.nameLabel')}
                   </label>
                   <input
                     type="text"
@@ -157,7 +167,7 @@ const Contact = () => {
                     className={`w-full px-4 py-3 rounded-lg bg-secondary/50 border ${
                       errors.name ? 'border-red-500' : 'border-border'
                     } focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors`}
-                    placeholder="Seu nome"
+                    placeholder={t('contact.form.namePlaceholder')}
                   />
                   {errors.name && (
                     <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
@@ -166,7 +176,7 @@ const Contact = () => {
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium mb-2">
-                    Email
+                    {t('contact.form.emailLabel')}
                   </label>
                   <input
                     type="email"
@@ -175,7 +185,7 @@ const Contact = () => {
                     className={`w-full px-4 py-3 rounded-lg bg-secondary/50 border ${
                       errors.email ? 'border-red-500' : 'border-border'
                     } focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors`}
-                    placeholder="seu@email.com"
+                    placeholder={t('contact.form.emailPlaceholder')}
                   />
                   {errors.email && (
                     <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
@@ -184,7 +194,7 @@ const Contact = () => {
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium mb-2">
-                    Mensagem
+                    {t('contact.form.messageLabel')}
                   </label>
                   <textarea
                     id="message"
@@ -193,7 +203,7 @@ const Contact = () => {
                     className={`w-full px-4 py-3 rounded-lg bg-secondary/50 border ${
                       errors.message ? 'border-red-500' : 'border-border'
                     } focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors resize-none`}
-                    placeholder="Sua mensagem..."
+                    placeholder={t('contact.form.messagePlaceholder')}
                   />
                   {errors.message && (
                     <p className="mt-1 text-sm text-red-500">{errors.message.message}</p>
@@ -208,11 +218,11 @@ const Contact = () => {
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
-                    <>Enviando...</>
+                    <>{t('contact.form.submitSending')}</>
                   ) : (
                     <>
                       <Send className="w-4 h-4 mr-2" />
-                      Enviar Mensagem
+                      {t('contact.form.submitSend')}
                     </>
                   )}
                 </Button>

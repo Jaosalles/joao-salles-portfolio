@@ -1,6 +1,8 @@
-import { Github, Linkedin, Mail, Heart } from "lucide-react";
+import { Github, Heart, Linkedin, Mail } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const Footer = () => {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -8,9 +10,11 @@ const Footer = () => {
       <div className="container px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
-            <span>Feito com</span>
+            <span>{t('footer.madeWith')}</span>
             <Heart className="w-4 h-4 text-primary fill-primary" />
-            <span>e React © {currentYear}</span>
+            <span>
+              {t('footer.and')} React © {currentYear}
+            </span>
           </div>
 
           <div className="flex items-center gap-4">
@@ -19,7 +23,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="GitHub"
+              aria-label={t('contact.github')}
             >
               <Github className="w-5 h-5" />
             </a>
@@ -28,14 +32,14 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="LinkedIn"
+              aria-label={t('contact.linkedin')}
             >
               <Linkedin className="w-5 h-5" />
             </a>
             <a
               href="mailto:joaopedrosalles@hotmail.com"
               className="text-muted-foreground hover:text-foreground transition-colors"
-              aria-label="Email"
+              aria-label={t('contact.email')}
             >
               <Mail className="w-5 h-5" />
             </a>

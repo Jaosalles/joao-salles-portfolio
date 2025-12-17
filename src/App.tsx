@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PerformanceMonitor from './components/PerformanceMonitor';
+import { LanguageProvider } from './features/common/context/LanguageContext';
 import Index from './pages/Index';
 import NotFound from './pages/NotFound';
 
@@ -16,7 +17,7 @@ const queryClient = new QueryClient({
       retry: (failureCount, error) => {
         // Don't retry on 4xx errors
         if (error && typeof (error as { status?: unknown }).status === 'number') {
-          const status = (error as { status: number }).status;
+          const status = (error as unknown as { status: number }).status;
           return status >= 500 && failureCount < 3;
         }
         return failureCount < 3;
@@ -36,26 +37,29 @@ const App = () => {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <PerformanceMonitor />
-        <Toaster />
-        <Sonner />
-        <BrowserRouter
-          basename={window.location.hostname.includes('github.io') ? '/joao-salles-portfolio' : ''}
-          future={{
-            v7_startTransition: true,
-            v7_relativeSplatPath: true,
-          }}
-        >
-          <Routes>
-            <Route path="/" element={<Index />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <LanguageProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <PerformanceMonitor />
+          <Toaster />
+          <Sonner />
+          <BrowserRouter
+            basename={
+              window.location.hostname.includes('github.io') ? '/joao-salles-portfolio' : ''
+            }
+            future={{
+              v7_startTransition: true,
+              v7_relativeSplatPath: true,
+            }}
+          >
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </LanguageProvider>
   );
 };
 

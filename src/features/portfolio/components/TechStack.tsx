@@ -1,3 +1,4 @@
+import { useLanguage } from '@/features/common/context/LanguageContext';
 import { motion } from 'framer-motion';
 
 const technologies = [
@@ -20,17 +21,17 @@ const technologies = [
   { name: 'Github Actions', level: 92, category: 'CI/CD' },
 ];
 
-const categories = [
-  { key: 'core', label: 'Core' },
-  { key: 'styling', label: 'Styling' },
-  { key: 'state', label: 'State Management' },
-  { key: 'testing', label: 'Testing' },
-  { key: 'tools', label: 'Ferramentas' },
-  { key: 'api', label: 'APIs' },
-  { key: 'CI/CD', label: 'CI/CD' },
-];
-
 const TechStack = () => {
+  const { t } = useLanguage();
+  const categories = [
+    { key: 'core', label: t('techStack.categories.core') },
+    { key: 'styling', label: t('techStack.categories.styling') },
+    { key: 'state', label: t('techStack.categories.state') },
+    { key: 'testing', label: t('techStack.categories.testing') },
+    { key: 'tools', label: t('techStack.categories.tools') },
+    { key: 'api', label: t('techStack.categories.api') },
+    { key: 'CI/CD', label: t('techStack.categories.cicd') },
+  ];
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -57,12 +58,10 @@ const TechStack = () => {
           className="text-center mb-16"
         >
           <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
-            Tech <span className="gradient-text">Stack</span>
+            {t('techStack.titlePrefix')}{' '}
+            <span className="gradient-text">{t('techStack.titleHighlight')}</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Tecnologias que domino e utilizo diariamente para criar aplicações robustas,
-            performáticas e escaláveis.
-          </p>
+          <p className="text-muted-foreground max-w-2xl mx-auto">{t('techStack.description')}</p>
         </motion.div>
 
         {categories.map((category, categoryIndex) => (
