@@ -49,7 +49,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight"
+            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 tracking-tight"
           >
             {t('hero.title')}
             <br />
@@ -92,8 +92,8 @@ const Hero = () => {
               href="https://github.com/jaosalles"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-full glass hover:bg-secondary transition-all duration-300 hover:scale-110"
-              aria-label={t('contact.github')}
+              className="p-3 rounded-full glass hover:bg-secondary transition-all duration-300 hover:scale-110 focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              aria-label="Visit my GitHub profile (opens in new window)"
             >
               <Github className="w-5 h-5" />
             </a>
@@ -101,15 +101,15 @@ const Hero = () => {
               href="https://www.linkedin.com/in/joao-pedro-salles-dos-santos-a5358a11a/"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-full glass hover:bg-secondary transition-all duration-300 hover:scale-110"
-              aria-label={t('contact.linkedin')}
+              className="p-3 rounded-full glass hover:bg-secondary transition-all duration-300 hover:scale-110 focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              aria-label="Visit my LinkedIn profile (opens in new window)"
             >
               <Linkedin className="w-5 h-5" />
             </a>
             <a
               href="mailto:joaopedrosalles@hotmail.com"
-              className="p-3 rounded-full glass hover:bg-secondary transition-all duration-300 hover:scale-110"
-              aria-label={t('contact.email')}
+              className="p-3 rounded-full glass hover:bg-secondary transition-all duration-300 hover:scale-110 focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              aria-label="Send me an email at joaopedrosalles@hotmail.com"
             >
               <Mail className="w-5 h-5" />
             </a>

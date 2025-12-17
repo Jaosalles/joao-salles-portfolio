@@ -91,7 +91,7 @@ const Contact = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="space-y-6"
             >
-              <div className="glass rounded-xl p-6">
+              <div className="glass rounded-xl p-6 shadow-card">
                 <h3 className="font-display text-lg font-semibold mb-4">
                   {t('contact.infoTitle')}
                 </h3>
@@ -160,7 +160,10 @@ const Contact = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <form onSubmit={handleSubmit(onSubmit)} className="glass rounded-xl p-6 space-y-4">
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="glass rounded-xl p-6 space-y-4 shadow-card"
+              >
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2">
                     {t('contact.form.nameLabel')}
@@ -169,9 +172,9 @@ const Contact = () => {
                     type="text"
                     id="name"
                     {...register('name')}
-                    className={`w-full px-4 py-3 rounded-lg bg-secondary/50 border ${
+                    className={`w-full px-4 py-3 sm:py-3 rounded-lg bg-secondary/50 border ${
                       errors.name ? 'border-red-500' : 'border-border'
-                    } focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors`}
+                    } focus:border-primary focus:ring-2 focus:ring-primary focus:ring-offset-2 outline-none transition-all`}
                     placeholder={t('contact.form.namePlaceholder')}
                   />
                   {errors.name && (
@@ -187,9 +190,9 @@ const Contact = () => {
                     type="email"
                     id="email"
                     {...register('email')}
-                    className={`w-full px-4 py-3 rounded-lg bg-secondary/50 border ${
+                    className={`w-full px-4 py-3 sm:py-3 rounded-lg bg-secondary/50 border ${
                       errors.email ? 'border-red-500' : 'border-border'
-                    } focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors`}
+                    } focus:border-primary focus:ring-2 focus:ring-primary focus:ring-offset-2 outline-none transition-all`}
                     placeholder={t('contact.form.emailPlaceholder')}
                   />
                   {errors.email && (
@@ -207,7 +210,7 @@ const Contact = () => {
                     {...register('message')}
                     className={`w-full px-4 py-3 rounded-lg bg-secondary/50 border ${
                       errors.message ? 'border-red-500' : 'border-border'
-                    } focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors resize-none`}
+                    } focus:border-primary focus:ring-2 focus:ring-primary focus:ring-offset-2 outline-none transition-all resize-none`}
                     placeholder={t('contact.form.messagePlaceholder')}
                   />
                   {errors.message && (
