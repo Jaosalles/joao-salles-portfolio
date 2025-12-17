@@ -1,3 +1,4 @@
+import { isGitHubPages } from '@/lib/utils';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -17,7 +18,7 @@ export const useHashNavigation = () => {
 
   const navigateToSection = (sectionId: string) => {
     const hash = `#${sectionId}`;
-    if (window.location.hostname.includes('github.io')) {
+    if (isGitHubPages()) {
       // For GitHub Pages, update the URL with hash
       navigate(`/${hash}`, { replace: true });
     } else {

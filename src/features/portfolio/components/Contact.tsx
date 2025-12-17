@@ -44,14 +44,19 @@ const Contact = () => {
       // Simula envio de email (você pode integrar com serviços como EmailJS, SendGrid, etc.)
       await new Promise(resolve => setTimeout(resolve, 1500));
 
-      console.log('Dados do formulário:', data);
+      // In development, log form data (will be removed in production builds)
+      if (import.meta.env.DEV) {
+        console.debug('📧 Form submitted:', data);
+      }
 
       toast.success(t('contact.toast.successTitle'), {
         description: t('contact.toast.successDesc'),
       });
 
       reset();
-    } catch {
+    } catch (error) {
+      console.error('Form submission error:', error);
+
       toast.error(t('contact.toast.errorTitle'), {
         description: t('contact.toast.errorDesc'),
       });

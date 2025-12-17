@@ -1,11 +1,12 @@
-import { Toaster as Sonner } from '@/components/ui/sonner';
-import { Toaster } from '@/components/ui/toaster';
-import { TooltipProvider } from '@/components/ui/tooltip';
+import { Toaster as Sonner } from '@/components/ui/feedback/sonner';
+import { Toaster } from '@/components/ui/feedback/toaster';
+import { TooltipProvider } from '@/components/ui/overlays/tooltip';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PerformanceMonitor from './components/PerformanceMonitor';
 import { LanguageProvider } from './features/common/context/LanguageContext';
+import { getBasePath, handleGitHubPagesRouting } from './lib/utils';
 import Index from './pages/Index';
 import NotFound from './pages/NotFound';
 
@@ -28,12 +29,7 @@ const queryClient = new QueryClient({
 
 const App = () => {
   useEffect(() => {
-    // Handle client-side routing for GitHub Pages
-    if (window.location.hostname.includes('github.io') && window.location.search.startsWith('?/')) {
-      const path = window.location.search.slice(2); // Remove '?/'
-      // Replace the current URL without causing a page reload
-      window.history.replaceState(null, '', path + (window.location.hash || ''));
-    }
+    handleGitHubPagesRouting();
   }, []);
 
   return (
@@ -44,9 +40,7 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter
-            basename={
-              window.location.hostname.includes('github.io') ? '/joao-salles-portfolio' : ''
-            }
+            basename={getBasePath()}
             future={{
               v7_startTransition: true,
               v7_relativeSplatPath: true,
