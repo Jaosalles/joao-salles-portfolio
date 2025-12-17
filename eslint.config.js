@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 // Temporary simple ESLint config to resolve issues
 import js from "@eslint/js";
 import prettierConfig from 'eslint-config-prettier';
@@ -6,26 +9,23 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config(
-  { ignores: ["dist", "node_modules", "**/*.test.ts", "**/*.test.tsx"] },
-  {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended, prettierConfig],
-    files: ["**/*.{ts,tsx}"],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-    },
-    plugins: {
-      "react-hooks": reactHooks,
-      "react-refresh": reactRefresh,
-    },
-    rules: {
-      ...reactHooks.configs.recommended.rules,
-      "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
-
-      // Prefer warnings initially to avoid noise, but do not allow explicit any freely
-      "@typescript-eslint/no-unused-vars": "warn",
-      "@typescript-eslint/no-explicit-any": "warn",
-    },
+export default tseslint.config({ ignores: ["dist", "node_modules", "**/*.test.ts", "**/*.test.tsx"] }, {
+  extends: [js.configs.recommended, ...tseslint.configs.recommended, prettierConfig],
+  files: ["**/*.{ts,tsx}"],
+  languageOptions: {
+    ecmaVersion: 2020,
+    globals: globals.browser,
   },
-);
+  plugins: {
+    "react-hooks": reactHooks,
+    "react-refresh": reactRefresh,
+  },
+  rules: {
+    ...reactHooks.configs.recommended.rules,
+    "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+
+    // Prefer warnings initially to avoid noise, but do not allow explicit any freely
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
+  },
+}, storybook.configs["flat/recommended"]);
