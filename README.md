@@ -61,6 +61,7 @@ Um portfólio profissional moderno e responsivo construído com as melhores prá
 - **ESLint** - Linting rigoroso para qualidade de código
 - **Vitest** - Framework de testes rápido
 - **Testing Library** - Testes focados no usuário
+- **Storybook** - Desenvolvimento e documentação de componentes isolados
 - **React Hook Form** - Gerenciamento de formulários
 - **React Query** - Gerenciamento de estado server
 - **React Router** - Roteamento client-side
@@ -84,7 +85,9 @@ Para mais informações: [ver ARCHITECTURE.md](./ARCHITECTURE.md)
 
 ### Pré-requisitos
 
-- Node.js 20.10.0 ou superior ([instalar com nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
+- **Node.js 20.19.0 ou superior** ([instalar com nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
+  - ⚠️ Storybook v10+ requer Node.js 20.19+ ou 22.12+
+  - Use `nvm use 20.19.0` para definir a versão correta
 - npm ou yarn
 
 ### ⚠️ Importante: Setup Inicial
@@ -145,6 +148,10 @@ npm run type-check      # Verifica tipos TypeScript
 npm run test            # Executa testes
 npm run test:ui         # Executa testes com interface gráfica
 npm run test:coverage   # Executa testes com relatório de cobertura
+
+# Storybook
+npm run storybook       # Inicia Storybook em modo desenvolvimento
+npm run build-storybook # Build de produção do Storybook
 
 # Commits
 npm run commit          # Assistente (Commitizen + cz-git) para mensagens padronizadas
@@ -257,6 +264,65 @@ npm run e2e
 
 # Rodar apenas Chromium (uso em CI)
 npm run e2e:ci
+```
+
+## 📚 Storybook
+
+O projeto utiliza **Storybook** para desenvolvimento e documentação de componentes em isolamento.
+
+### Começando com Storybook
+
+```bash
+# Iniciar Storybook em modo desenvolvimento
+npm run storybook
+
+# Build de produção do Storybook
+npm run build-storybook
+```
+
+O Storybook estará disponível em [http://localhost:6006](http://localhost:6006)
+
+### Componentes Documentados
+
+Todos os componentes UI possuem stories documentadas:
+
+- **UI Components**: Button, Toggle
+- **Data Display**: Badge, Card
+- **Feedback**: Alert
+- E mais componentes sendo adicionados...
+
+### Recursos do Storybook
+
+- ✨ **Visualização Isolada**: Veja cada componente individualmente
+- 🎛️ **Controles Interativos**: Teste diferentes props em tempo real
+- 📖 **Documentação Automática**: Gerada automaticamente via `autodocs`
+- 🎨 **Variantes**: Explore todas as variantes e estados dos componentes
+- 🌓 **Temas**: Alterne entre tema light e dark
+
+### Criando Novas Stories
+
+Para criar stories para novos componentes, consulte o [Guia de Contribuição para Stories](./docs/STORYBOOK_GUIDE.md).
+
+Exemplo básico:
+
+```typescript
+import type { Meta, StoryObj } from '@storybook/react';
+import { MyComponent } from './MyComponent';
+
+const meta = {
+  title: 'UI/MyComponent',
+  component: MyComponent,
+  tags: ['autodocs'],
+} satisfies Meta<typeof MyComponent>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    // suas props aqui
+  },
+};
 ```
 
 ## 🧬 CI/CD
