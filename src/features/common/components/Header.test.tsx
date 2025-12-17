@@ -53,7 +53,7 @@ describe('Header', () => {
       </LanguageProvider>
     );
 
-    const toggle = screen.getByLabelText(/Toggle menu/i);
+    const toggle = screen.getByLabelText(/Toggle.*menu|navigation menu/i);
     await act(async () => {
       await user.click(toggle);
     });

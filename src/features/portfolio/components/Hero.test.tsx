@@ -35,9 +35,9 @@ describe('Hero', () => {
         <Hero />
       </LanguageProvider>
     );
-    const githubLink = screen.getByLabelText('GitHub');
-    const linkedinLink = screen.getByLabelText('LinkedIn');
-    const emailLink = screen.getByLabelText(/Email|E-mail/i);
+    const githubLink = screen.getByLabelText(/GitHub profile/i);
+    const linkedinLink = screen.getByLabelText(/LinkedIn profile/i);
+    const emailLink = screen.getByLabelText(/email/i);
 
     expect(githubLink).toBeInTheDocument();
     expect(linkedinLink).toBeInTheDocument();
@@ -50,7 +50,7 @@ describe('Hero', () => {
         <Hero />
       </LanguageProvider>
     );
-    const githubLink = screen.getByLabelText('GitHub');
+    const githubLink = screen.getByLabelText(/GitHub profile/i);
     expect(githubLink).toHaveAttribute('href', 'https://github.com/jaosalles');
   });
 
@@ -60,7 +60,7 @@ describe('Hero', () => {
         <Hero />
       </LanguageProvider>
     );
-    const linkedinLink = screen.getByLabelText('LinkedIn');
+    const linkedinLink = screen.getByLabelText(/LinkedIn profile/i);
     expect(linkedinLink).toHaveAttribute(
       'href',
       'https://www.linkedin.com/in/joao-pedro-salles-dos-santos-a5358a11a/'
