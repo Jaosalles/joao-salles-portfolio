@@ -67,15 +67,18 @@ Um portfólio profissional moderno e responsivo construído com as melhores prá
 
 ## 🧱 Arquitetura
 
-- Padrão: Feature-Sliced Architecture (FSD) leve.
-- Camadas/Convenções:
-  - `src/components/ui`: primitivos reutilizáveis, sem regra de domínio.
-  - `src/features/<feature>`: componentes, hooks e lógica por domínio.
-  - Cada feature expõe Public API via `index.ts` (barrel).
-- Regras de dependência:
-  - Features não importam internals de outras features; apenas via Public API.
-  - `components/ui` pode ser consumido por qualquer feature.
-- Ver detalhes e boas práticas em `src/features/README.md`.
+Este projeto segue os princípios do **Feature-Sliced Design (FSD)** com organização modular por domínio.
+
+**📖 Documentação Completa:** Para detalhes aprofundados sobre a arquitetura, convenções de código, padrões de import, boas práticas e estrutura de pastas, consulte o arquivo dedicado: **[ARCHITECTURE.md](./ARCHITECTURE.md)**
+
+**Resumo Rápido:**
+
+- Components UI agrupados semanticamente por categoria (forms, overlays, navigation, etc.)
+- Features com baixo acoplamento e Public API via barrel exports
+- Hooks padronizados em dash-case (`use-nome-do-hook`)
+- Utilitários consolidados em `/lib`
+
+Para mais informações: [ver ARCHITECTURE.md](./ARCHITECTURE.md)
 
 ## 🚀 Começando
 
@@ -151,20 +154,80 @@ npm run commit          # Assistente (Commitizen + cz-git) para mensagens padron
 
 ```
 src/
-├── components/          # Componentes React
-│   ├── ui/             # Componentes base (shadcn/ui)
-│   ├── Hero.tsx        # Seção hero
-│   ├── Experience.tsx  # Experiência profissional
-│   ├── Projects.tsx    # Projetos
-│   └── ...
-├── features/           # Features por domínio (FSD)
-├── hooks/              # Custom hooks
-├── lib/                # Utilitários
-├── pages/              # Páginas da aplicação
-├── test/               # Configurações de teste
-├── App.tsx             # Componente raiz
-└── main.tsx            # Ponto de entrada
+├── components/
+│   ├── ui/                    # Componentes UI primitivos (shadcn/ui)
+│   │   ├── forms/            # Input, Form, Select, Checkbox, etc
+│   │   ├── overlays/         # Dialog, Popover, Tooltip, Dropdown
+│   │   ├── navigation/       # Breadcrumb, Tabs, Pagination, Menubar
+│   │   ├── feedback/         # Alert, Toast, Progress, Skeleton
+│   │   ├── data-display/     # Table, Card, Avatar, Badge, Calendar
+│   │   ├── layout/           # Accordion, Sidebar, Separator, Carousel
+│   │   ├── button.tsx        # Botões (raiz por serem muito usados)
+│   │   ├── toggle.tsx
+│   │   └── index.ts          # Barrel export centralizador
+│   ├── PerformanceMonitor.tsx
+│   └── NavLink.tsx
+├── features/                  # Feature-Sliced Architecture
+│   ├── common/               # Features compartilhadas
+│   │   ├── components/       # Header, Footer
+│   │   ├── context/          # LanguageContext
+│   │   └── index.ts
+│   └── portfolio/            # Feature do portfólio
+│       ├── components/       # Hero, Projects, Contact, Experience
+│       └── index.ts
+├── hooks/                     # Custom hooks (dash-case)
+│   ├── use-hash-navigation.ts
+│   ├── use-lazy-load.ts
+│   ├── use-mobile.tsx
+│   ├── use-toast.ts
+│   ├── use-meta-tags.ts
+│   ├── use-t.ts
+│   └── index.ts              # Barrel export
+├── lib/                       # Utilitários e helpers
+│   ├── utils.ts              # Funções gerais (cn, GitHub Pages)
+│   ├── translations.ts       # Sistema de i18n
+│   ├── constants.ts          # Constantes da aplicação
+│   ├── error-handling.ts     # Tratamento de erros
+│   ├── performance.ts        # Métricas de performance
+│   └── seo.ts               # Utilitários de SEO
+├── pages/                     # Páginas da aplicação
+│   ├── Index.tsx
+│   └── NotFound.tsx
+├── types/                     # Definições de tipos TypeScript
+├── App.tsx                    # Componente raiz
+└── main.tsx                   # Ponto de entrada
 ```
+
+### Organização por Categoria
+
+**Components UI**: Organizados semanticamente para facilitar navegação e manutenção:
+
+- **forms**: Componentes de formulário e input
+- **overlays**: Modais, dialogs, tooltips e popovers
+- **navigation**: Componentes de navegação
+- **feedback**: Alertas, toasts e indicadores de progresso
+- **data-display**: Tabelas, cards e exibição de dados
+- **layout**: Componentes estruturais e de layout
+
+**Features**: Seguindo princípios do Feature-Sliced Design:
+
+- Código organizado por domínio de negócio
+- Cada feature exporta uma Public API via `index.ts`
+- Baixo acoplamento entre features
+
+**Hooks**: Hooks customizados padronizados em dash-case:
+
+- Nomenclatura consistente (`use-nome-do-hook`)
+- Agrupados logicamente (navigation, ui, i18n, seo)
+- Barrel export para facilitar imports
+
+**Lib**: Utilitários consolidados em um único local:
+
+- Funções auxiliares e helpers
+- Configurações e constantes
+- Tratamento de erros e performance
+
+````
 
 ## 🧪 Testes
 
@@ -179,7 +242,7 @@ npm run test:ui
 
 # Gerar relatório de cobertura
 npm run test:coverage
-```
+````
 
 ### E2E (Playwright)
 
