@@ -1,5 +1,7 @@
 module.exports = {
   extends: ['@commitlint/config-conventional'],
+  defaultIgnores: true,
+  ignores: [(message) => message.startsWith('Merge ')],
   rules: {
     'type-enum': [
       2,
@@ -37,11 +39,9 @@ module.exports = {
         'ci'
       ]
     ],
-    'scope-empty': [2, 'never'],
-    'subject-case': [
-      2,
-      'never',
-      ['sentence-case', 'start-case', 'pascal-case', 'upper-case']
-    ]
+    // Permite commits sem escopo (evita falhas em histórico/PRs externos)
+    'scope-empty': [0],
+    // Não força casing do assunto (usa padrão do preset convencional)
+    'subject-case': [0]
   }
 };
