@@ -182,7 +182,7 @@ const Header = () => {
           <button
             className="md:hidden p-2.5 rounded-lg hover:bg-secondary transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle navigation menu"
+            aria-label="Toggle menu"
             aria-controls="mobile-menu"
             aria-expanded={isMobileMenuOpen}
             ref={toggleButtonRef}
