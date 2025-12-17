@@ -30,20 +30,6 @@ jobs:
       - name: Install dependencies
         run: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci
 
-      - name: Validate commits with commitlint (PR)
-        if: ${{ github.event_name == 'pull_request' && github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
-        run: |
-          npx --no commitlint --config commitlint.config.mjs \
-            --from "${{ github.event.pull_request.base.sha }}" \
-            --to   "${{ github.sha }}" -V
-
-      - name: Validate commits with commitlint (Push)
-        if: ${{ github.event_name == 'push' && github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
-        run: |
-          npx --no commitlint --config commitlint.config.mjs \
-            --from "${{ github.event.before }}" \
-            --to   "${{ github.sha }}" -V
-
       - name: Lint
         run: npm run lint
 
