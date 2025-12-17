@@ -3,10 +3,12 @@
 ## 📌 Descrição
 
 **O que mudou?**
-- 
+
+-
 
 **Por quê?**
-- 
+
+-
 
 ## 🔗 Issues Relacionadas
 
@@ -31,11 +33,10 @@ Fecha #(número)
 
 ## 🖼️ Screenshots (se houver mudanças de UI)
 
-**Antes:**
--
+## **Antes:**
 
-**Depois:**
--
+## **Depois:**
+
 - [ ] A documentação foi atualizada, se necessário.
 - [ ] O código foi revisado e está livre de erros.
 

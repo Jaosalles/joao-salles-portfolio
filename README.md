@@ -72,6 +72,7 @@ Este projeto segue os princípios do **Feature-Sliced Design (FSD)** com organiz
 **📖 Documentação Completa:** Para detalhes aprofundados sobre a arquitetura, convenções de código, padrões de import, boas práticas e estrutura de pastas, consulte o arquivo dedicado: **[ARCHITECTURE.md](./ARCHITECTURE.md)**
 
 **Resumo Rápido:**
+
 - Components UI agrupados semanticamente por categoria (forms, overlays, navigation, etc.)
 - Features com baixo acoplamento e Public API via barrel exports
 - Hooks padronizados em dash-case (`use-nome-do-hook`)

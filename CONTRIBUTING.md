@@ -58,6 +58,7 @@ Use `npm run commit` para abrir o wizard (Commitizen + cz-git). O assistente val
 ### 4. Pull Request
 
 1. **Atualize sua branch**:
+
    ```bash
    git fetch origin && git rebase origin/main
    ```

@@ -25,17 +25,17 @@ sudo chown -R $(whoami) ~/.npm && npm install
 
 ### Erros comuns
 
-| Erro | Solução |
-|------|---------|
-| command not found | `npm install` |
-| Cannot find module | `rm -rf node_modules && npm install` |
+| Erro                           | Solução                                    |
+| ------------------------------ | ------------------------------------------ |
+| command not found              | `npm install`                              |
+| Cannot find module             | `rm -rf node_modules && npm install`       |
 | EPERM: operation not permitted | Execute em terminal do sistema, use `sudo` |
 
 ## 📜 Todos os Scripts
 
 ```bash
 npm run dev              # Desenvolvimento
-npm run build           # Build de produção  
+npm run build           # Build de produção
 npm run preview         # Preview
 npm run lint            # ESLint
 npm run lint:fix        # ESLint com correção

@@ -13,6 +13,7 @@ Engenheiro de software com experiência comprovada em arquitetura escalável, ot
 ## 💼 Experiência
 
 ### Senior Software Engineer — Onesight | Remoto
+
 **ABRIL 2024 - Atual**
 
 - Arquitetura e otimização React.js/TypeScript (code splitting, lazy loading, Tailwind CSS)
@@ -20,6 +21,7 @@ Engenheiro de software com experiência comprovada em arquitetura escalável, ot
 - Mentoria em React.js, TypeScript e revisões colaborativas
 
 ### Software Engineer — Uber | Remoto
+
 **ABRIL 2021 - MAIO 2023** (2 anos 2 meses)
 
 - Escalabilidade e acessibilidade de plataforma React/TypeScript para 10k+ usuários
@@ -28,6 +30,7 @@ Engenheiro de software com experiência comprovada em arquitetura escalável, ot
 - Mentoria de juniores e otimização de fluxos Jira
 
 ### Full Stack Developer — Lam Digital | Presencial/Remoto
+
 **JUNHO 2018 - MARÇO 2021** (2 anos 9 meses)
 
 - CMS com React, Node.js e React Query para 500+ usuários diários
@@ -36,6 +39,7 @@ Engenheiro de software com experiência comprovada em arquitetura escalável, ot
 - APIs REST com Swagger + testes E2E
 
 ### Trainee Support & Junior Mobile Developer — NewM Mobile | Presencial
+
 **JUNHO 2016 - AGOSTO 2017** (1 ano 3 meses)
 
 - Aplicativos Android com Java/SQLite

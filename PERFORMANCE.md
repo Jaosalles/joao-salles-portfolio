@@ -6,23 +6,23 @@ O projeto inclui monitoramento nativo de performance usando apenas APIs do naveg
 
 O `PerformanceMonitor` coleta automaticamente:
 
-| Métrica | Descrição |
-|---------|-----------|
-| **LCP** | Tempo do maior elemento de conteúdo |
-| **CLS** | Mudanças cumulativas de layout |
-| **FID** | Atraso da primeira interação |
-| **FCP** | Primeiro conteúdo pintado |
-| **TTFB** | Primeiro byte da resposta |
-| **Memory** | Uso de memória (Chrome/Edge) |
+| Métrica    | Descrição                           |
+| ---------- | ----------------------------------- |
+| **LCP**    | Tempo do maior elemento de conteúdo |
+| **CLS**    | Mudanças cumulativas de layout      |
+| **FID**    | Atraso da primeira interação        |
+| **FCP**    | Primeiro conteúdo pintado           |
+| **TTFB**   | Primeiro byte da resposta           |
+| **Memory** | Uso de memória (Chrome/Edge)        |
 
 ## 📋 Setup
 
 Já configurado automaticamente em `App.tsx`:
 
 ```tsx
-import PerformanceMonitor from "./components/PerformanceMonitor";
+import PerformanceMonitor from './components/PerformanceMonitor';
 
-<PerformanceMonitor />
+<PerformanceMonitor />;
 ```
 
 ## 🔍 Logs em Desenvolvimento
@@ -44,19 +44,19 @@ As métricas aparecem automaticamente no console do navegador:
 
 ## 📈 Otimizando Performance
 
-| Métrica | Como Melhorar |
-|---------|---------------|
-| **LCP** | Comprimir imagens, usar CDN, lazy loading |
-| **CLS** | Definir dimensões de elementos |
-| **FID** | Reduzir JavaScript bloqueante |
-| **Carregamento** | Code splitting, compressão, caching |
+| Métrica          | Como Melhorar                             |
+| ---------------- | ----------------------------------------- |
+| **LCP**          | Comprimir imagens, usar CDN, lazy loading |
+| **CLS**          | Definir dimensões de elementos            |
+| **FID**          | Reduzir JavaScript bloqueante             |
+| **Carregamento** | Code splitting, compressão, caching       |
 
 ## 🔍 Debug no Console
 
 ```javascript
-performance.getEntriesByType('paint')
-performance.getEntriesByType('largest-contentful-paint')
-performance.getEntriesByType('layout-shift')
+performance.getEntriesByType('paint');
+performance.getEntriesByType('largest-contentful-paint');
+performance.getEntriesByType('layout-shift');
 ```
 
 ## 📚 Referências
