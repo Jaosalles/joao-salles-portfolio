@@ -47,11 +47,11 @@ class MockIntersectionObserver {
     createdIntersectionObserver = this;
   }
 }
-(global as any).IntersectionObserver = MockIntersectionObserver as any;
-(global as any).__createdIntersectionObserver = () => createdIntersectionObserver;
+(globalThis as any).IntersectionObserver = MockIntersectionObserver as any;
+(globalThis as any).__createdIntersectionObserver = () => createdIntersectionObserver;
 
 // Mock ResizeObserver
-global.ResizeObserver = class ResizeObserver {
+globalThis.ResizeObserver = class ResizeObserver {
   constructor() {}
   disconnect() {}
   observe() {}
@@ -68,8 +68,10 @@ class MockImage {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     createdImage = this;
   }
+  addEventListener() {}
+  removeEventListener() {}
 }
-(global as any).Image = MockImage as any;
+(globalThis as any).Image = MockImage as any;
 
 // Expose getter for tests if needed
-(global as any).__createdImage = () => createdImage;
+(globalThis as any).__createdImage = () => createdImage;
