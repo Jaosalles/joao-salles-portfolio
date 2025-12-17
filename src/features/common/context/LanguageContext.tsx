@@ -54,6 +54,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useLanguage = (): LanguageContextType => {
   const context = useContext(LanguageContext);
   if (!context) {
