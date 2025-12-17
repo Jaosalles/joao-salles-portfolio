@@ -1,0 +1,25 @@
+{
+  "$schema": "https://unpkg.com/cz-git@1.9.0/schema.json",
+  "path": "cz-git",
+  "useEmoji": true,
+  "emojiAlign": "center",
+  "scopes": [
+    "components",
+    "hooks",
+    "pages",
+    "lib",
+    "utils",
+    "styles",
+    "config",
+    "e2e",
+    "tests",
+    "docs",
+    "deps",
+    "ci"
+  ],
+  "allowCustomScopes": true,
+  "allowEmptyScopes": false,
+  "upperCaseSubject": false,
+  "breaklineNumber": 100,
+  "enableMultipleScopes": true
+}
