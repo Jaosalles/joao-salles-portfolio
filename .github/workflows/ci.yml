@@ -30,6 +30,14 @@ jobs:
       - name: Install dependencies
         run: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci
 
+      - name: Validate commits with commitlint
+        if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
+        uses: wagoid/commitlint-github-action@v5
+        with:
+          configFile: commitlint.config.cjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Lint
         run: npm run lint
 
@@ -41,6 +49,15 @@ jobs:
 
       - name: Verify coverage thresholds
         run: node scripts/check-coverage.js
+
+      - name: Upload coverage to Codecov
+        if: github.event_name == 'push'
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/coverage-summary.json, ./coverage/coverage-final.json
+          fail_ci_if_error: true
+          verbose: true
 
   build:
     runs-on: ubuntu-latest
