@@ -21,6 +21,7 @@ npm run dev
 ### 2. Processo de Desenvolvimento
 
 1. **Crie uma branch** para sua feature/bug fix:
+
    ```bash
    git checkout -b feature/nome-da-feature
    # ou
@@ -34,6 +35,7 @@ npm run dev
    - Escreva testes para novas funcionalidades
 
 3. **Execute os testes e linting**:
+
    ```bash
    npm run lint
    npm run type-check
@@ -42,24 +44,20 @@ npm run dev
 
 4. **Faça commits claros e descritivos**:
    ```bash
-   git commit -m "feat: adiciona nova seção de habilidades"
+   npm run commit
    ```
+   Use o assistente (Commitizen + cz-git) para seguir o padrão convencional já configurado.
 
 ### 3. Padrões de Commit
 
-Use [Conventional Commits](https://conventionalcommits.org/):
-
-- `feat:` - Nova funcionalidade
-- `fix:` - Correção de bug
-- `docs:` - Mudanças na documentação
-- `style:` - Mudanças de estilo (formatação, etc.)
-- `refactor:` - Refatoração de código
-- `test:` - Adição ou correção de testes
-- `chore:` - Mudanças em ferramentas, configurações
+- Execute `npm run commit` para abrir o wizard (Commitizen + cz-git) e gerar mensagens convencionais.
+- O commitlint valida os tipos/escopos; prefira `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `build`, `ci`, `perf`, `deps`, `revert`.
+- Mantenha o escopo alinhado ao wizard (ex.: components, hooks, pages, lib, utils, styles, config, e2e, tests, docs, deps, ci).
 
 ### 4. Pull Request
 
 1. **Atualize sua branch** com a main:
+
    ```bash
    git fetch origin
    git rebase origin/main
@@ -71,6 +69,8 @@ Use [Conventional Commits](https://conventionalcommits.org/):
    - Inclua screenshots se aplicável
 
 3. **Aguarde revisão** e implemente feedback se necessário
+
+Use o template de PR em [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md) e preencha descrição, checklist e evidências visuais quando houver mudanças de UI.
 
 ## 🧪 Testes
 
@@ -94,6 +94,7 @@ npm run test:coverage
 - Mantenha testes legíveis e descritivos
 
 Exemplo:
+
 ```typescript
 import { render, screen } from '@testing-library/react'
 import { Hero } from './Hero'

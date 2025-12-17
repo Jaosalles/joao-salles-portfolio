@@ -8,6 +8,7 @@
 Um portfólio profissional moderno e responsivo construído com as melhores práticas de desenvolvimento frontend. Apresenta minha experiência como Senior Frontend Engineer, projetos destacados e informações de contato.
 
 ## Índice
+
 - Características
 - Stack Tecnológico
 - Arquitetura
@@ -141,6 +142,9 @@ npm run type-check      # Verifica tipos TypeScript
 npm run test            # Executa testes
 npm run test:ui         # Executa testes com interface gráfica
 npm run test:coverage   # Executa testes com relatório de cobertura
+
+# Commits
+npm run commit          # Assistente (Commitizen + cz-git) para mensagens padronizadas
 ```
 
 ## 📁 Estrutura do Projeto
@@ -225,7 +229,8 @@ npm run e2e:ci
 
 - Branching: `main` (produção), `develop` (integração).
 - PRs: precisam passar por `lint`, `type-check`, `tests` e `coverage`.
-- Commits: recomendável Conventional Commits (feat, fix, chore, docs...).
+- Commits: use `npm run commit` (Commitizen + cz-git) para seguir o padrão convencional.
+- PRs: siga o template em [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md) para descrição, checklist e evidências.
 
 ## 🧩 Ambiente & Troubleshooting
 
@@ -254,6 +259,9 @@ npm run preview
 ## 🤝 Contribuição
 
 Contribuições são bem-vindas! Por favor, leia as [diretrizes de contribuição](CONTRIBUTING.md) antes de começar.
+
+- Mensagens de commit: use `npm run commit` (Commitizen + cz-git) para seguir o padrão convencional já configurado no projeto.
+- Pull Requests: use o template em [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md) e preencha descrição, checklist e evidências visuais quando aplicável.
 
 ## 📄 Licença
 
