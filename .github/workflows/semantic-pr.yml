@@ -1,0 +1,49 @@
+name: Semantic Pull Request Title
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  semantic-pr:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
+    steps:
+      - name: Check PR title follows Conventional Commits
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # Allowed types aligned with commitlint
+          types: |
+            build
+            chore
+            ci
+            docs
+            feat
+            fix
+            perf
+            refactor
+            revert
+            style
+            test
+            deps
+          # Allowed scopes aligned with cz-git/commitlint config
+          scopes: |
+            components
+            hooks
+            pages
+            lib
+            utils
+            styles
+            config
+            e2e
+            tests
+            docs
+            deps
+            ci
+          requireScope: true
+          subjectPattern: '^(?![A-Z]).+'
+          subjectPatternError: 'PR subject should not start with uppercase.'
+          ignoreLabels: |
+            skip-semantic

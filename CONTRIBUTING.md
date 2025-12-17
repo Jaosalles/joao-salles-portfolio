@@ -67,6 +67,7 @@ npm run dev
    - Descreva claramente o que foi implementado
    - Referencie issues relacionadas
    - Inclua screenshots se aplicável
+   - Checagens automáticas: título semântico (Conventional Commits) e commitlint rodarão na CI; PRs de bots (Dependabot/GitHub Actions) são ignorados. Para dispensar a verificação de título em casos específicos, use o rótulo `skip-semantic`.
 
 3. **Aguarde revisão** e implemente feedback se necessário
 

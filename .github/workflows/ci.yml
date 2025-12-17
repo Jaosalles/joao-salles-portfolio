@@ -21,6 +21,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Validate commits with commitlint
+        if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
+        uses: wagoid/commitlint-github-action@v5
+        with:
+          configFile: commitlint.config.cjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -41,6 +49,14 @@ jobs:
 
       - name: Verify coverage thresholds
         run: node scripts/check-coverage.js
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/coverage-summary.json, ./coverage/coverage-final.json
+          fail_ci_if_error: true
+          verbose: true
 
   build:
     runs-on: ubuntu-latest
