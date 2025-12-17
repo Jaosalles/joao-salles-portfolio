@@ -50,28 +50,32 @@ npm run dev
 
 ### 3. Padrões de Commit
 
-- Execute `npm run commit` para abrir o wizard (Commitizen + cz-git) e gerar mensagens convencionais.
-- O commitlint valida os tipos/escopos; prefira `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `build`, `ci`, `perf`, `deps`, `revert`.
-- Mantenha o escopo alinhado ao wizard (ex.: components, hooks, pages, lib, utils, styles, config, e2e, tests, docs, deps, ci).
+Use `npm run commit` para abrir o wizard (Commitizen + cz-git). O assistente valida automaticamente:
+
+- **Tipos**: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `build`, `ci`, `perf`, `deps`, `revert`
+- **Escopos**: `components`, `hooks`, `pages`, `lib`, `styles`, `config`, `e2e`, `tests`, `docs`, `deps`, `ci`
 
 ### 4. Pull Request
 
-1. **Atualize sua branch** com a main:
-
+1. **Atualize sua branch**:
    ```bash
-   git fetch origin
-   git rebase origin/main
+   git fetch origin && git rebase origin/main
    ```
 
-2. **Crie um Pull Request**:
-   - Descreva claramente o que foi implementado
+2. **Crie um Pull Request** usando o template em [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md):
+   - Descreva o que mudou e por quê
    - Referencie issues relacionadas
-   - Inclua screenshots se aplicável
-   - Checagens automáticas: título semântico (Conventional Commits) e commitlint rodarão na CI; PRs de bots (Dependabot/GitHub Actions) são ignorados. Para dispensar a verificação de título em casos específicos, use o rótulo `skip-semantic`.
+   - Inclua screenshots se houver mudanças de UI
+   - Preencha o checklist
 
-3. **Aguarde revisão** e implemente feedback se necessário
+3. **Checagens Automáticas**:
+   - Título semântico (Conventional Commits)
+   - commitlint
+   - CI/CD (lint, type-check, testes)
+   - **Dispensar título**: adicione rótulo `skip-semantic` se necessário
+   - **PRs de bots**: ignorados em commitlint e título semântico
 
-Use o template de PR em [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md) e preencha descrição, checklist e evidências visuais quando houver mudanças de UI.
+4. **Aguarde revisão** e implemente feedback
 
 ## 🧪 Testes
 
@@ -116,6 +120,56 @@ describe('Hero', () => {
 - Mantenha consistência visual
 - Garanta acessibilidade (WCAG 2.1 AA)
 - Use animações sutis com Framer Motion
+
+### Organização de Componentes UI
+
+Os componentes UI estão organizados por categoria em `src/components/ui/`:
+
+```
+ui/
+├── forms/              # Inputs, Forms, Selects, Checkboxes
+├── overlays/           # Dialogs, Popovers, Tooltips, Dropdowns
+├── navigation/         # Breadcrumbs, Tabs, Pagination, Menus
+├── feedback/           # Alerts, Toasts, Progress, Skeletons
+├── data-display/       # Tables, Cards, Avatars, Badges
+├── layout/             # Accordions, Sidebars, Separators
+└── index.ts            # Barrel export (use para imports)
+```
+
+**Importando componentes UI:**
+
+```typescript
+// ✅ Correto - Use barrel exports
+import { Button, Dialog, Input } from '@/components/ui';
+
+// ✅ Também correto - Import direto da categoria
+import { Dialog } from '@/components/ui/overlays/dialog';
+
+// ❌ Evite - Import sem categoria
+import { Dialog } from '@/components/ui/dialog'; // Não funciona mais
+```
+
+### Hooks Customizados
+
+Hooks seguem padrão **dash-case** e estão em `src/hooks/`:
+
+```typescript
+// ✅ Correto
+import { useHashNavigation, useLazyLoad } from '@/hooks';
+
+// ou
+import { useHashNavigation } from '@/hooks/use-hash-navigation';
+```
+
+### Utilitários e Lib
+
+Tudo consolidado em `src/lib/`:
+
+```typescript
+import { cn, isGitHubPages } from '@/lib/utils';
+import { APP_CONFIG } from '@/lib/constants';
+import { handleError } from '@/lib/error-handling';
+```
 
 ### Estilos
 
