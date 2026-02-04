@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import path from "path";
-import { componentTagger } from "lovable-tagger";
 import { sharedPlugins, sharedOptimizeDeps, sharedResolveConfig } from "./shared-vite-config";
 
 // https://vitejs.dev/config/
@@ -12,9 +11,8 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [
-    ...sharedPlugins,
-    mode === "development" && componentTagger()
-  ].filter(Boolean),
+    ...sharedPlugins
+  ],
   resolve: sharedResolveConfig,
   build: {
     target: 'esnext',
