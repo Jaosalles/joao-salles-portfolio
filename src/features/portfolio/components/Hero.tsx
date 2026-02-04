@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/features/common/context/LanguageContext';
+import { heroHeadline } from '@/lib/motion-variants';
 import { motion } from 'framer-motion';
 import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
 
@@ -28,9 +29,7 @@ const Hero = () => {
 
       <div className="container relative z-10 px-6">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          {...heroHeadline}
           className="max-w-4xl mx-auto text-center"
         >
           {/* Status badge */}

@@ -56,6 +56,3 @@ export const renderWithProviders = (
 export const setupTestEnvironment = () => {
   localStorage.setItem('language', 'pt');
 };
-
-// Re-export everything from testing-library for convenience
-export * from '@testing-library/react';

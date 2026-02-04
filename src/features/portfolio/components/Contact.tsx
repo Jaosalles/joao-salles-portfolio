@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/features/common/context/LanguageContext';
+import { fadeInLeft, fadeInRight, fadeInUp } from '@/lib/motion-variants';
 import emailjs from '@emailjs/browser';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
@@ -90,10 +91,7 @@ const Contact = () => {
     <section id="contact" className="py-24 relative">
       <div className="container px-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          {...fadeInUp}
           className="max-w-4xl mx-auto"
         >
           <div className="text-center mb-12">
@@ -106,10 +104,7 @@ const Contact = () => {
 
           <div className="grid md:grid-cols-2 gap-8">
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              {...fadeInLeft}
               className="space-y-6"
             >
               <div className="glass rounded-xl p-6 shadow-card">
@@ -176,10 +171,8 @@ const Contact = () => {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              {...fadeInRight}
+              transition={{ ...fadeInRight.transition, delay: 0.3 }}
             >
               <form
                 onSubmit={handleSubmit(onSubmit)}
