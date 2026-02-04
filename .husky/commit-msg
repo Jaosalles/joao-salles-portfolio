@@ -1,0 +1,43 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🔍 Validating commit message..."
+
+# Get commit message from file
+commit_msg=$(cat "$1")
+
+# Check if using commitizen (cz) - if so, skip validation
+if echo "$commit_msg" | grep -q "^.*:"; then
+  # Validate commit message format (conventional commits)
+  if ! echo "$commit_msg" | grep -qE "^(feat|fix|docs|style|refactor|perf|test|chore|ci|revert)(\(.+\))?!?: .{1,}"; then
+    echo ""
+    echo "❌ Commit message does not follow Conventional Commits format"
+    echo ""
+    echo "Expected format: <type>(<scope>?): <message>"
+    echo "Example: feat(components): add new button variant"
+    echo ""
+    echo "Allowed types:"
+    echo "  feat     - New feature"
+    echo "  fix      - Bug fix"
+    echo "  docs     - Documentation changes"
+    echo "  style    - Code style changes (formatting)"
+    echo "  refactor - Code refactoring"
+    echo "  perf     - Performance improvements"
+    echo "  test     - Test changes"
+    echo "  chore    - Build, dependencies, config"
+    echo "  ci       - CI/CD changes"
+    echo "  revert   - Revert previous commit"
+    echo ""
+    echo "💡 Tip: Use 'npm run commit' to use commitizen assistant"
+    exit 1
+  fi
+fi
+
+# Check commit message length
+first_line_length=$(echo "$commit_msg" | head -n1 | wc -c)
+if [ "$first_line_length" -gt 73 ]; then
+  echo "⚠️  Warning: First line is longer than 72 characters ($first_line_length chars)"
+  echo "Consider using a shorter message for better readability"
+fi
+
+echo "✅ Commit message is valid"

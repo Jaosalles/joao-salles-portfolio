@@ -55,6 +55,59 @@ Use `npm run commit` para abrir o wizard (Commitizen + cz-git). O assistente val
 - **Tipos**: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `build`, `ci`, `perf`, `deps`, `revert`
 - **Escopos**: `components`, `hooks`, `pages`, `lib`, `styles`, `config`, `e2e`, `tests`, `docs`, `deps`, `ci`
 
+#### Pre-commit Hooks (Husky + lint-staged)
+
+Antes de cada commit, os seguintes validadores são executados **automaticamente**:
+
+**1️⃣ Lint-staged** (ESLint + Prettier)
+
+- Formata e valida apenas arquivos staged
+- Arquivos TypeScript/TSX: ESLint + Prettier
+- JSON e Markdown: Prettier
+
+**2️⃣ Type-check** (TypeScript)
+
+- Valida tipos com `tsc --noEmit`
+- Garante zero erros de tipo
+
+**3️⃣ Commit-msg** (Validação de mensagem)
+
+- Valida formato Conventional Commits
+- Avisa se primeira linha > 72 caracteres
+
+**Exemplo de fluxo:**
+
+```bash
+git add .
+git commit -m "feat(components): add new button variant"
+# ✅ Lint-staged passa
+# ✅ Type-check passa
+# ✅ Mensagem validada
+# ✅ Commit bem-sucedido
+```
+
+**Se houver falha:**
+
+```bash
+# ESLint/Prettier encontrou problemas
+npm run lint:fix
+git add .
+git commit -m "..."
+
+# Type-check encontrou erros
+npm run type-check
+# Corrigir manualmente
+git add .
+git commit -m "..."
+```
+
+**Bypass (não recomendado):**
+
+```bash
+git commit --no-verify    # Pula todos os hooks
+HUSKY=0 git commit -m "..." # Desabilita Husky
+```
+
 ### 4. Pull Request
 
 1. **Atualize sua branch**:

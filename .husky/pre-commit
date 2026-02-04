@@ -1,6 +1,27 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-echo "Running pre-commit hooks..."
+echo "🔍 Running pre-commit hooks..."
+echo ""
 
+# Step 1: Run lint-staged for formatting and linting
+echo "1️⃣  Linting and formatting staged files..."
 npx --no -- lint-staged
+if [ $? -ne 0 ]; then
+  echo "❌ Lint-staged failed"
+  exit 1
+fi
+echo "✅ Lint-staged passed"
+echo ""
+
+# Step 2: Run type-check on staged files
+echo "2️⃣  Type-checking..."
+npx --no -- tsc --noEmit
+if [ $? -ne 0 ]; then
+  echo "❌ Type-check failed"
+  exit 1
+fi
+echo "✅ Type-check passed"
+echo ""
+
+echo "✨ All pre-commit hooks passed!"
