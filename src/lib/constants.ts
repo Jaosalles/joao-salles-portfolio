@@ -74,7 +74,7 @@ export const SKILLS = {
 export const SEO_DEFAULTS = {
   title: 'João Pedro Salles - Senior Frontend Engineer',
   description:
-    'Desenvolvedor frontend sênior especializado em React, TypeScript e arquiteturas modernas. Experiência em desenvolvimento de aplicações web escaláveis e performáticas. Fullstack, Testing, Performance & Accessibility.',
+    'Senior Frontend Engineer disponível para oportunidades remotas. Expert em React, TypeScript, Next.js e desenvolvimento de aplicações web escaláveis de alta performance.',
   keywords: [
     'frontend developer',
     'react developer',

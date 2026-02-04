@@ -29,7 +29,7 @@ export const generateStructuredData = () => {
     name: 'João Pedro Salles',
     jobTitle: 'Senior Frontend Engineer',
     description:
-      'Desenvolvedor frontend sênior especializado em React, TypeScript e arquiteturas modernas de frontend. Com 8+ anos de experiência em desenvolvimento web escalável e performático.',
+      'Senior Frontend Engineer disponível para oportunidades remotas. Expert em React, TypeScript, Next.js e desenvolvimento de aplicações web escaláveis de alta performance. 8+ anos de experiência.',
     url: 'https://jaosalles.github.io/joao-salles-portfolio/',
     email: 'joaopedrosalles@hotmail.com',
     image: 'https://jaosalles.github.io/joao-salles-portfolio/og-image.png',
