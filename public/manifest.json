@@ -1,0 +1,26 @@
+{
+  "name": "João Pedro Salles - Senior Frontend Engineer",
+  "short_name": "João Salles Portfolio",
+  "description": "Senior Frontend Engineer disponível para oportunidades remotas. Expert em React, TypeScript, Next.js e desenvolvimento de aplicações web escaláveis de alta performance",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a1a1a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["technology", "business"],
+  "screenshots": [
+    {
+      "src": "./og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}
