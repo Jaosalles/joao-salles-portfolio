@@ -1,4 +1,4 @@
-import { SEO_DEFAULTS } from '@/constants';
+import { SEO_DEFAULTS } from '@/lib/constants';
 
 export const generateMetaTags = (overrides: Partial<typeof SEO_DEFAULTS> = {}) => {
   const meta = { ...SEO_DEFAULTS, ...overrides };
