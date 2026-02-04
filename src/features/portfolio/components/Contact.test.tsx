@@ -252,8 +252,7 @@ describe('Contact', () => {
             email: testEmail,
             message: testMessage,
             phone: '',
-          }),
-          'public_test'
+          })
         );
       });
     });
