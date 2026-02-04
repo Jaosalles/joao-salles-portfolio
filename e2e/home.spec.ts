@@ -1,39 +1,9 @@
-import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
-test('homepage renders and has no detected a11y violations', async ({ page, context }) => {
-  await context.addInitScript(() => {
-    localStorage.setItem('language', 'pt');
-  });
-  await page.goto('/');
+test('homepage renders and has no detected a11y violations', async ({ page, testUtils }) => {
+  await testUtils.initializeEnvironment();
   await expect(page).toHaveTitle(/Dev Portfolio|Senior Frontend Engineer/);
 
-  // Run axe-core analysis using AxeBuilder and fail if violations are present
-  const results = await new AxeBuilder({ page }).analyze();
-
-  // Filter out color-contrast violations from the theme toggle button and CTA buttons
-  // These elements use design system colors which may have intentional contrast choices
-  const filtered = (results.violations || []).filter(v => {
-    if (v.id !== 'color-contrast') return true;
-    // Filter out violations from hero CTA buttons and theme toggle
-    return !v.nodes.some(node =>
-      node.target.some(
-        t =>
-          typeof t === 'string' &&
-          (t.includes('text-primary-foreground') ||
-            (t.includes('rounded-md') && t.includes('h-9')) ||
-            (t.includes('shadow-lg') && t.includes('hover:shadow-xl')))
-      )
-    );
-  });
-
-  if (filtered.length > 0) {
-    // Attach JSON to the report for easier debugging
-    test.info().attachments.push({
-      name: 'axe-violations',
-      contentType: 'application/json',
-      body: JSON.stringify(filtered, null, 2),
-    } as any);
-  }
-  expect(filtered).toHaveLength(0);
+  const violations = await testUtils.runA11yScan(undefined, 'axe-homepage-violations');
+  expect(violations).toHaveLength(0);
 });

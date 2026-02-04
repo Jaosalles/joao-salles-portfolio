@@ -90,10 +90,6 @@ Para mais informações: [ver ARCHITECTURE.md](./ARCHITECTURE.md)
   - Use `nvm use 20.19.0` para definir a versão correta
 - npm ou yarn
 
-### ⚠️ Importante: Setup Inicial
-
-Este projeto usa configurações avançadas de senior-level. Se encontrar problemas com `yarn run lint`, consulte o [arquivo SETUP.md](./SETUP.md) para instruções detalhadas.
-
 ### Instalação
 
 1. **Clone o repositório**

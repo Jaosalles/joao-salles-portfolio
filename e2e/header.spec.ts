@@ -1,11 +1,7 @@
-import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
-test('header navigation updates hash and shows sections', async ({ page, context }) => {
-  await context.addInitScript(() => {
-    localStorage.setItem('language', 'pt');
-  });
-  await page.goto('/');
+test('header navigation updates hash and shows sections', async ({ page, testUtils }) => {
+  await testUtils.initializeEnvironment();
   const projetosButton = page.locator('header').locator('button', { hasText: 'Projetos' });
   await expect(projetosButton).toBeVisible();
 
@@ -14,24 +10,13 @@ test('header navigation updates hash and shows sections', async ({ page, context
   await expect(page.locator('#projects')).toBeVisible();
 
   // a11y scan limited to the projects section
-  const results = await new AxeBuilder({ page }).include('#projects').analyze();
-  const filtered = (results.violations || []).filter(v => v.id !== 'color-contrast');
-  if (results.violations && results.violations.length > 0) {
-    test.info().attachments.push({
-      name: 'axe-projects-violations',
-      contentType: 'application/json',
-      body: JSON.stringify(results, null, 2),
-    } as any);
-  }
-  expect(filtered).toHaveLength(0);
+  const violations = await testUtils.runA11yScan('#projects', 'axe-projects-violations');
+  expect(violations).toHaveLength(0);
 });
 
-test('mobile menu toggles and focuses back', async ({ page, context }) => {
-  await context.addInitScript(() => {
-    localStorage.setItem('language', 'pt');
-  });
+test('mobile menu toggles and focuses back', async ({ page, testUtils }) => {
+  await testUtils.initializeEnvironment();
   await page.setViewportSize({ width: 375, height: 800 });
-  await page.goto('/');
 
   const toggle = page.locator('button[aria-label="Toggle menu"]');
   await toggle.click();

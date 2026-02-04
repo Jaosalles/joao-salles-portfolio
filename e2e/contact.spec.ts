@@ -1,25 +1,13 @@
-import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
-test('contact CTA scrolls to contact section and shows contact info', async ({ page, context }) => {
-  await context.addInitScript(() => {
-    localStorage.setItem('language', 'pt');
-  });
-  await page.goto('/');
+test('contact CTA scrolls to contact section and shows contact info', async ({ page, testUtils }) => {
+  await testUtils.initializeEnvironment();
   // The main CTA button "Entrar em contato" should navigate to contact
   await page.click('text=Entrar em contato');
   await expect(page).toHaveURL(/#contact/);
   await expect(page.locator('#contact')).toBeVisible();
   await expect(page.locator('#contact a[href^="mailto:"]')).toBeVisible();
 
-  const results = await new AxeBuilder({ page }).include('#contact').analyze();
-  const filtered = (results.violations || []).filter(v => v.id !== 'color-contrast');
-  if (results.violations && results.violations.length > 0) {
-    test.info().attachments.push({
-      name: 'axe-contact-violations',
-      contentType: 'application/json',
-      body: JSON.stringify(results, null, 2),
-    } as any);
-  }
-  expect(filtered).toHaveLength(0);
+  const violations = await testUtils.runA11yScan('#contact', 'axe-contact-violations');
+  expect(violations).toHaveLength(0);
 });
