@@ -1,15 +1,17 @@
 /// <reference types="vitest" />
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
-import react from '@vitejs/plugin-react-swc';
 import { fileURLToPath } from 'node:url';
 import path from 'path';
 import { defineConfig } from 'vite';
+import { sharedPlugins, sharedOptimizeDeps } from './shared-vite-config';
+
 const dirname =
   typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  plugins: [react()],
+  plugins: sharedPlugins,
+  optimizeDeps: sharedOptimizeDeps,
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -39,6 +41,12 @@ export default defineConfig({
     projects: [
       {
         name: 'unit',
+        plugins: sharedPlugins,
+        resolve: {
+          alias: {
+            '@': path.resolve(__dirname, './src'),
+          },
+        },
         test: {
           globals: true,
           environment: 'jsdom',
@@ -51,12 +59,18 @@ export default defineConfig({
       {
         name: 'storybook',
         plugins: [
+          ...sharedPlugins,
           // The plugin will run tests for the stories defined in your Storybook config
           // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
           storybookTest({
             configDir: path.join(dirname, '.storybook'),
           }),
         ],
+        resolve: {
+          alias: {
+            '@': path.resolve(__dirname, './src'),
+          },
+        },
         test: {
           browser: {
             enabled: true,
