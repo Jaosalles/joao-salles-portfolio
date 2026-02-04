@@ -323,27 +323,117 @@ export const Default: Story = {
 
 ## 🧬 CI/CD
 
-- Pipeline (GitHub Actions):
-  - `test`: lint, type-check, unit + coverage (thresholds verificados por script).
-  - `build`: depende de `test`, artefata `dist/`.
-  - `e2e`: apenas em push, reutiliza build artefatado, cache de browsers.
-  - `lhci`: apenas em push, roda contra `dist` artefatado.
-- Concurrency: execuções na mesma ref são canceladas (evita filas).
-- Cache: npm e navegadores Playwright para reduzir tempo.
+### Pipeline GitHub Actions
+
+O projeto possui um pipeline robusto e automatizado com as seguintes workflows:
+
+#### 1️⃣ **CI Workflow** (`.github/workflows/ci.yml`)
+
+Executa em cada push/PR com 4 jobs paralelos:
+
+- **test** (~8 min): ESLint, type-check, testes com coverage, validação de thresholds
+- **build** (~3 min): Vite build, upload artifacts
+- **e2e** (~5 min): Testes end-to-end com Playwright (somente em push)
+- **lhci** (~4 min): Lighthouse CI para performance (somente em push)
+- **summary**: Relatório final do pipeline
+
+**Timeout:** 20 minutos | **Cache:** npm + Playwright browsers
+
+#### 2️⃣ **Deploy Workflow** (`.github/workflows/deploy.yml`)
+
+Deploy automático para GitHub Pages em push na `main`
+
+- Build com `GITHUB_PAGES=true`
+- Cria `.nojekyll` para desabilitar Jekyll
+- Deploy com GitHub Pages Action
+- **Tempo:** ~5 minutos
+
+#### 3️⃣ **Semantic PR Workflow** (`.github/workflows/semantic-pr.yml`)
+
+Valida que títulos de PR seguem Conventional Commits
+
+- **Tipos:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `ci`, `perf`, `deps`, `revert`
+- **Escopo obrigatório** para todos os tipos
+- **Bypass:** Adicione label `skip-semantic` se necessário
+- Ignora PRs de bots (Dependabot, GitHub Actions)
+
+#### 4️⃣ **Dependabot** (`.github/dependabot.yml`)
+
+Atualizações automáticas de dependências
+
+- Verifica **semanalmente**
+- Abre até **5 PRs por semana**
+- Todas as dependências (runtime + dev)
+- Validadas automaticamente via CI
+
+### ⚙️ Otimizações
+
+- **Concurrency**: Cancela runs anteriores na mesma branch (economiza filas)
+- **Caching**: npm + Playwright browsers (~50% mais rápido)
+- **Conditional Jobs**: E2E/LHCI apenas em push (economiza recursos em PRs)
+- **Artifacts**: Retenção limitada a 7 dias
 
 ### ✅ Checks de CI (Branch Protection)
 
-Para proteger a branch `main`, recomendamos marcar como obrigatórios estes checks:
+Recomendado marcar como obrigatórios em `main`:
 
-- CI / test: valida lint, type-check e testes com cobertura (usa [scripts/check-coverage.js](scripts/check-coverage.js)).
-- Semantic Pull Request Title: valida o título do PR no padrão Conventional Commits.
-- codecov/project: valida cobertura total do projeto (alvo 90%, ver [codecov.yml](codecov.yml)).
-- codecov/patch: valida cobertura do patch (alvo 90%).
+- `CI / test`: Lint, type-check, testes e coverage
+- `CI / build`: Build bem-sucedido
+- `Semantic Pull Request Title`: Títulos em Conventional Commits
+- `codecov/project`: Coverage total ≥ 90%
+- `codecov/patch`: Coverage do patch ≥ 90%
 
-Observações:
+### 📊 Tempos de Execução
 
-- PRs de bots (Dependabot/GitHub Actions) são ignorados em commitlint e título semântico.
-- Para dispensar a verificação de título em casos específicos, aplique o rótulo `skip-semantic` no PR.
+Total: **~20 minutos** em um push
+| Job | Tempo |
+|-----|-------|
+| Test | ~8 min |
+| Build | ~3 min |
+| E2E | ~5 min |
+| LHCI | ~4 min |
+
+### 🔧 Troubleshooting CI/CD
+
+**E2E testes falhando localmente mas passando em CI?**
+
+```bash
+npm run e2e:ci          # Rodar em modo CI
+npm run e2e:headed      # Visualizar com browser
+npm run e2e:debug       # Debug mode
+```
+
+**LHCI falhando?**
+
+```bash
+# Verificar se build existe
+ls -la dist/
+
+# Testar build localmente
+npm run build && npm run preview
+```
+
+**Coverage abaixo do threshold?**
+
+```bash
+npm run test:coverage   # Gera relatório
+# Adicione testes para cobrir código novo
+```
+
+**Dependabot PR falhando?**
+
+```bash
+# Testar localmente com versão nova
+npm install             # com a versão do Dependabot
+npm run test && npm run build
+```
+
+### 🔑 Secrets Necessários (Opcional)
+
+| Secret                  | Uso                     |
+| ----------------------- | ----------------------- |
+| `CODECOV_TOKEN`         | Upload coverage Codecov |
+| `LHCI_GITHUB_APP_TOKEN` | Lighthouse CI comments  |
 
 ## 📈 Performance e Observabilidade
 
