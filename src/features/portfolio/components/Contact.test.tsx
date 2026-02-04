@@ -1,4 +1,5 @@
 import { LanguageProvider } from '@/features/common/context/LanguageContext';
+import emailjs from '@emailjs/browser';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as sonner from 'sonner';
@@ -13,10 +14,21 @@ vi.mock('sonner', () => ({
   },
 }));
 
+// Mock emailjs
+vi.mock('@emailjs/browser', () => ({
+  default: {
+    send: vi.fn(),
+  },
+}));
+
 describe('Contact', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     localStorage.setItem('language', 'pt');
+    // Setup default environment variables
+    import.meta.env.VITE_EMAILJS_SERVICE_ID = 'service_test';
+    import.meta.env.VITE_EMAILJS_TEMPLATE_ID = 'template_test';
+    import.meta.env.VITE_EMAILJS_PUBLIC_KEY = 'public_test';
   });
 
   const renderWithLang = (ui: React.ReactNode) => render(<LanguageProvider>{ui}</LanguageProvider>);
@@ -104,6 +116,9 @@ describe('Contact', () => {
 
   it('submits form successfully with valid data', async () => {
     const user = userEvent.setup();
+    const mockSend = vi.mocked(emailjs.send);
+    mockSend.mockResolvedValueOnce({ ok: true } as any);
+
     renderWithLang(<Contact />);
 
     const nameInput = screen.getByLabelText(/Nome/i);
@@ -146,6 +161,9 @@ describe('Contact', () => {
 
   it('disables submit button while submitting', async () => {
     const user = userEvent.setup();
+    const mockSend = vi.mocked(emailjs.send);
+    mockSend.mockResolvedValueOnce({ ok: true } as any);
+
     renderWithLang(<Contact />);
 
     const nameInput = screen.getByLabelText(/Nome/i);
@@ -210,6 +228,217 @@ describe('Contact', () => {
 
     await waitFor(() => {
       expect(nameInput).toHaveClass('border-red-500');
+    });
+  });
+
+  describe('EmailJS Integration', () => {
+    it('sends email via EmailJS with correct parameters', async () => {
+      const user = userEvent.setup();
+      const mockSend = vi.mocked(emailjs.send);
+      mockSend.mockResolvedValueOnce({ ok: true } as any);
+
+      renderWithLang(<Contact />);
+
+      const nameInput = screen.getByLabelText(/Nome/i);
+      const emailInput = screen.getByLabelText(/Email/i);
+      const messageInput = screen.getByLabelText(/Mensagem/i);
+      const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });
+
+      const testName = 'João Silva';
+      const testEmail = 'joao@example.com';
+      const testMessage = 'Esta é uma mensagem de teste válida';
+
+      await act(async () => {
+        await user.type(nameInput, testName);
+        await user.type(emailInput, testEmail);
+        await user.type(messageInput, testMessage);
+        await user.click(submitButton);
+      });
+
+      await waitFor(() => {
+        expect(mockSend).toHaveBeenCalledWith(
+          'service_test',
+          'template_test',
+          expect.objectContaining({
+            name: testName,
+            email: testEmail,
+            message: testMessage,
+            phone: '',
+          }),
+          'public_test'
+        );
+      });
+    });
+
+    it('shows success toast when email is sent successfully', async () => {
+      const user = userEvent.setup();
+      const mockSend = vi.mocked(emailjs.send);
+      mockSend.mockResolvedValueOnce({ ok: true } as any);
+
+      renderWithLang(<Contact />);
+
+      const nameInput = screen.getByLabelText(/Nome/i);
+      const emailInput = screen.getByLabelText(/Email/i);
+      const messageInput = screen.getByLabelText(/Mensagem/i);
+      const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });
+
+      await act(async () => {
+        await user.type(nameInput, 'João Silva');
+        await user.type(emailInput, 'joao@example.com');
+        await user.type(messageInput, 'Esta é uma mensagem de teste válida');
+        await user.click(submitButton);
+      });
+
+      await waitFor(() => {
+        expect(sonner.toast.success).toHaveBeenCalledWith(
+          'Mensagem enviada com sucesso!',
+          expect.objectContaining({
+            description: 'Entrarei em contato em breve.',
+          })
+        );
+      });
+    });
+
+    it('shows error toast when EmailJS fails', async () => {
+      const user = userEvent.setup();
+      const mockSend = vi.mocked(emailjs.send);
+      mockSend.mockRejectedValueOnce(new Error('EmailJS Error'));
+
+      renderWithLang(<Contact />);
+
+      const nameInput = screen.getByLabelText(/Nome/i);
+      const emailInput = screen.getByLabelText(/Email/i);
+      const messageInput = screen.getByLabelText(/Mensagem/i);
+      const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });
+
+      await act(async () => {
+        await user.type(nameInput, 'João Silva');
+        await user.type(emailInput, 'joao@example.com');
+        await user.type(messageInput, 'Esta é uma mensagem de teste válida');
+        await user.click(submitButton);
+      });
+
+      await waitFor(() => {
+        expect(sonner.toast.error).toHaveBeenCalledWith(
+          'Erro ao enviar mensagem',
+          expect.objectContaining({
+            description: 'Tente novamente mais tarde.',
+          })
+        );
+      });
+    });
+
+    it('shows error when EmailJS is not configured', async () => {
+      const user = userEvent.setup();
+      // Simulate missing configuration
+      import.meta.env.VITE_EMAILJS_SERVICE_ID = '';
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID = '';
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY = '';
+
+      renderWithLang(<Contact />);
+
+      const nameInput = screen.getByLabelText(/Nome/i);
+      const emailInput = screen.getByLabelText(/Email/i);
+      const messageInput = screen.getByLabelText(/Mensagem/i);
+      const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });
+
+      await act(async () => {
+        await user.type(nameInput, 'João Silva');
+        await user.type(emailInput, 'joao@example.com');
+        await user.type(messageInput, 'Esta é uma mensagem de teste válida');
+        await user.click(submitButton);
+      });
+
+      await waitFor(() => {
+        expect(sonner.toast.error).toHaveBeenCalledWith(
+          'Erro ao enviar mensagem',
+          expect.objectContaining({
+            description: 'Configuração de email incompleta. Entre em contato diretamente.',
+          })
+        );
+      });
+
+      // EmailJS should not be called when configuration is missing
+      expect(emailjs.send).not.toHaveBeenCalled();
+    });
+
+    it('includes sent_date in email parameters', async () => {
+      const user = userEvent.setup();
+      const mockSend = vi.mocked(emailjs.send);
+      mockSend.mockResolvedValueOnce({ ok: true } as any);
+
+      renderWithLang(<Contact />);
+
+      const nameInput = screen.getByLabelText(/Nome/i);
+      const emailInput = screen.getByLabelText(/Email/i);
+      const messageInput = screen.getByLabelText(/Mensagem/i);
+      const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });
+
+      await act(async () => {
+        await user.type(nameInput, 'João Silva');
+        await user.type(emailInput, 'joao@example.com');
+        await user.type(messageInput, 'Esta é uma mensagem de teste válida');
+        await user.click(submitButton);
+      });
+
+      await waitFor(() => {
+        const callArgs = mockSend.mock.calls[0][2];
+        expect(callArgs).toHaveProperty('sent_date');
+        expect(typeof callArgs.sent_date).toBe('string');
+      });
+    });
+
+    it('resets form after successful email submission', async () => {
+      const user = userEvent.setup();
+      const mockSend = vi.mocked(emailjs.send);
+      mockSend.mockResolvedValueOnce({ ok: true } as any);
+
+      renderWithLang(<Contact />);
+
+      const nameInput = screen.getByLabelText(/Nome/i) as HTMLInputElement;
+      const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement;
+      const messageInput = screen.getByLabelText(/Mensagem/i) as HTMLTextAreaElement;
+      const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });
+
+      await act(async () => {
+        await user.type(nameInput, 'João Silva');
+        await user.type(emailInput, 'joao@example.com');
+        await user.type(messageInput, 'Esta é uma mensagem de teste válida');
+        await user.click(submitButton);
+      });
+
+      await waitFor(() => {
+        expect(nameInput.value).toBe('');
+        expect(emailInput.value).toBe('');
+        expect(messageInput.value).toBe('');
+      });
+    });
+
+    it('does not reset form when email submission fails', async () => {
+      const user = userEvent.setup();
+      const mockSend = vi.mocked(emailjs.send);
+      mockSend.mockRejectedValueOnce(new Error('EmailJS Error'));
+
+      renderWithLang(<Contact />);
+
+      const nameInput = screen.getByLabelText(/Nome/i) as HTMLInputElement;
+      const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement;
+      const messageInput = screen.getByLabelText(/Mensagem/i) as HTMLTextAreaElement;
+      const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });
+
+      await act(async () => {
+        await user.type(nameInput, 'João Silva');
+        await user.type(emailInput, 'joao@example.com');
+        await user.type(messageInput, 'Esta é uma mensagem de teste válida');
+        await user.click(submitButton);
+      });
+
+      await waitFor(() => {
+        // Form should still have values after error
+        expect(nameInput.value).toBe('João Silva');
+        expect(emailInput.value).toBe('joao@example.com');
+        expect(messageInput.value).toBe('Esta é uma mensagem de teste válida');
+      });
     });
   });
 });

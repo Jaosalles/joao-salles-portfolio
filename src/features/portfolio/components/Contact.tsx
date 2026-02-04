@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/features/common/context/LanguageContext';
+import emailjs from '@emailjs/browser';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, MapPin, Send } from 'lucide-react';
@@ -41,13 +42,33 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Simula envio de email (você pode integrar com serviços como EmailJS, SendGrid, etc.)
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Valida se as variáveis de ambiente estão configuradas
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-      // In development, log form data (will be removed in production builds)
-      if (import.meta.env.DEV) {
-        console.debug('📧 Form submitted:', data);
+      if (!serviceId || !templateId || !publicKey) {
+        console.error('EmailJS configuration missing');
+        toast.error(t('contact.toast.errorTitle'), {
+          description: 'Configuração de email incompleta. Entre em contato diretamente.',
+        });
+        return;
       }
+
+      // Prepara os parâmetros do template
+      const templateParams = {
+        name: data.name,
+        email: data.email,
+        message: data.message,
+        phone: '', // Campo opcional
+        sent_date: new Date().toLocaleString('pt-BR', {
+          dateStyle: 'short',
+          timeStyle: 'short',
+        }),
+      };
+
+      // Envia o email via EmailJS
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
 
       toast.success(t('contact.toast.successTitle'), {
         description: t('contact.toast.successDesc'),
