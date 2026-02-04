@@ -11,3 +11,4 @@ export { useT } from './use-t';
 
 // SEO hooks
 export { useMetaTags } from './use-meta-tags';
+export { useStructuredData } from './use-structured-data';

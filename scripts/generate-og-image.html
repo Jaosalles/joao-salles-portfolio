@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1200, height=630">
+  <title>OG Image Generator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 1200px;
+      height: 630px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      padding: 60px;
+      max-width: 1000px;
+    }
+
+    .name {
+      font-size: 72px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .title {
+      font-size: 42px;
+      font-weight: 600;
+      color: #e5e5e7;
+      margin-bottom: 50px;
+      letter-spacing: -0.5px;
+    }
+
+    .skills {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 50px;
+    }
+
+    .skill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 28px;
+      color: #9ca3af;
+      font-weight: 500;
+    }
+
+    .skill-icon {
+      font-size: 32px;
+    }
+
+    .url {
+      font-size: 24px;
+      color: #6b7280;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .accent {
+      color: #3b82f6;
+    }
+
+    .divider {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #3b82f6, #10b981);
+      margin: 40px auto;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="name">JOÃO PEDRO SALLES</h1>
+    <h2 class="title">Senior Frontend Engineer</h2>
+    
+    <div class="divider"></div>
+    
+    <div class="skills">
+      <div class="skill">
+        <span class="skill-icon">⚛️</span>
+        <span>React</span>
+      </div>
+      <div class="skill">
+        <span class="skill-icon">💙</span>
+        <span>TypeScript</span>
+      </div>
+      <div class="skill">
+        <span class="skill-icon">⚡</span>
+        <span>Next.js</span>
+      </div>
+      <div class="skill">
+        <span class="skill-icon">🎨</span>
+        <span>Web Architect</span>
+      </div>
+      <div class="skill">
+        <span class="skill-icon">📊</span>
+        <span>Performance</span>
+      </div>
+    </div>
+    
+    <div class="url">
+      <span class="accent">jaosalles.dev</span>
+    </div>
+  </div>
+</body>
+</html>

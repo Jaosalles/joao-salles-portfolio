@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PerformanceMonitor from './components/PerformanceMonitor';
 import { LanguageProvider } from './features/common/context/LanguageContext';
+import { useStructuredData } from './hooks';
 import { getBasePath, handleGitHubPagesRouting } from './lib/utils';
 import Index from './pages/Index';
 import NotFound from './pages/NotFound';
@@ -28,6 +29,9 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  // Setup structured data for SEO
+  useStructuredData();
+
   useEffect(() => {
     handleGitHubPagesRouting();
   }, []);
