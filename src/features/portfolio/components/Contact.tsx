@@ -46,9 +46,8 @@ const Contact = () => {
       // Valida se as variáveis de ambiente estão configuradas
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
       const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-      if (!serviceId || !templateId || !publicKey) {
+      if (!serviceId || !templateId) {
         console.error('EmailJS configuration missing');
         toast.error(t('contact.toast.errorTitle'), {
           description: 'Configuração de email incompleta. Entre em contato diretamente.',
@@ -68,8 +67,8 @@ const Contact = () => {
         }),
       };
 
-      // Envia o email via EmailJS
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      // Envia o email via EmailJS (já inicializado no main.tsx)
+      await emailjs.send(serviceId, templateId, templateParams);
 
       toast.success(t('contact.toast.successTitle'), {
         description: t('contact.toast.successDesc'),
