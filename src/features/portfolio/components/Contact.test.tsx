@@ -1,9 +1,9 @@
-import { LanguageProvider } from '@/features/common/context/LanguageContext';
 import emailjs from '@emailjs/browser';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as sonner from 'sonner';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { renderWithLanguage } from '@/test/test-utils';
 import Contact from './Contact';
 
 // Mock sonner toast
@@ -31,23 +31,21 @@ describe('Contact', () => {
     import.meta.env.VITE_EMAILJS_PUBLIC_KEY = 'public_test';
   });
 
-  const renderWithLang = (ui: React.ReactNode) => render(<LanguageProvider>{ui}</LanguageProvider>);
-
   it('renders contact heading', () => {
-    renderWithLang(<Contact />);
+    renderWithLanguage(<Contact />);
     expect(screen.getByText(/Vamos/i)).toBeInTheDocument();
     expect(screen.getByText(/Conversar\?/i)).toBeInTheDocument();
   });
 
   it('renders contact information', () => {
-    renderWithLang(<Contact />);
+    renderWithLanguage(<Contact />) ;
     expect(screen.getByText('joaopedrosalles@hotmail.com')).toBeInTheDocument();
     expect(screen.getByText('@jaosalles')).toBeInTheDocument();
     expect(screen.getByText('Brasil (Remoto)')).toBeInTheDocument();
   });
 
   it('renders form fields', () => {
-    renderWithLang(<Contact />);
+    renderWithLanguage(<Contact />);
     expect(screen.getByLabelText(/Nome/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Mensagem/i)).toBeInTheDocument();
@@ -56,7 +54,7 @@ describe('Contact', () => {
 
   it('shows validation errors when submitting empty form', async () => {
     const user = userEvent.setup();
-    renderWithLang(<Contact />);
+    renderWithLanguage(<Contact />);
 
     const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });
 
@@ -72,7 +70,7 @@ describe('Contact', () => {
   });
 
   it('validates email field correctly', () => {
-    renderWithLang(<Contact />);
+    renderWithLanguage(<Contact />);
 
     const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement;
 
@@ -82,7 +80,7 @@ describe('Contact', () => {
 
   it('shows error for short name', async () => {
     const user = userEvent.setup();
-    renderWithLang(<Contact />);
+    renderWithLanguage(<Contact />);
 
     const nameInput = screen.getByLabelText(/Nome/i);
     const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });
@@ -99,7 +97,7 @@ describe('Contact', () => {
 
   it('shows error for short message', async () => {
     const user = userEvent.setup();
-    renderWithLang(<Contact />);
+    renderWithLanguage(<Contact />);
 
     const messageInput = screen.getByLabelText(/Mensagem/i);
     const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });
@@ -119,7 +117,7 @@ describe('Contact', () => {
     const mockSend = vi.mocked(emailjs.send);
     mockSend.mockResolvedValueOnce({ ok: true } as any);
 
-    renderWithLang(<Contact />);
+    renderWithLanguage(<Contact />);
 
     const nameInput = screen.getByLabelText(/Nome/i);
     const emailInput = screen.getByLabelText(/Email/i);
@@ -159,7 +157,7 @@ describe('Contact', () => {
     const mockSend = vi.mocked(emailjs.send);
     mockSend.mockResolvedValueOnce({ ok: true } as any);
 
-    renderWithLang(<Contact />);
+    renderWithLanguage(<Contact />);
 
     const nameInput = screen.getByLabelText(/Nome/i);
     const emailInput = screen.getByLabelText(/Email/i);
@@ -183,7 +181,7 @@ describe('Contact', () => {
   });
 
   it('renders contact links with correct href attributes', () => {
-    renderWithLang(<Contact />);
+    renderWithLanguage(<Contact />);
 
     const emailLink = screen.getByRole('link', { name: /joaopedrosalles@hotmail\.com/i });
     expect(emailLink).toHaveAttribute('href', 'mailto:joaopedrosalles@hotmail.com');
@@ -206,7 +204,7 @@ describe('Contact', () => {
 
   it('applies error styling to invalid fields', async () => {
     const user = userEvent.setup();
-    renderWithLang(<Contact />);
+    renderWithLanguage(<Contact />);
 
     const nameInput = screen.getByLabelText(/Nome/i);
     const submitButton = screen.getByRole('button', { name: /Enviar Mensagem/i });
@@ -227,7 +225,7 @@ describe('Contact', () => {
       const mockSend = vi.mocked(emailjs.send);
       mockSend.mockResolvedValueOnce({ ok: true } as any);
 
-      renderWithLang(<Contact />);
+      renderWithLanguage(<Contact />);
 
       const nameInput = screen.getByLabelText(/Nome/i);
       const emailInput = screen.getByLabelText(/Email/i);
@@ -265,7 +263,7 @@ describe('Contact', () => {
       const mockSend = vi.mocked(emailjs.send);
       mockSend.mockResolvedValueOnce({ ok: true } as any);
 
-      renderWithLang(<Contact />);
+      renderWithLanguage(<Contact />);
 
       const nameInput = screen.getByLabelText(/Nome/i);
       const emailInput = screen.getByLabelText(/Email/i);
@@ -294,7 +292,7 @@ describe('Contact', () => {
       const mockSend = vi.mocked(emailjs.send);
       mockSend.mockRejectedValueOnce(new Error('EmailJS Error'));
 
-      renderWithLang(<Contact />);
+      renderWithLanguage(<Contact />);
 
       const nameInput = screen.getByLabelText(/Nome/i);
       const emailInput = screen.getByLabelText(/Email/i);
@@ -325,7 +323,7 @@ describe('Contact', () => {
       import.meta.env.VITE_EMAILJS_TEMPLATE_ID = '';
       import.meta.env.VITE_EMAILJS_PUBLIC_KEY = '';
 
-      renderWithLang(<Contact />);
+      renderWithLanguage(<Contact />);
 
       const nameInput = screen.getByLabelText(/Nome/i);
       const emailInput = screen.getByLabelText(/Email/i);
@@ -357,7 +355,7 @@ describe('Contact', () => {
       const mockSend = vi.mocked(emailjs.send);
       mockSend.mockResolvedValueOnce({ ok: true } as any);
 
-      renderWithLang(<Contact />);
+      renderWithLanguage(<Contact />);
 
       const nameInput = screen.getByLabelText(/Nome/i);
       const emailInput = screen.getByLabelText(/Email/i);
@@ -383,7 +381,7 @@ describe('Contact', () => {
       const mockSend = vi.mocked(emailjs.send);
       mockSend.mockResolvedValueOnce({ ok: true } as any);
 
-      renderWithLang(<Contact />);
+      renderWithLanguage(<Contact />);
 
       const nameInput = screen.getByLabelText(/Nome/i) as HTMLInputElement;
       const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement;
@@ -409,7 +407,7 @@ describe('Contact', () => {
       const mockSend = vi.mocked(emailjs.send);
       mockSend.mockRejectedValueOnce(new Error('EmailJS Error'));
 
-      renderWithLang(<Contact />);
+      renderWithLanguage(<Contact />);
 
       const nameInput = screen.getByLabelText(/Nome/i) as HTMLInputElement;
       const emailInput = screen.getByLabelText(/Email/i) as HTMLInputElement;

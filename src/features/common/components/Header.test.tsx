@@ -1,8 +1,7 @@
-import { LanguageProvider } from '@/features/common/context/LanguageContext';
-import { act, render, screen, waitFor, within } from '@testing-library/react';
+import { act, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { renderWithProviders } from '@/test/test-utils';
 import Header from './Header';
 
 // Mock next-themes
@@ -18,13 +17,7 @@ describe('Header', () => {
     localStorage.setItem('language', 'pt');
   });
   it('renders logo', () => {
-    render(
-      <LanguageProvider>
-        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-          <Header />
-        </MemoryRouter>
-      </LanguageProvider>
-    );
+    renderWithProviders(<Header />, { includeRouter: true });
     const logo = screen.getByText(/Dev/i);
     expect(logo).toBeInTheDocument();
   });
@@ -32,26 +25,14 @@ describe('Header', () => {
   it('renders theme toggle button in desktop view', () => {
     // aceitar PT ou EN no aria-label
     localStorage.setItem('language', 'en');
-    render(
-      <LanguageProvider>
-        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-          <Header />
-        </MemoryRouter>
-      </LanguageProvider>
-    );
+    renderWithProviders(<Header />, { includeRouter: true });
     const themeToggle = screen.getByLabelText(/Alternar tema|Toggle theme/i);
     expect(themeToggle).toBeInTheDocument();
   });
 
   it('opens mobile menu and closes when link clicked or escape pressed', async () => {
     const user = userEvent.setup();
-    render(
-      <LanguageProvider>
-        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-          <Header />
-        </MemoryRouter>
-      </LanguageProvider>
-    );
+    renderWithProviders(<Header />, { includeRouter: true });
 
     const toggle = screen.getByLabelText(/Toggle.*menu|navigation menu/i);
     await act(async () => {
