@@ -93,7 +93,7 @@ export const SEO_DEFAULTS = {
     'brazil remote',
     'portugal tech',
   ],
-  ogImage: '/og-image.png',
+  ogImage: 'https://jaosalles.github.io/joao-salles-portfolio/og-image.png',
   twitterHandle: '@jaosalles',
 } as const;
 

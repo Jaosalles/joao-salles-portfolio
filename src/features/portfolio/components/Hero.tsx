@@ -28,10 +28,7 @@ const Hero = () => {
       />
 
       <div className="container relative z-10 px-6">
-        <motion.div
-          {...heroHeadline}
-          className="max-w-4xl mx-auto text-center"
-        >
+        <motion.div {...heroHeadline} className="max-w-4xl mx-auto text-center">
           {/* Status badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}

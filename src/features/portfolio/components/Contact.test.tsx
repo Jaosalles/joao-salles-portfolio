@@ -1,9 +1,9 @@
+import { renderWithLanguage } from '@/test/test-utils';
 import emailjs from '@emailjs/browser';
 import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as sonner from 'sonner';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { renderWithLanguage } from '@/test/test-utils';
 import Contact from './Contact';
 
 // Mock sonner toast
@@ -38,7 +38,7 @@ describe('Contact', () => {
   });
 
   it('renders contact information', () => {
-    renderWithLanguage(<Contact />) ;
+    renderWithLanguage(<Contact />);
     expect(screen.getByText('joaopedrosalles@hotmail.com')).toBeInTheDocument();
     expect(screen.getByText('@jaosalles')).toBeInTheDocument();
     expect(screen.getByText('Brasil (Remoto)')).toBeInTheDocument();

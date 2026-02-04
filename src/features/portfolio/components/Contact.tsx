@@ -90,10 +90,7 @@ const Contact = () => {
   return (
     <section id="contact" className="py-24 relative">
       <div className="container px-6">
-        <motion.div
-          {...fadeInUp}
-          className="max-w-4xl mx-auto"
-        >
+        <motion.div {...fadeInUp} className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
               {t('contact.titlePrefix')}{' '}
@@ -103,10 +100,7 @@ const Contact = () => {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <motion.div
-              {...fadeInLeft}
-              className="space-y-6"
-            >
+            <motion.div {...fadeInLeft} className="space-y-6">
               <div className="glass rounded-xl p-6 shadow-card">
                 <h3 className="font-display text-lg font-semibold mb-4">
                   {t('contact.infoTitle')}
@@ -170,10 +164,7 @@ const Contact = () => {
               </div>
             </motion.div>
 
-            <motion.div
-              {...fadeInRight}
-              transition={{ ...fadeInRight.transition, delay: 0.3 }}
-            >
+            <motion.div {...fadeInRight} transition={{ ...fadeInRight.transition, delay: 0.3 }}>
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="glass rounded-xl p-6 space-y-4 shadow-card"

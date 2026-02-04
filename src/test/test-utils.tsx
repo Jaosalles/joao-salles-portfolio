@@ -1,7 +1,7 @@
 import { LanguageProvider } from '@/features/common/context/LanguageContext';
 import { render, RenderOptions } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 import { ReactNode } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
 /**
  * Custom render function that wraps components with common providers

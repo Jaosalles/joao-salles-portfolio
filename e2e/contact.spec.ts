@@ -1,6 +1,9 @@
 import { expect, test } from './fixtures';
 
-test('contact CTA scrolls to contact section and shows contact info', async ({ page, testUtils }) => {
+test('contact CTA scrolls to contact section and shows contact info', async ({
+  page,
+  testUtils,
+}) => {
   await testUtils.initializeEnvironment();
   // The main CTA button "Entrar em contato" should navigate to contact
   await page.click('text=Entrar em contato');

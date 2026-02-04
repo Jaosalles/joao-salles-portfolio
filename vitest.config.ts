@@ -3,7 +3,7 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { fileURLToPath } from 'node:url';
 import path from 'path';
 import { defineConfig } from 'vite';
-import { sharedPlugins, sharedOptimizeDeps } from './shared-vite-config';
+import { sharedOptimizeDeps, sharedPlugins } from './shared-vite-config';
 
 const dirname =
   typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));

@@ -1,5 +1,5 @@
+import { generateBreadcrumbSchema, generateStructuredData, generateWebPageSchema } from '@/lib/seo';
 import { useEffect } from 'react';
-import { generateStructuredData, generateBreadcrumbSchema, generateWebPageSchema } from '@/lib/seo';
 
 /**
  * Hook para injetar schema.org JSON-LD no document head.

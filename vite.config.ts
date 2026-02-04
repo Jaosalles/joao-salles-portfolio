@@ -1,18 +1,15 @@
-import { defineConfig } from "vite";
-import path from "path";
-import { sharedPlugins, sharedOptimizeDeps, sharedResolveConfig } from "./shared-vite-config";
+import { defineConfig } from 'vite';
+import { sharedOptimizeDeps, sharedPlugins, sharedResolveConfig } from './shared-vite-config';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   // GitHub Pages deployment config
   base: process.env.GITHUB_PAGES ? '/joao-salles-portfolio/' : '/',
   server: {
-    host: "::",
+    host: '::',
     port: 8080,
   },
-  plugins: [
-    ...sharedPlugins
-  ],
+  plugins: [...sharedPlugins],
   resolve: sharedResolveConfig,
   build: {
     target: 'esnext',
