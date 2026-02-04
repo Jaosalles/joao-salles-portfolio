@@ -11,7 +11,7 @@ export const generateMetaTags = (overrides: Partial<typeof SEO_DEFAULTS> = {}) =
     'og:description': meta.description,
     'og:image': meta.ogImage,
     'og:type': 'website',
-    'og:url': 'https://jaosalles.dev',
+    'og:url': 'https://jaosalles.github.io/joao-salles-portfolio/',
     'og:site_name': 'João Pedro Salles Portfolio',
     'og:locale': 'pt_BR',
     'twitter:card': 'summary_large_image',
@@ -30,9 +30,9 @@ export const generateStructuredData = () => {
     jobTitle: 'Senior Frontend Engineer',
     description:
       'Desenvolvedor frontend sênior especializado em React, TypeScript e arquiteturas modernas de frontend. Com 8+ anos de experiência em desenvolvimento web escalável e performático.',
-    url: 'https://jaosalles.dev',
+    url: 'https://jaosalles.github.io/joao-salles-portfolio/',
     email: 'joaopedrosalles@hotmail.com',
-    image: 'https://jaosalles.dev/og-image.png',
+    image: 'https://jaosalles.github.io/joao-salles-portfolio/og-image.png',
     sameAs: [
       'https://github.com/jaosalles',
       'https://www.linkedin.com/in/joao-pedro-salles-dos-santos-a5358a11a/',
@@ -91,7 +91,7 @@ export const generateBreadcrumbSchema = () => {
     '@type': 'ListItem',
     position: data.position,
     name: data.name,
-    item: `https://jaosalles.dev${path}`,
+    item: `https://jaosalles.github.io/joao-salles-portfolio${path}`,
   }));
 
   return {
@@ -107,7 +107,7 @@ export const generateWebPageSchema = () => {
     '@type': 'WebPage',
     name: 'João Pedro Salles - Senior Frontend Engineer',
     description: 'Portfolio profissional com projetos, experiência e stack de tecnologias.',
-    url: 'https://jaosalles.dev',
+    url: 'https://jaosalles.github.io/joao-salles-portfolio/',
     creator: {
       '@type': 'Person',
       name: 'João Pedro Salles',
@@ -115,7 +115,7 @@ export const generateWebPageSchema = () => {
     isPartOf: {
       '@type': 'WebSite',
       name: 'João Pedro Salles Portfolio',
-      url: 'https://jaosalles.dev',
+      url: 'https://jaosalles.github.io/joao-salles-portfolio/',
     },
   };
 };
