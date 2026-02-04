@@ -437,9 +437,143 @@ npm run test && npm run build
 
 ## 📈 Performance e Observabilidade
 
-- Ver `PERFORMANCE.md` para detalhes.
-- `PerformanceMonitor`: coleta Web Vitals via APIs nativas (LCP, CLS, FID, FCP, TTFB) e logs em desenvolvimento.
-- `src/utils/performance.ts`: helpers para métricas, memória e navigation timing.
+### Lighthouse CI
+
+O projeto utiliza **Lighthouse CI** para rastrear performance, acessibilidade e SEO:
+
+**Thresholds (Mínimos Exigidos):**
+
+- ⚡ **Performance**: ≥ 0.90 (90%)
+- ♿ **Acessibilidade**: ≥ 0.90 (90%)
+- ✅ **Best Practices**: ≥ 0.90 (90%)
+- 🔍 **SEO**: ≥ 0.90 (90%)
+
+**Configuração** (`.lighthouserc.json`):
+
+- Valida 2 URLs: home (`/`) e about (`/about`)
+- Executa 3 auditorias por URL para maior confiabilidade
+- Desabilita PWA (não é aplicável ao projeto)
+- Armazena resultados em servidor temporário
+
+### Web Vitals Monitoring
+
+O projeto monitora **Core Web Vitals** via APIs nativas do navegador (sem dependências externas):
+
+**Métricas Rastreadas:**
+
+| Métrica    | Tipo           | Descrição                                              |
+| ---------- | -------------- | ------------------------------------------------------ |
+| **LCP**    | Core Web Vital | Largest Contentful Paint (pintura do maior conteúdo)   |
+| **FID**    | Core Web Vital | First Input Delay (atraso na primeira interação)       |
+| **CLS**    | Core Web Vital | Cumulative Layout Shift (deslocamento visual)          |
+| **FCP**    | Baseline       | First Contentful Paint (primeira pintura com conteúdo) |
+| **TTFB**   | Baseline       | Time to First Byte (tempo até primeiro byte)           |
+| **Memory** | Custom         | Uso de memória JS (heap)                               |
+
+**Implementação** (`src/components/PerformanceMonitor.tsx`):
+
+```typescript
+// Monitora LCP, CLS, FID em tempo real
+setupWebVitalsMonitoring();
+
+// Log em desenvolvimento (a cada 30s)
+if (import.meta.env.DEV) {
+  logMemoryUsage(); // Monitoramento de memória
+}
+
+// Coleta timing de navegação
+logNavigationMetrics(); // DNS, TCP, TTFB, DOM, load
+```
+
+**Em Desenvolvimento:**
+
+- Logs no console a cada evento de métrica
+- Memória JS rastreada a cada 30 segundos
+- Tudo desabilita automaticamente em produção
+
+### Performance Utilities
+
+Arquivo [`src/lib/performance.ts`](src/lib/performance.ts) fornece helpers para coleta e envio de métricas:
+
+```typescript
+// Obter uso de memória (em MB)
+const { used, total, limit } = getMemoryUsage();
+
+// Obter timing de navegação
+const { dnsLookup, tcpConnect, serverResponse, ttfb, domProcessing, totalLoad } =
+  getNavigationTiming();
+
+// Enviar métricas para analytics
+reportPerformanceMetrics({
+  lcp: 2500,
+  cls: 0.1,
+  fid: 100,
+  fcp: 1800,
+  ttfb: 200,
+  memory: 45.2,
+});
+```
+
+### Build Optimization
+
+**Estratégia de Code Splitting** (`vite.config.ts`):
+
+- **vendor** (react, react-dom)
+- **ui** (componentes Radix/shadcn)
+- **router** (lógica de roteamento)
+- **utils** (funções auxiliares)
+
+**Otimizações:**
+
+- ✅ esbuild minification para tudo
+- ✅ Source maps em dev (melhor debugging)
+- ✅ Report de tamanho comprimido
+- ✅ GitHub Pages base path configurado
+
+**Tamanho de Bundle:**
+
+```bash
+npm run build          # Gera dist/ com relatório de tamanho
+npm run preview        # Preview do build de produção
+```
+
+### 🎯 Recomendações de Performance
+
+1. **Lazy Loading**
+   - Componentes pesados devem usar `React.lazy()` + `Suspense`
+   - Route-based code splitting está configurado
+
+2. **Imagens**
+   - Use formatos modernos (WebP) quando possível
+   - Implemente lazy loading com `loading="lazy"`
+   - Comprima com ferramentas como ImageOptim/TinyPNG
+
+3. **Fontes**
+   - Hosted localmente ou via Google Fonts com `font-display: swap`
+   - Precarregue apenas o peso/estilo necessário
+
+4. **Assets Estáticos**
+   - Coloque em `public/` para caching por content hash
+   - Evite imports dinâmicos em tempo de compilação
+
+5. **Monitoramento Contínuo**
+   - LHCI roda a cada push em `main`
+   - Monitorar tendências de performance ao longo do tempo
+   - Investigar regressions antes de fazer merge
+
+### Debugging Performance
+
+```bash
+# Visualizar tamanho do bundle
+npm run build          # Exibe relatório de cada chunk
+
+# Analisar em detalhes
+npm run build-analyze  # Gera visualização interativa (se disponível)
+
+# Testar metricas de performance localmente
+npm run preview        # Simula produção localmente
+# Abra DevTools > Performance tab > gravações
+```
 
 ## ♿ Acessibilidade
 
